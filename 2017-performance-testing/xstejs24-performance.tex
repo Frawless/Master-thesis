@@ -11,9 +11,9 @@
 % zpracování / processing: make, make pdf, make clean
 %==============================================================================
 % Soubory, které je nutné upravit: / Files which have to be edited:
-%   projekt-20-literatura-bibliography.bib - literatura / bibliography
-%   projekt-01-kapitoly-chapters.tex - obsah práce / the thesis content
-%   projekt-30-prilohy-appendices.tex - přílohy / appendices
+%   xstejs24-performance-20-literatura-bibliography.bib - literatura / bibliography
+%   xstejs24-performance-01-kapitoly-chapters.tex - obsah práce / the thesis content
+%   xstejs24-performance-30-prilohy-appendices.tex - přílohy / appendices
 %==============================================================================
 %\documentclass[]{fitthesis} % bez zadání - pro začátek práce, aby nebyl problém s překladem
 \documentclass[english]{fitthesis} % without assignment - for the work start to avoid compilation problem
@@ -201,7 +201,7 @@ Uvedl jsem všechny literární prameny a publikace, ze kterých jsem čerpal.}
 
   % Text prace / Thesis text
   % ----------------------------------------------
-  \input{projekt-01-kapitoly-chapters} % viz. obsah.tex / see obsah.tex
+  \input{xstejs24-performance-01-kapitoly-chapters} % viz. obsah.tex / see obsah.tex
 
   % Pouzita literatura / Bibliography
   % ----------------------------------------------
@@ -225,7 +225,7 @@ Uvedl jsem všechny literární prameny a publikace, ze kterých jsem čerpal.}
   \fi
 \fi
   \begin{flushleft}
-  \bibliography{projekt-20-literatura-bibliography}
+  \bibliography{xstejs24-performance-20-literatura-bibliography}
   \end{flushleft}
 
   % vynechani stranky v oboustrannem rezimu
@@ -282,5 +282,5 @@ Uvedl jsem všechny literární prameny a publikace, ze kterých jsem čerpal.}
   \iftwoside
     \cleardoublepage
   \fi
-  \input{projekt-30-prilohy-appendices} % viz. prilohy.tex / see prilohy.tex
+  \input{xstejs24-performance-30-prilohy-appendices} % viz. prilohy.tex / see prilohy.tex
 \end{document}
