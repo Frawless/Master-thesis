@@ -2,6 +2,17 @@
 % (c) Michal Bidlo, Bohuslav Křena, 2008
 
 \chapter{Introduction}
+Good application performance is one of the main goals during software development. Why is software performance so important? Bad software performance could have very unpleasant behaviour not only for users, but also for application owner. Software reliability is guaranteed by owner, but with bad performance there could be a lot of issues which can badly influence software behaviour. Bad software performance can lead to an outflow of the consumers, brand destruction, financial damage and loss of trust to the software owner. This few reasons are enough to do a proper performance testing before software release, which is more significant for many of large projects where large industries guarantee some level of software behaviour and they cannot assure it after insufficient performance testing. Great emphasis on software performance is for example in space programs, medical facility, army systems or energy distribution systems. In such cases it is necessary to ensure proper application behaviour for a long time with high load and without unsuspended behaviour like as high response, frequent delay or stuck, because every failure could cost human lives. 
+
+Nowadays every developer should trying to use frameworks which can make developers work easier because they can handle complex underlying issues such as security, performance and code clarity. It causes that developers can spend more time for the application functionality and meet the application requirements, because frameworks are usually optimized for particular job. In the past every developer had to spent more time with performance which lead to spent more time and money for software development. Not everyone have enough knowledge about performance testing and thus make performance analysis and optimization more difficult. This lead to need a special outsource performance tools which can provide more sophistic informations but also usually cost a lot of money.
+
+A very important part of performance analysis is the wise choice of \textit{key performance indicators} (KPIs)\cite{Molyneaux:TAoAPT} and clearly interpretation of the results as fast as possible. This can leads to faster detection of performance problems and help developers to fix them and meet the \textit{performance standards}\cite{Molyneaux:TAoAPT} set up by application owner or customer in time before the release cycle. 
+
+Network performance testing refers to measures of service quality of a network. When you want to buy some network hardware you probably want to know basic attributes such as \textit{bandwidth, throughput, latency} it has. During performance testing of network devices these, and more other attributes, are testing and evaluating.
+
+This thesis is focused on performance testing and analysis of Qpid-dispatch \cite{RH:Interconnect}, an application level router which is designed by Red Hat Inc. 
+
+% https://www.seguetech.com/what-is-software-performance-testing/
 
 \chapter{Fundamentals of Software Performance Testing}
 
@@ -28,6 +39,7 @@
 \subsection*{Bench-marking}
 
 \section{Performance Metrics}
+\label{Performance Metrics}
 % https://loadstorm.com/load-testing-metrics/ 2017/10/18
 
 \subsection{Response Time}
@@ -48,7 +60,10 @@
 
 \section{Gathered Data and Their Evaluation}
 
-\chapter{Design}
+\section{Related Works}
+% popsat podobne "existujici" reseni (samozrejme, obcas neexistuje ;), ale verim, ze zde se neco najde). Nejlepsi je i se vuci tem "related tools" vymezit (jako napr. "The tool ... cannot be used because it does not support ...")
+
+\chapter{Analysis and Design}
 
 \section{Qpid-Dispatch Router}
 
@@ -80,10 +95,6 @@ AMQP, MQTT - possibly?
 \subsection{Docker}
 Using for testing Ansible roles (remove?)
 
-\subsection{Python}
-
-\subsection{C}
-
 \section{Topology Generator}
 
 \subsection{Template Generator}
@@ -96,7 +107,7 @@ Using for testing Ansible roles (remove?)
 
 \subsection{TODO - more subsections about implementation}
 
-\chapter{Testing and Experiments}
+\chapter{Experimental Evaluation}
 
 \section{Performance Testing on Various Generated Topology}
 
