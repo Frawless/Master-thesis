@@ -8,17 +8,18 @@ Nowadays every developer should trying to use frameworks which can make develope
 
 A very important part of performance analysis is the wise choice of \textit{key performance indicators} (KPIs)\cite{Molyneaux:TAoAPT} and clearly interpretation of the results as fast as possible. This can leads to faster detection of performance problems and help developers to fix them and meet the \textit{performance standards}\cite{Molyneaux:TAoAPT} set up by application owner or customer in time before the release cycle. 
 
-Network performance testing refers to measures of service quality of a network. When you want to buy some network hardware you probably want to know basic attributes such as \textit{bandwidth, throughput, latency} it has. During performance testing of network devices these, and more other attributes, are testing and evaluating.
-
-This thesis is focused on performance testing and analysis of Qpid-dispatch \cite{RH:Interconnect}, an application level router which is designed by Red Hat Inc. 
+Network performance testing refers to measures of service quality of a network. When you want to buy some network hardware you probably want to know basic attributes such as \textit{bandwidth, throughput, latency} it has. During performance testing of network devices these, and more other attributes, are testing and evaluating. This thesis describe fundamentals of performance testing which includes 'what is performance process', 'common performance issues', 'types of performance testing', 'standard performance metrics and how to choose them' and more in chapter \ref{Fundamentals of Software Performance Testing}. The rest of thesis is focused on performance testing and analysis of Qpid-dispatch \cite{RH:Interconnect}, an application level router which is designed by Red Hat Inc. Qpid-dispatch performance testing is based on Messaging Performance Tool (MPT)\cite{ORPISKE:MSGPT} which is described in chapter \ref{Messaging Performance Tool}. Description includes \textit{measures process} and \textit{gathered data description and evaluation}. MPT is intended for performance testing of \textit{Broker}\cite{RH:Broker} which is application level device cooperating with Qpid-dispatch in the network as message distributor. Main goal is analyse MPT and design module for Qpid-dispatch performance testing. This part can be found in chapter \ref{Analysis and Design} just like a protocols which router working with and \textit{Automatic Topology Generator} for semi-automated network generating and deployment. After appropriate design, the implementation is needed, all used technologies, tools and  implementation processes of each component are described in chapter \ref{Implementation}. The most important part of the thesis is situated in chapter \ref{Experimental Evaluation}. It contains gathering data from routers located in different types of topology, their evaluation and representation which lead to conclusion about performance of Qpid-dispatch. Finally, chapter \ref{Conclusion} summarizes the thesis with our conclusion  and ideas for future use of developed tool.
 
 % https://www.seguetech.com/what-is-software-performance-testing/
 
 \chapter{Fundamentals of Software Performance Testing}
+\label{Fundamentals of Software Performance Testing}
 
 \section{Performance Testing Process}
+\label{Performance Testing Process}
 
 \section{Performance Issues}
+\label{Performance Issues}
 
 \subsection{Response Time}
 
@@ -27,6 +28,7 @@ This thesis is focused on performance testing and analysis of Qpid-dispatch \cit
 \subsection{Performance Degradation}
 
 \section{Different Types of Performance Testing}
+\label{Different Types of Performance Testing}
 % % http://www.wmrichards.com/high_performance_messaging.pdf 2017/10/18
 
 \subsection*{Robustness Testing}
@@ -53,17 +55,24 @@ This thesis is focused on performance testing and analysis of Qpid-dispatch \cit
 \subsection{Error Rate}
 
 \chapter{Messaging Performance Tool}
+\label{Messaging Performance Tool}
 % https://github.com/orpiske/msg-perf-tool
+
 \section{Measures Process}
+\label{Measures Process}
 
 \section{Testing Metrics}
+\label{Testing Metrics}
 
 \section{Gathered Data and Their Evaluation}
+\label{Gathered Data and Their Evaluation}
 
 \section{Related Works}
+\label{Related Works}
 % popsat podobne "existujici" reseni (samozrejme, obcas neexistuje ;), ale verim, ze zde se neco najde). Nejlepsi je i se vuci tem "related tools" vymezit (jako napr. "The tool ... cannot be used because it does not support ...")
 
 \chapter{Analysis and Design}
+\label{Analysis and Design}
 
 \section{Qpid-Dispatch Router}
 
@@ -87,6 +96,7 @@ AMQP, MQTT - possibly?
 \section{Gathered Data Evaluation}
 
 \chapter{Implementation}
+\label{Implementation}
 
 \section{Used Technologies}
 
@@ -108,11 +118,12 @@ Using for testing Ansible roles (remove?)
 \subsection{TODO - more subsections about implementation}
 
 \chapter{Experimental Evaluation}
+\label{Experimental Evaluation}
 
 \section{Performance Testing on Various Generated Topology}
 
 \section{Testing results}
 
 \chapter{Conclusion}
-
+\label{Conclusion}
 %=========================================================================
