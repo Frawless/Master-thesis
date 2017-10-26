@@ -1,0 +1,15 @@
+Messaging Performance Tool (MPT)
+Key Performance indicators
+Performance standards
+Automatic Topology Generator
+Qpid-Dispatch 
+Broker
+performance requirements
+Throughput
+latency
+error rate
+reliability
+stability
+responsiveness
+speed
+scalability

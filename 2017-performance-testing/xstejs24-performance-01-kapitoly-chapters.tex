@@ -1,22 +1,60 @@
 %=========================================================================
 % (c) Michal Bidlo, Bohuslav Křena, 2008
 
+% Zajimavy blog
+% http://brendangregg.com/
+
 \chapter{Introduction}
-Good application performance is one of the main goals during software development. Why is software performance so important? Bad software performance could have very unpleasant behaviour not only for users, but also for application owner. Software reliability is guaranteed by owner, but with bad performance there could be a lot of issues which can badly influence software behaviour. Bad software performance can lead to an outflow of the consumers, brand destruction, financial damage and loss of trust to the software owner. This few reasons are enough to do a proper performance testing before software release, which is more significant for many of large projects where large industries guarantee some level of software behaviour and they cannot assure it after insufficient performance testing. Great emphasis on software performance is for example in space programs, medical facility, army systems or energy distribution systems. In such cases it is necessary to ensure proper application behaviour for a long time with high load and without unsuspended behaviour like as high response, frequent delay or stuck, because every failure could cost human lives. 
+Good application performance is one of the main goals during software development. Why is software performance so important? Bad software performance could have very unpleasant behavior not only for users, but also for application owner. Software reliability is guaranteed by owner, but with bad performance there could be a lot of issues which can badly influence software behavior. Bad software performance can lead to an outflow of the consumers, brand destruction, financial damage and loss of trust to the software owner. This few reasons are enough to do a proper performance testing before software release, which is more significant for many of large projects where large industries guarantee some level of software behavior and they cannot assure it after insufficient performance testing. Great emphasis on software performance is for example in space programs, medical facility, army systems or energy distribution systems. In such cases it is necessary to ensure proper application behavior for a long time with high load and without unsuspected behavior like as high response, frequent delay or stuck, because every failure could cost human lives. 
 
-Nowadays every developer should trying to use frameworks which can make developers work easier because they can handle complex underlying issues such as security, performance and code clarity. It causes that developers can spend more time for the application functionality and meet the application requirements, because frameworks are usually optimized for particular job. In the past every developer had to spent more time with performance which lead to spent more time and money for software development. Not everyone have enough knowledge about performance testing and thus make performance analysis and optimization more difficult. This lead to need a special outsource performance tools which can provide more sophistic informations but also usually cost a lot of money.
+Nowadays every developer should trying to use frameworks which can make developers work easier because they can handle complex underlying issues such as security, performance and code clarity. It causes that developers can spend more time for the application functionality and meet the application requirements, because frameworks are usually optimized for particular job. In the past every developer had to spent more time with performance which lead to spent more time and money for software development. Not everyone have enough knowledge about performance testing and thus make performance analysis and optimization more difficult. This lead to need a special outsource performance tools which can provide more sophistic information but also usually cost a lot of money.
 
-A very important part of performance analysis is the wise choice of \textit{key performance indicators} (KPIs)\cite{Molyneaux:TAoAPT} and clearly interpretation of the results as fast as possible. This can leads to faster detection of performance problems and help developers to fix them and meet the \textit{performance standards}\cite{Molyneaux:TAoAPT} set up by application owner or customer in time before the release cycle. 
+A very important part of performance analysis is the wise choice of \emph{key performance indicators} (KPIs)\cite{Molyneaux:TAoAPT} and clearly interpretation of the results as fast as possible. This can leads to faster detection of performance problems and help developers to fix them and meet the \emph{performance standards}\cite{Molyneaux:TAoAPT} set up by application owner or customer in time before the release cycle. 
 
-Network performance testing refers to measures of service quality of a network. When you want to buy some network hardware you probably want to know basic attributes such as \textit{bandwidth, throughput, latency} it has. During performance testing of network devices these, and more other attributes, are testing and evaluating. This thesis describe fundamentals of performance testing which includes 'what is performance process', 'common performance issues', 'types of performance testing', 'standard performance metrics and how to choose them' and more in chapter \ref{Fundamentals of Software Performance Testing}. The rest of thesis is focused on performance testing and analysis of Qpid-dispatch \cite{RH:Interconnect}, an application level router which is designed by Red Hat Inc. Qpid-dispatch performance testing is based on Messaging Performance Tool (MPT)\cite{ORPISKE:MSGPT} which is described in chapter \ref{Messaging Performance Tool}. Description includes \textit{measures process} and \textit{gathered data description and evaluation}. MPT is intended for performance testing of \textit{Broker}\cite{RH:Broker} which is application level device cooperating with Qpid-dispatch in the network as message distributor. Main goal is analyse MPT and design module for Qpid-dispatch performance testing. This part can be found in chapter \ref{Analysis and Design} just like a protocols which router working with and \textit{Automatic Topology Generator} for semi-automated network generating and deployment. After appropriate design, the implementation is needed, all used technologies, tools and  implementation processes of each component are described in chapter \ref{Implementation}. The most important part of the thesis is situated in chapter \ref{Experimental Evaluation}. It contains gathering data from routers located in different types of topology, their evaluation and representation which lead to conclusion about performance of Qpid-dispatch. Finally, chapter \ref{Conclusion} summarizes the thesis with our conclusion  and ideas for future use of developed tool.
+Network performance testing refers to measures of service quality of a network. When you want to buy some network hardware you probably want to know basic attributes such as \emph{bandwidth, throughput, latency} it has. During performance testing of network devices these, and more other attributes, are testing and evaluating. This thesis describe fundamentals of performance testing which includes 'what is performance process', 'common performance issues', 'types of performance testing', 'standard performance metrics and how to choose them' and more in chapter \ref{Fundamentals of Software Performance Testing}. The rest of thesis is focused on performance testing and analysis of Qpid-dispatch \cite{RH:Interconnect}, an application level router which is designed by Red Hat Inc. Qpid-dispatch performance testing is based on Messaging Performance Tool (MPT)\cite{ORPISKE:MSGPT} which is described in chapter \ref{Messaging Performance Tool}. Description includes \emph{measures process} and \emph{gathered data description and evaluation}. MPT is intended for performance testing of \emph{Broker}\cite{RH:Broker} which is application level device cooperating with Qpid-dispatch in the network as message distributor. Main goal is analyze MPT and design module for Qpid-dispatch performance testing. This part can be found in chapter \ref{Analysis and Design} just like a protocols which router working with and \emph{Automatic Topology Generator} for semi-automated network generating and deployment. After appropriate design, the implementation is needed, all used technologies, tools and  implementation processes of each component are described in chapter \ref{Implementation}. The most important part of the thesis is situated in chapter \ref{Experimental Evaluation}. It contains gathering data from routers located in different types of topology, their evaluation and representation which lead to conclusion about performance of Qpid-dispatch. Finally, chapter \ref{Conclusion} summarizes the thesis with our conclusion  and ideas for future use of developed tool.
 
 % https://www.seguetech.com/what-is-software-performance-testing/
 
 \chapter{Fundamentals of Software Performance Testing}
 \label{Fundamentals of Software Performance Testing}
+Main goal of performance testing is to ensure that an application runs fast enough to keep the attention of users, even with unexpected number of users using an application at the same time. Why is so important to have application optimized for best speed? It is simply, you are probably not only one person on the whole world with some application and when your application have slow response, long load time or bad scalability, the first website which user visit will be web of your competitor. That is the reason why speed is one of the most significant performance factor of common performance problems. This chapter summarize fundamentals of performance testing which includes common performance processes, issues and metrics. This chapter is based on knowledge available in \cite{Molyneaux:TAoAPT},\cite{Kurkova:Thesis:2017}, \cite{DIN:PHD}.
+
 
 \section{Performance Testing Process}
 \label{Performance Testing Process}
+Main goal of performance testing is to ensure following application attributes \cite{GAO:MEASURING}:
+
+\begin{itemize}
+	\setlength\itemsep{0em}
+	\item \textbf{Reliability, Stability} - the ability of software to perform its functions in system environment under some system load for acceptable period of time
+	\item \textbf{Scalability} - the ability of software to behave properly under various type of system load and handle growing up amount of work (network traffic, server load, data transfer)
+	\item \textbf{Processing time, Speed} - the ability of software to react quickly without low response time during any acceptable system load
+	\item \textbf{Availability} - the ability of software has available its functions during any acceptable system load
+\end{itemize}
+
+Performance testing process, as well as software development process, consist of all engineering steps from requirements definition to data evaluation. Between these steps is also found design, implementation of performance tests and execution with data gathering. 
+\\
+
+First step of performance testing process is selection of performance requirements for the application. In this step, testing engineer has to describe a metrics, which will characterize an application performance. It is very helpful to get answers for some questions about application:
+
+\begin{itemize}
+	\setlength\itemsep{0em}
+	\item How many end users will the application need to support at release, after 6 months and 1 year ?
+	\item Where will these users be located, and how will they connect to the application?
+	\item How many end users will be concurrent at release, after 6 months and 1 year?
+\end{itemize}
+
+After complete this questions we should be able to estimate 
+
+
+Graphical representation of the performance testing process is available on the figure \ref{fig:performace_testing_process}. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=13cm]{obrazky-figures/performance_process_pyramid.png}
+  \caption{Performance Testing Process - \todo{prekreslit na vlastni, pripadne doplnit, vektorove, zdroj \cite{Sharma:HP}}}
+  \label{fig:performace_testing_process}
+\end{figure}
 
 \section{Performance Issues}
 \label{Performance Issues}
