@@ -39,7 +39,7 @@ Main goal of performance testing is to ensure following application attributes \
 Performance testing process, as well as software development process, consist of all engineering steps from requirements definition to data evaluation. Between these steps is also found design, implementation of performance tests and execution with data gathering. 
 \\
 
-First step of performance testing process is selection of performance requirements for the application. In this step, testing engineer has to describe a metrics, which will characterize an application performance. It is very helpful to get answers for some questions about application:
+First step of performance testing process is selection of \emph{performance requirements} for the application. In this step, testing engineer has to analyze tested application, describe metrics, which will characterize an application performance and set performance requirements. It is very helpful to get answers for some questions about application:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -48,15 +48,22 @@ First step of performance testing process is selection of performance requiremen
 	\item How many end users will be concurrent at release, after 6 months and 1 year?
 \end{itemize}
 
-After complete this questions we should be able to estimate 
+After complete this questions, an engineer should be able to select some important key performance indicators for performance test cases. Some of these indicators may be \emph{response time}, \emph{stability}, \emph{scalability} and \emph{speed}. However there are many other possible indicator so it is necessary to analyze whole application and take into consideration another application needs like error rate, system resources etc.  
 
+
+
+\emph{workload} 
+
+workload of testing environment
+
+\todo{Dopsat kapitolu}
 
 Graphical representation of the performance testing process is available on the figure~\ref{fig:performace_testing_process}. 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=13cm]{obrazky-figures/performance_process_pyramid.png}
-  \caption{Performance Testing Process - \todo{prekreslit na vlastni, pripadne doplnit, vektorove, zdroj \cite{Sharma:HP}}}
+  \includegraphics[width=16cm]{obrazky-figures/pyramid.pdf}
+  \caption{Pyramid scheme of Performance Testing Process}
   \label{fig:performace_testing_process}
 \end{figure}
 
