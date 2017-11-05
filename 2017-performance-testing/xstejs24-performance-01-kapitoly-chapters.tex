@@ -46,7 +46,7 @@ Performance testing process, as well as software development process, consist of
   \label{fig:performace_testing_process}
 \end{figure}
 
-First step of performance testing process is selection of \emph{performance requirements} for the application. In this step, testing engineer has to analyze tested application, describe metrics, which will characterize an application performance and set performance requirements. It is very helpful to get answers for some questions about application:
+First step of performance testing process is selection of \emph{performance requirements} for the application. In this step, testing engineer has to analyze tested application, describe metrics, which will characterize an application performance and set performance requirements. It is very helpful to get answers for following questions about application:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -80,10 +80,26 @@ Final step of performance testing process is results evaluation. Output of this 
 Performance issues is common label for an unexpected application/device behavior which affects its performance. Usually, those issues are hardly detectable because they occur only under certain circumstances as unexpected high load or long term of application running. In the network applications there are several issues that are more frequently occurring  than others, some of which are described in more detail below.
 
 \subsection{Performance Degradation}
-It takes time to the programmer to learn clean code habits, however unclean code leads to inefficient algorithms, application deadlocks and memory leaks, which all leads to performance degradation. The problem is that issues like those are usually detected only during the long time run of application or inability of an application to handle unexpected load.
+It takes time to the programmer to learn clean code habits, however unclean code leads to inefficient algorithms, application deadlocks and memory leaks, which all leads to performance degradation. The problem is that issues like those are usually detected only during the long time run of application or inability of an application to handle unexpected load. For this kind of issues there is performance testing method called \emph{soak testing} \cite{BUCH:4TYPES, Manzor:APTB} which is detailed described in \ref{Soak Testing}. In short term, soak test is intended to identify problems that may appear only after long period of application run time, hence its necessary to run this type of tests during network application development since they usually need to be available for 24 hours per day. The duration of a soak test should have some correlation to the operational mode of the system under test. Following scenarios may contains performance issues which ones can soak test reveal:
+
+\begin{itemize}
+	\setlength\itemsep{0em}
+	\item a constant degradation in response time when the system is run over time
+	\item any degradation in system resources that are not apparent during short runs but will surface during long run time as free disk space, memory consumption, machines handles
+	\item a periodical process that may affect the performance of the system, but can be detected only during long run time as backup process, exporting of data into a 3rd party system
+\end{itemize}
 
 
 \subsection{Response Time}
+Response time represent value which system needs to accept, evaluate and response to the user for his request . Different actions can have significantly different response time and with that provide different load on the system. For example retrieve document from web-server by ID is faster then search for the same document by keywords. Response time is main parameter to focus during \emph{load test} of the application. Well designed test should consider different type of load on the system, which means various kind of requests, and different 
+number of connected end-users at the same time. There are 3 limits for the response time values: 
+
+\begin{itemize}
+	\setlength\itemsep{0em}
+	\item \textbf{0.1 second} \,---\ this is an ideal response time for the application, because user feels that system is reacting instantaneously and do not sense any interruptions
+	\item \textbf{1 second} \,---\ this is the highest acceptable response time when user still do not feel an interruptions but they can feel little delay, so far no bad impact on user experience
+	\item \textbf{10 second} \,---\ this is the limit after which response time become unacceptable and user will probably stop using your application
+\end{itemize}
 
 \subsection{Traffic Spikes}
 
@@ -97,6 +113,9 @@ It takes time to the programmer to learn clean code habits, however unclean code
 \subsection*{Stress Testing}
 
 \subsection*{Load Testing}
+
+\subsection*{Soak Testing}
+\label{Soak Testing}
 
 \subsection*{Bench-marking}
 
