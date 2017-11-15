@@ -91,7 +91,7 @@ Unclean code usually leads to inefficient algorithms, application deadlocks or m
 
 
 \subsection{Response Time}
-Response time is time it takes system to accept, evaluate and response to the user for his request . Different actions and requests can have significantly different response time and with that provide different load on the system. For example retrieving document from web-server by its ID is considerably faster than searching for the same document by keywords. Response time is measured during \emph{load test} of the application. Well designed test should consider different type of load on the system, which means various kind of requests, and different 
+Response time is time it takes system to accept, evaluate and response to the user for his request . Different actions and requests can have significantly different response time and with that provide different load on the system. For example retrieving document from web-server by its ID is considerably faster than searching for the same document by keywords. Response time is measured during \emph{load test} \cite{Manzor:APTB} of the application. Well designed test should consider different type of load on the system, which means various kind of requests, and different 
 number of connected end-users at the same time. usually we put 3 limits for the response time values: 
 
 \begin{itemize}
@@ -102,20 +102,73 @@ number of connected end-users at the same time. usually we put 3 limits for the 
 \end{itemize}
 
 \subsection{Traffic Spikes}
+As \emph{traffic spikes} \cite{Kurkova:Thesis:2017, AMC:SPIKES} we can understand the sudden degradation of one of the performance metrics such as \emph{throughput, bandwidth, error rate, response time} but also recourse usage such as \emph{memory usage, disk space, etc.} In real network, spikes are result of high workload, which can be caused by multiple users trying to concurrently use service over the network. For example after publishing new popular viral context on video servers, start of sales events, reservation of limited count of tickets or subject registration at university.
+
+Traffic spikes can lead to inappropriate system behavior such as \underline{long response time}, \underline{bad throughput} and \underline{limited concurrency}. For prevent influence of traffic spikes on system performance, it's  necessary to do sophistic infrastructure monitoring and network load analysis, because we should recognize normal traffic and attack on the system. Method designed for spikes testing is called \emph{stress testing} \cite{Manzor:APTB} and it's described in Section \ref{Different Types of Performance Testing} in detail. Network system should also be scalable, thus it should be able to redirect traffic to another node with same service in case of high load which can cause performance issues due inappropriate recourse usage.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm]{obrazky-figures/spike.png}
+  \caption{\todo{Najit novy}}
+  \label{fig:spikes}
+\end{figure}
+
+In the Figure \ref{fig:spikes} there is recorder traffic spike of.....\todo{popsat obrazek}
 
 \section{Different Types of Performance Testing}
 \label{Different Types of Performance Testing}
 % % http://www.wmrichards.com/high_performance_messaging.pdf 2017/10/18
 
-\subsection*{Robustness Testing}
-% Soak
-
-\subsection*{Stress Testing}
+For performance measurements there are many types of tests. Which test you should use is determined by nature of the system, testing requirements and how much time is available for performance testing. The following testing term are generally well known and using in practice and each of them characterizes category or suite of the tests. The following subsections are based on knowledge available in \cite{TuPo:TESTS}
 
 \subsection*{Load Testing}
+Load testing is a testing method which examines how developed system behaves during different types of workload within its acceptable limits. Basically its simulation of real-world load. Main metric to focus during load test is response time of the system on requests from users or another system which communicating with tested subject. Main goal is to determine if system can handle required workload from performance requirements. Load tests are designed to measure response time of system transactions under normal or peak workload. When the systems response time dramatically extends or become unstable, thus system reach its maximum operating capacity. After this, engineers will mark workload requirements as fulfilling or they should analyze gathered data and report issues to the developers. In the Figure \ref{fig:load_test} you can see graph of load test showing workload of 1.000 users who are sending requests to the web server at the same time where the system response time does not exceed 2 seconds.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm]{obrazky-figures/spike.png}
+  \caption{\todo{load test figure}}
+  \label{fig:load_test}
+\end{figure}
+
+\subsection*{Stress Testing}
+\label{Stress Testing}
+Stress testing is the specific type of load test, where engineers does not measure normal workload, but focus on unexpected workloads and traffic spikes. Main purpose is to find how the system behaves in extreme conditions such as enormous number of concurrent requests, using a server with much less memory or a weaker CPU and analyze system performance threshold. Its very useful to know performance threshold because you want to know the difference between performance under normal workload and performance threshold when the system is overloaded. The following enumeration collect common stress test scenarios: 
+
+\begin{itemize}
+	\setlength\itemsep{0em}
+	\item Monitor the system behavior when maximum number of users logged in at the same time,
+	\item All user performing critical operations at the same time,
+	\item All users accessing the same file at the same time,
+	\item Hardware issues such as server in cluster down.
+\end{itemize} 
+
+When engineers finish stress testing and found systems limits, they also can test the system recovery after crash during finding of the system limits.
+
+\todo{graf?}
 
 \subsection*{Soak Testing}
 \label{Soak Testing}
+Soak, or stability/endurance testing refer to method, where goal is to identify problems, that may appear only after extended period of time. The system may be stable for one week, but after longer period than that, problems such as memory leaks or not enough disk space can appear. Primary measured metric during soak tests is memory. The following are common issues found by soak test:
+
+\begin{itemize}
+	\setlength\itemsep{0em}
+	\item Serious memory leaks that will eventually result into system crash,
+	\item Improperly closed database connections could starve the system,
+	\item Improperly closed connections between system layers could stall any of the system modules,
+	\item Step-wise degradation could lead to high response time and the system become inefficient.
+\end{itemize}
+
+\todo{vice informaci}
+\todo{graf?}
+
+\subsection*{Smoke Testing}
+Smoke testing method is inspired by similar hardware technique, when engineers checks for the smoke from the device after tuning power on. Basically, its very similar for software, since main goal of smoke test is to test basic functionality of the system and tell to the engineers if the system is ready for build. When smoke tests fails, the system are tagged as unstable and 
+
+\subsection*{Regression Testing}
+
+\subsection*{Volume Testing}
+% Soak
 
 \subsection*{Bench-marking}
 
@@ -149,6 +202,8 @@ number of connected end-users at the same time. usually we put 3 limits for the 
 \section{Related Works}
 \label{Related Works}
 % popsat podobne "existujici" reseni (samozrejme, obcas neexistuje ;), ale verim, ze zde se neco najde). Nejlepsi je i se vuci tem "related tools" vymezit (jako napr. "The tool ... cannot be used because it does not support ...")
+
+SpecJMS
 
 \chapter{Analysis and Design}
 \label{Analysis and Design}

@@ -13,3 +13,7 @@ stability
 responsiveness
 speed
 scalability
+performance treshold
+CPU
+memory
+endurance
