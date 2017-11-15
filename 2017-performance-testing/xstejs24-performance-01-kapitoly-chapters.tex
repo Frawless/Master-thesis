@@ -101,6 +101,8 @@ number of connected end-users at the same time. usually we put 3 limits for the 
 	\item \textbf{10 second}\,---\,this is the limit after which response time become unacceptable and user will probably stop using your application.
 \end{itemize}
 
+\todo{First iteration till here!}
+
 \subsection{Traffic Spikes}
 As \emph{traffic spikes} \cite{Kurkova:Thesis:2017, AMC:SPIKES} we can understand the sudden degradation of one of the performance metrics such as \emph{throughput, bandwidth, error rate, response time} but also recourse usage such as \emph{memory usage, disk space, etc.} In real network, spikes are result of high workload, which can be caused by multiple users trying to concurrently use service over the network. For example after publishing new popular viral context on video servers, start of sales events, reservation of limited count of tickets or subject registration at university.
 
@@ -119,21 +121,21 @@ In the Figure \ref{fig:spikes} there is recorder traffic spike of.....\todo{pops
 \label{Different Types of Performance Testing}
 % % http://www.wmrichards.com/high_performance_messaging.pdf 2017/10/18
 
-For performance measurements there are many types of tests. Which test you should use is determined by nature of the system, testing requirements and how much time is available for performance testing. The following testing term are generally well known and using in practice and each of them characterizes category or suite of the tests. The following subsections are based on knowledge available in \cite{TuPo:TESTS}
+For performance measurements there are many types of tests. Which test you should use is determined by nature of the system, testing requirements and how much time is available for performance testing. The following testing term are generally well known and using in practice and each of them characterizes category or suite of the tests. The following subsections are based on knowledge available in \cite{TuPo:TESTS, BUCH:4TYPES, Molyneaux:TAoAPT}.
 
 \subsection*{Load Testing}
 Load testing is a testing method which examines how developed system behaves during different types of workload within its acceptable limits. Basically its simulation of real-world load. Main metric to focus during load test is response time of the system on requests from users or another system which communicating with tested subject. Main goal is to determine if system can handle required workload from performance requirements. Load tests are designed to measure response time of system transactions under normal or peak workload. When the systems response time dramatically extends or become unstable, thus system reach its maximum operating capacity. After this, engineers will mark workload requirements as fulfilling or they should analyze gathered data and report issues to the developers. In the Figure \ref{fig:load_test} you can see graph of load test showing workload of 1.000 users who are sending requests to the web server at the same time where the system response time does not exceed 2 seconds.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=15cm]{obrazky-figures/spike.png}
-  \caption{\todo{load test figure}}
+  \includegraphics[width=15cm]{obrazky-figures/load-testing.png}
+  \caption{\todo{vlastni obrazek - popsat}}
   \label{fig:load_test}
 \end{figure}
 
 \subsection*{Stress Testing}
 \label{Stress Testing}
-Stress testing is the specific type of load test, where engineers does not measure normal workload, but focus on unexpected workloads and traffic spikes. Main purpose is to find how the system behaves in extreme conditions such as enormous number of concurrent requests, using a server with much less memory or a weaker CPU and analyze system performance threshold. Its very useful to know performance threshold because you want to know the difference between performance under normal workload and performance threshold when the system is overloaded. The following enumeration collect common stress test scenarios: 
+Stress testing is the specific type of load test, where engineers does not measure normal workload, but focus on unexpected workloads and traffic spikes. The main purpose is to find how the system behaves in extreme conditions such as enormous number of concurrent requests, using a server with much less memory or a weaker CPU and analyze system performance threshold. Its very useful to know performance threshold because you want to know the difference between performance under normal workload and performance threshold when the system is overloaded. The following enumeration collect common stress test scenarios: 
 
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -145,11 +147,16 @@ Stress testing is the specific type of load test, where engineers does not measu
 
 When engineers finish stress testing and found systems limits, they also can test the system recovery after crash during finding of the system limits.
 
-\todo{graf?}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm]{obrazky-figures/stress-testing.png}
+  \caption{\todo{vlastni obrazek - popsat}}
+  \label{fig:load_test}
+\end{figure}
 
 \subsection*{Soak Testing}
 \label{Soak Testing}
-Soak, or stability/endurance testing refer to method, where goal is to identify problems, that may appear only after extended period of time. The system may be stable for one week, but after longer period than that, problems such as memory leaks or not enough disk space can appear. Primary measured metric during soak tests is memory. The following are common issues found by soak test:
+Soak, or stability/endurance testing refer to method, where goal is to identify problems, that may appear only after extended period of time. The system seems stable for one week, but after longer period than that, problems such as memory leaks or not enough disk space can appear. Primary measured metric during soak tests is memory. The following are common issues found by soak test:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -159,18 +166,25 @@ Soak, or stability/endurance testing refer to method, where goal is to identify 
 	\item Step-wise degradation could lead to high response time and the system become inefficient.
 \end{itemize}
 
-\todo{vice informaci}
-\todo{graf?}
+This sort of test needs for effectively use appropriate monitoring system. Problems detected by soak tests are typically manifested by gradual system slowdown in response time or as sudden lost of system availability.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm]{obrazky-figures/soak-testing.png}
+  \caption{\todo{vlastni obrazek - popsat}}
+  \label{fig:load_test}
+\end{figure}
 
 \subsection*{Smoke Testing}
-Smoke testing method is inspired by similar hardware technique, when engineers checks for the smoke from the device after tuning power on. Basically, its very similar for software, since main goal of smoke test is to test basic functionality of the system and tell to the engineers if the system is ready for build. When smoke tests fails, the system are tagged as unstable and 
+Smoke testing method is inspired by similar hardware technique, when engineers checks for the smoke from the device after tuning power on. Basically, its very similar for software, since main goal of smoke test is to test basic functionality of the system and tell to the engineers if the system is ready for build. However, smoke tests are testing functionality on a surface level, so its not enough for testing deeply basic systems functions. When smoke tests fails, the system are tagged as unstable, because its can't ensure basic functionality and its not tested anymore until the smoke test will pass because it should be waste of time. Smoke test are designed to uncovering obvious errors which saves time, money and effort of the engineers. Smoke tests should be used with every new build, since new features could harm previous system functionality. 
+
 
 \subsection*{Regression Testing}
+With software development comes times, when engineers develop new feature and they want to update previous build and now is the time for regression testing. \emph{Regression tests} \cite{STF:REGRESSION} are designed to test functionality of the latest build updated with new feature. The main objective is to determine, if new feature affects already functional parts of the system. This type of tests are very important, because engineers do not always know, which part of the system will be indirectly affected. During regression testing, new test cases are not created, but previous test cases are automatic re-executed and analyzed. 
 
-\subsection*{Volume Testing}
-% Soak
 
-\subsection*{Bench-marking}
+\subsection*{Benchmark Testing}
+\emph{Benchmark testing} \cite{Aho:Benchmarking} is method, which is collecting performance data during the system run on different hardware machines. Gathered data have significant value when we want smooth run of the system on an older hardware, hence we can discover performance issues under normal load. However, the system does not run smoothly on prepared hardware, only options is to run benchmark tests on different machines with different hardware and under different load. \todo{dopsat nebo vyhodit} 
 
 \section{Performance Metrics}
 \label{Performance Metrics}
