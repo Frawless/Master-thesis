@@ -8,7 +8,7 @@
 \label{Introduction}
 Good application performance is one of the main goals during the software development. But what makes software performance so important? Poor performance can have very unpleasant behavior not just for its users, but also for the application owners. Software reliability is guaranteed by the owner, but with undesirable performance there could be a lot of issues which can badly influence software behavior. And this can lead to a significant outflow of the consumers, and even brand destruction, financial damage or loss of trust. These few reasons should be enough to do a proper performance testing before software release, especially for many of large projects where industries guarantee certain level of software behavior and they cannot assure it after insufficient performance testing. Great emphasis on software performance is in particular in space programs, medical facilities, army systems or energy distribution systems. In such cases it is necessary to ensure proper application behavior for a long time under high load and without unsuspected behavior such as high response time, frequent delays or timeouts, because every failure could cost a lot of money. 
 
-Nowadays every developer should try to use well established \todo{Doplnit vyznam well estabilished} frameworks which can make developers work easier because they handle complex underlying issues such as security, performance and code clarity. This way developers can invest more time in the application functionality and meet the application requirements, since frameworks are usually optimized for one particular job. In the past every developer had to spent more time tuning performance which lead to spending more time and money for software development. But not everyone has enough knowledge about performance testing and this makes performance analysis and optimization even more difficult. This leads to a need to specialized performance tools which can provide more sophisticated information. However, useful tools are usually proprietary or expensive.
+Nowadays every developer should try to use well established frameworks which can make developers work easier because they handle complex underlying issues such as security, performance and code clarity since they are designed for it. This way developers can invest more time in the application functionality and meet the application requirements, since frameworks are usually optimized for one particular job. In the past every developer had to spent more time tuning performance which lead to spending more time and money for software development. But not everyone has enough knowledge about performance testing and this makes performance analysis and optimization even more difficult. This leads to a need to specialized performance tools which can provide more sophisticated information. However, useful tools are usually proprietary or expensive.
 
 A very important part of the performance analysis is the right choice of \emph{key performance indicators} (KPIs) \cite{Molyneaux:TAoAPT} and effective interpretation of the results. This can lead to faster detection of performance problems and help developers to fix them and meet the \emph{performance standards} \cite{Molyneaux:TAoAPT} set up by application owner or customer in time before the release. 
 
@@ -42,7 +42,8 @@ Performance testing process, similarly to software development process, consist 
 \begin{figure}[H]
   \centering
   \includegraphics[width=16cm]{obrazky-figures/pyramid.pdf}
-  \caption{Pyramid scheme of Performance Testing Process \todo{vice popsat}}
+  \captionsetup{justification=centering}
+  \caption{Pyramid scheme of Performance Testing Process with four most important parts with theirs steps.}
   \label{fig:performace_testing_process}
 \end{figure}
 
@@ -61,11 +62,10 @@ The next step is to define the \emph{performance testing strategy}, correspondin
 
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item \textbf{Prepare test environment}\,---\,proper environment needs sourcing and configuring proper hardware\todo{preformulovat}.
-	\item \textbf{Provide sufficient workload injectors}\,---\,prepare workload injector may take few days; this usually involves a few workstations or servers to simulate real traffic.
-	\item \textbf{Identify and script use cases}\,---\,this include identification of important parts of system which may have an impact on performance; time needed for each use case may be different because some use cases can be simple such as navigating to a web application home page or complex such as filtering specific communication
-	\item \textbf{Performance test scenario}\,---\,\todo{doplnit}.
-	\item \textbf{Instrument the test environment}\,---\,install and configure the monitoring software on the test environment.
+	\item \textbf{Prepare test environment}\,---\,this step include single out hardware machines for testing and install necessary software which is needed for run load injectors, tested components, etc.,
+	\item \textbf{Provide sufficient workload injectors}\,---\,prepare workload injector may take few days; this usually involves a few workstations or servers to simulate real traffic,
+	\item \textbf{Identify and script use cases}\,---\,this include identification of important parts of system which may have an impact on performance; time needed for each use case may be different because some use cases can be simple such as navigating to a web application home page or complex such as filtering specific communication,
+	\item \textbf{Instrument the test environment}\,---\,install and configure the monitoring software on the test environment,
 	\item \textbf{Deal with detected problems}\,---\,test can detect significant performance issues and their fix may take a long time.
 \end{itemize}
 
@@ -237,7 +237,7 @@ AMQP, MQTT - possibly?
 
 \section{Qpid-Dispatch Performance Module}
 
-\subsection{TODO - more subsections about module}
+\subsection{\todo{more subsections about module}}
 
 \section{Performance and Testing Metrics of Qpid-Dispatch Performance Module}
 
