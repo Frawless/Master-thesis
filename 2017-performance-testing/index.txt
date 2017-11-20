@@ -17,3 +17,4 @@ performance treshold
 CPU
 memory
 endurance
+service time

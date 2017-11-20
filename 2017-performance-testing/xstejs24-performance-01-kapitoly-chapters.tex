@@ -43,7 +43,7 @@ Performance testing process, similarly to software development process, consist 
   \centering
   \includegraphics[width=16cm]{obrazky-figures/pyramid.pdf}
   \captionsetup{justification=centering}
-  \caption{Pyramid scheme of Performance Testing Process with four most important parts with theirs steps.}
+  \caption{Pyramid scheme of Performance Testing Process with four most important parts and theirs steps.}
   \label{fig:performace_testing_process}
 \end{figure}
 
@@ -80,6 +80,7 @@ Final step of performance testing process is results evaluation. Output of this 
 Performance issue is a common label for an unexpected application or device behavior which affects its performance. Usually, those issues are hard to detect because they manifest only under certain circumstances such as high load or long application run time. In the network applications there are several issues that are more frequently occurring  than others. In following, we will describe chosen issues in more detail.
 
 \subsection{Performance Degradation}
+\label{Performance Degradation}
 Unclean code usually leads to inefficient algorithms, application deadlocks or memory leaks, which all can eventually lead to performance degradation. The problem is that these issues are usually detected only during the long run time of application or inability of an application to handle high load. For this kind of issues there is a performance testing method called \emph{soak testing} \cite{BUCH:4TYPES, Manzor:APTB} which is described in Section \ref{Soak Testing}. In short term, soak test is intended to identify problems that may appear only after long period of application run time, hence its necessary to run this type of tests during network application development since they usually need to be available for 24 hours per day. The duration of a soak test should have some correlation to the operational mode of the system under test. Following scenarios may contains performance issues detectable by soak tests:
 
 \begin{itemize}
@@ -91,6 +92,7 @@ Unclean code usually leads to inefficient algorithms, application deadlocks or m
 
 
 \subsection{Response Time}
+\label{Response Time 1}
 Response time is time it takes system to accept, evaluate and response to the user for his request . Different actions and requests can have significantly different response time and with that provide different load on the system. For example retrieving document from web-server by its ID is considerably faster than searching for the same document by keywords. Response time is measured during \emph{load test} \cite{Manzor:APTB} of the application. Well designed test should consider different type of load on the system, which means various kind of requests, and different 
 number of connected end-users at the same time. usually we put 3 limits for the response time values: 
 
@@ -101,7 +103,7 @@ number of connected end-users at the same time. usually we put 3 limits for the 
 	\item \textbf{10 second}\,---\,this is the limit after which response time become unacceptable and user will probably stop using your application.
 \end{itemize}
 
-\todo{First iteration till here!}
+\todo{Prvni iterace}
 
 \subsection{Traffic Spikes}
 As \emph{traffic spikes} \cite{Kurkova:Thesis:2017, AMC:SPIKES} we can understand the sudden degradation of one of the performance metrics such as \emph{throughput, bandwidth, error rate, response time} but also recourse usage such as \emph{memory usage, disk space, etc.} In real network, spikes are result of high workload, which can be caused by multiple users trying to concurrently use service over the network. For example after publishing new popular viral context on video servers, start of sales events, reservation of limited count of tickets or subject registration at university.
@@ -151,7 +153,7 @@ When engineers finish stress testing and found systems limits, they also can tes
   \centering
   \includegraphics[width=15cm]{obrazky-figures/stress-testing.png}
   \caption{\todo{vlastni obrazek - popsat}}
-  \label{fig:load_test}
+  \label{fig:stress_test}
 \end{figure}
 
 \subsection*{Soak Testing}
@@ -172,7 +174,7 @@ This sort of test needs for effectively use appropriate monitoring system. Probl
   \centering
   \includegraphics[width=15cm]{obrazky-figures/soak-testing.png}
   \caption{\todo{vlastni obrazek - popsat}}
-  \label{fig:load_test}
+  \label{fig:soak_test}
 \end{figure}
 
 \subsection*{Smoke Testing}
@@ -190,15 +192,45 @@ With software development comes times, when engineers develop new feature and th
 \label{Performance Metrics}
 % https://loadstorm.com/load-testing-metrics/ 2017/10/18
 
-\subsection{Response Time}
+During performance testing we can monitoring a lot of metrics, which some are more important than other based on the system purpose. The following metrics are the most common that are monitored during performance testing of all application, no matter of developing language. 
 
-\subsection{Requests per Second}
 
 \subsection{Resource Usage}
+Vyuziti zdroju - dlouhodobe uzivani aplikace, datbaze, pamet
 
 \subsection{Throughput}
 
+\subsection{Response Time and Latency}
+Response time was already mentioned in Subsection \ref{Response Time 1}, so we should basically know what does it mean in case of performance testing. Now, we should understand difference between response time and \emph{latency} \cite{Broadwell:RPT, BHATT:PERF}. In fact, response time is consist of two partial metrics which are latency and \emph{service time}. 
+
+\subsection*{Service Time}
+Service time is time it takes system to evaluate and send response for users request. In particular, when user send request for web page to server, it takes the server time to evaluate request and send proper response back to the user, this is the service time. Measurement can be perform easily with stopwatch which starts at receive request and stops after response send. Service time could be affected by any item which leads to performance degradation as it was described in Subsection \ref{Performance Degradation}. 
+
+\subsection*{Latency}
+Second part of the response time is latency, which is a delay between sending request on the client side and receive it for evaluate on the server side. Hence latency is common problem in the network systems such as data center, web server, etc., because request/response needs to travel over the physical medium between client and server. Client and server could be located on different continents, thus the message have to travel long distance and latency is increasing.  
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm]{obrazky-figures/latency.jpg}
+  \caption{\todo{vlastni obrazek - popsat}}
+  \label{fig:latency}
+\end{figure}
+
+\subsection*{Average and Percentile Response Time}
+There are two ways of measuring response time \cite{Kopp:RPT}; Average (mean) response time is calculated as sum of all measured time divided by count of users requests. This sounds cool and easy, but many times, average response time does not reflect real response time of the system. How is that possible? In reality, most application have few very heavy outlines such as very slow transactions. In the Figure \ref{fig:average_percentil_1} you can see few slow transactions which drag the average of response time to the right. Thus leads to inaccurate determine of response time.
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm]{obrazky-figures/average_vs_percentile.png}
+  \caption{\todo{vlastni obrazek - popsat}}
+  \label{fig:average_percentil_1}
+\end{figure}
+
+On the other side, better solution how to determine response time is Percentile.
+
 \subsection{Error Rate}
+Error Rate is metric, which occur in the network systems, especially under high load. During communication between client and server there could be... 
 
 \chapter{Messaging Performance Tool}
 \label{Messaging Performance Tool}
