@@ -112,12 +112,10 @@ Traffic spikes can lead to inappropriate system behavior such as \underline{long
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=15cm]{obrazky-figures/spike.png}
-  \caption{\todo{Najit novy}}
+  \includegraphics[width=15cm]{obrazky-figures/traffic-spikes.pdf}
+  \caption{Recorded a traffic spike during network traffic monitoring around 11th October.}
   \label{fig:spikes}
 \end{figure}
-
-In the Figure \ref{fig:spikes} there is recorder traffic spike of.....\todo{popsat obrazek}
 
 \section{Different Types of Performance Testing}
 \label{Different Types of Performance Testing}
@@ -126,12 +124,12 @@ In the Figure \ref{fig:spikes} there is recorder traffic spike of.....\todo{pops
 For performance measurements there are many types of tests. Which test you should use is determined by nature of the system, testing requirements and how much time is available for performance testing. The following testing term are generally well known and using in practice and each of them characterizes category or suite of the tests. The following subsections are based on knowledge available in \cite{TuPo:TESTS, BUCH:4TYPES, Molyneaux:TAoAPT}.
 
 \subsection*{Load Testing}
-Load testing is a testing method which examines how developed system behaves during different types of workload within its acceptable limits. Basically its simulation of real-world load. Main metric to focus during load test is response time of the system on requests from users or another system which communicating with tested subject. Main goal is to determine if system can handle required workload from performance requirements. Load tests are designed to measure response time of system transactions under normal or peak workload. When the systems response time dramatically extends or become unstable, thus system reach its maximum operating capacity. After this, engineers will mark workload requirements as fulfilling or they should analyze gathered data and report issues to the developers. In the Figure \ref{fig:load_test} you can see graph of load test showing workload of 1.000 users who are sending requests to the web server at the same time where the system response time does not exceed 2 seconds.
+Load testing is a testing method which examines how developed system behaves during different types of workload within its acceptable limits. Basically its simulation of real-world load. Main metric to focus during load test is response time of the system on requests from users or another system which communicating with tested subject. Main goal is to determine if system can handle required workload from performance requirements. Load tests are designed to measure response time of system transactions under normal or peak workload. When the systems response time dramatically extends or become unstable, thus system reach its maximum operating capacity. After this, engineers will mark workload requirements as fulfilling or they should analyze gathered data and report issues to the developers. In the Figure \ref{fig:load_test} you can see graph of load test showing workload of rising requests to the web server at the same time where the system response time does not exceed 3.5 seconds.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=15cm]{obrazky-figures/load-testing.png}
-  \caption{\todo{vlastni obrazek - popsat}}
+  \includegraphics[width=15cm]{obrazky-figures/load-testing.pdf}
+  \caption{Systems response time during load testing affected by load size.}
   \label{fig:load_test}
 \end{figure}
 
@@ -194,11 +192,8 @@ With software development comes times, when engineers develop new feature and th
 
 During performance testing we can monitoring a lot of metrics, which some are more important than other based on the system purpose. The following metrics are the most common that are monitored during performance testing of all application, no matter of developing language. 
 
-
-\subsection{Resource Usage}
-Vyuziti zdroju - dlouhodobe uzivani aplikace, datbaze, pamet
-
 \subsection{Throughput}
+Throughput is a metrics, which refer to number of requests per second that the system can handle. In the network, there is \emph{network throughput} that is the rate of successful message deliver over a communication channel. Throughput is usually measured after a warm-up period of time after the commencement of traffic, because it takes a while before the throughput stabilizes. Throughput is measured by load testing; strategy for measuring throughput is to pick up different types of load and see how many pass successfully in an acceptable time. \todo{neco doplnit?}
 
 \subsection{Response Time and Latency}
 Response time was already mentioned in Subsection \ref{Response Time 1}, so we should basically know what does it mean in case of performance testing. Now, we should understand difference between response time and \emph{latency} \cite{Broadwell:RPT, BHATT:PERF}. In fact, response time is consist of two partial metrics which are latency and \emph{service time}. 
@@ -222,15 +217,37 @@ There are two ways of measuring response time \cite{Kopp:RPT}; Average (mean) re
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=15cm]{obrazky-figures/average_vs_percentile.png}
+  \includegraphics[width=15cm]{obrazky-figures/average_vs_percentile_1.png}
   \caption{\todo{vlastni obrazek - popsat}}
   \label{fig:average_percentil_1}
 \end{figure}
 
-On the other side, better solution how to determine response time is Percentile.
+On the other side, better solution how to determine response time is Percentile. In the Figure \ref{fig:average_percentil_1} you can see \emph{median} value, which reflect more realistic value of the system response time. In this case, there is no problem, because user will expect slower response time than it has in real. In the figure \ref{fig:average_percentil_2} there is different situation. Average response time is better than median, which reflect into expectation of faster system response time than it has.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm]{obrazky-figures/average_vs_percentile_2.png}
+  \caption{\todo{vlastni obrazek - popsat}}
+  \label{fig:average_percentil_2}
+\end{figure}
+
+In this case, a considerable percentage of transactions are very fast (first 20 percent), while the bulk of transactions are several times slower. Thus, calculated median gets more realistic values than average response time.
+
+\subsection{Resource Usage}
+At long run applications running at servers, there is a limited amount of resource available for use. Thus makes resource usage another important metric, which needs to be monitored since not enough resources could shut down the whole system. Main resources for monitoring and utilization are:
+
+\begin{itemize}
+	\setlength\itemsep{0em}
+	\item CPU usage\,---\,inappropriate using of CPU could lead to performance degradation, because low priority processes may occupy CPU ahead of higher priority processes, 
+	\item Memory usage\,---\,full operation memory could cause performance degradation,
+	\item Disk space\,---\,for example when using storage disk as a database, there should be preventive measures to backup the data and free up disk space,
+	\item Operating System limits\,---\,\todo{doplnit}
+\end{itemize}
+
 
 \subsection{Error Rate}
-Error Rate is metric, which occur in the network systems, especially under high load. During communication between client and server there could be... 
+Error Rate is a metric, which commonly occur in the network systems, especially under high load. During communication between client and server there could be error caused by another network device (router, switch, hub, etc.) or signal disturb. The Error Rate is the mathematical calculation that produces a percentage of problem requests compared to all requests. In the ideal system, there should be zero network error present; however, the reality that there is always be some. Thus usually leads to performance degradation and slow down throughput, because damaged data need to be resend.
+Error rate is a significant metric because it tells to engineers how many requests failed at a particular point in time of performance testing. This metric is more evident when you can see the percentage of problem strongly increasing, hence you can detect problem easily.
 
 \chapter{Messaging Performance Tool}
 \label{Messaging Performance Tool}
