@@ -4,6 +4,22 @@
 % Zajimavy blog
 % http://brendangregg.com/
 
+%% CHAPTER X                                                                                                              
+%% NAME                                                                                                                    
+%%                                                                                                                        
+%% ->                                                                                                                      
+%% X NAME                                                                                                                  
+%%                                                                                                                        
+%%                                                                                                                       \makeatletter                                                                                                              
+%%                                                                                                                        \def\@makechapterhead#1{%                                                                                                  
+%%                                                                                                                        \vspace*{50\p@}%                                                                                                        
+%%                                                                                                                          {\parindent \z@ \raggedright \normalfont                                                                                
+%%                                                                                                                            \interlinepenalty\@M                                                                                                  
+%%                                                                                                                              \Huge \bfseries \thechapter\ #1\par\nobreak                                                                          
+%%                                                                                                                              \vskip 40\p@                                                                                                        
+%%                                                                                                                          }}                                                                                                                      
+%%                                                                                                                        \makeatother
+
 \chapter{Introduction}
 \label{Introduction}
 Good application performance is one of the main goals during the software development. But what makes software performance so important? Poor performance can have very unpleasant behavior not just for its users, but also for the application owners. Software reliability is guaranteed by the owner, but with undesirable performance there could be a lot of issues which can badly influence software behavior. And this can lead to a significant outflow of the consumers, and even brand destruction, financial damage or loss of trust. These few reasons should be enough to do a proper performance testing before software release, especially for many of large projects where industries guarantee certain level of software behavior and they cannot assure it after insufficient performance testing. Great emphasis on software performance is in particular in space programs, medical facilities, army systems or energy distribution systems. In such cases it is necessary to ensure proper application behavior for a long time under high load and without unsuspected behavior such as high response time, frequent delays or timeouts, because every failure could cost a lot of money. 
@@ -29,13 +45,13 @@ Usual goal of performance testing is to ensure that the application runs reasona
 \label{Performance Testing Process}
 The main goal of performance testing is to ensure the following application attributes \cite{GAO:MEASURING}:
 
-\begin{itemize}
+\begin{description}
 	\setlength\itemsep{0em}
 	\item \textbf{Reliability and Stability}\,---\,the ability of software to perform its functions in system environment under some system load for acceptable period of time,
 	\item \textbf{Scalability}\,---\,the ability of software to behave properly under various types of system load and handle growing up amount of workload (network traffic, server load, data transfer, etc.),
 	\item \textbf{Processing time, Speed}\,---\,the ability of software to react quickly without low response time during any acceptable system load,
 	\item \textbf{Availability}\,---\,the ability of software to make all of its functions available during any acceptable system load.
-\end{itemize}
+\end{description}
 
 Performance testing process, similarly to software development process, consist of all engineering steps ranging from requirements definition to data evaluation. These steps also includes design, implementation of performance tests and execution with data gathering. Graphical representation of the performance testing process is depicted in the Figure~\ref{fig:performace_testing_process}. 
 
@@ -43,7 +59,7 @@ Performance testing process, similarly to software development process, consist 
   \centering
   \includegraphics[width=16cm]{obrazky-figures/pyramid.pdf}
   \captionsetup{justification=centering}
-  \caption{Pyramid scheme of Performance Testing Process with four most important parts and theirs steps.}
+  \caption{Performance Testing Process with four most important parts and theirs steps based on \cite{Sharma:HP}.}
   \label{fig:performace_testing_process}
 \end{figure}
 
@@ -60,14 +76,14 @@ Based on answer to these studies, the engineer should be able to select importan
 
 The next step is to define the \emph{performance testing strategy}, corresponding to planning and design. It is extremely important to allocate enough time for test application effectively, because, as it was mentioned in Chapter \ref{Introduction}, performance testing is not an easy task and detecting all of the possible issues of tested units is very time consuming process. Every plan should take into account the following considerations:
 
-\begin{itemize}
+\begin{description}
 	\setlength\itemsep{0em}
-	\item \textbf{Prepare test environment}\,---\,this step include single out hardware machines for testing and install necessary software which is needed for run load injectors, tested components, etc.,
-	\item \textbf{Provide sufficient workload injectors}\,---\,prepare workload injector may take few days; this usually involves a few workstations or servers to simulate real traffic,
-	\item \textbf{Identify and script use cases}\,---\,this include identification of important parts of system which may have an impact on performance; time needed for each use case may be different because some use cases can be simple such as navigating to a web application home page or complex such as filtering specific communication,
-	\item \textbf{Instrument the test environment}\,---\,install and configure the monitoring software on the test environment,
+	\item \textbf{Prepare test environment}\,---\,this step include single out hardware machines for testing and install necessary software which is needed for run load injectors, tested components, etc.
+	\item \textbf{Provide sufficient workload injectors}\,---\,prepare workload injector may take few days; this usually involves a few workstations or servers to simulate real traffic.
+	\item \textbf{Identify and script use cases}\,---\,this include identification of important parts of system which may have an impact on performance; time needed for each use case may be different because some use cases can be simple such as navigating to a web application home page or complex such as filtering specific communication.
+	\item \textbf{Instrument the test environment}\,---\,install and configure the monitoring software on the test environment.
 	\item \textbf{Deal with detected problems}\,---\,test can detect significant performance issues and their fix may take a long time.
-\end{itemize}
+\end{description}
 
 While this process seems trivial, the opposite is true, in particular in case of network applications. Most of performance issues manifest any big workload or high number of users, eg. when million users are sending requests to the network device at the same time it could lead to unacceptable device crash. Workload injectors are designated to simulate real user activity, and allows automatic analysis of performance behavior for tested application or device. Depending on the used technology, there can be a limit on the number of virtual users that can be generated by a single injector. Automated workload injectors are necessary for effective performance testing.
 
@@ -79,7 +95,7 @@ Final step of performance testing process is results evaluation. Output of this 
 \label{Performance Issues}
 Performance issue is a common label for an unexpected application or device behavior which affects its performance. Usually, those issues are hard to detect because they manifest only under certain circumstances such as high load or long application run time. In the network applications there are several issues that are more frequently occurring  than others. In following, we will describe chosen issues in more detail.
 
-\subsection{Performance Degradation}
+\subsection*{Performance Degradation}
 \label{Performance Degradation}
 Unclean code usually leads to inefficient algorithms, application deadlocks or memory leaks, which all can eventually lead to performance degradation. The problem is that these issues are usually detected only during the long run time of application or inability of an application to handle high load. For this kind of issues there is a performance testing method called \emph{soak testing} \cite{BUCH:4TYPES, Manzor:APTB} which is described in Section \ref{Soak Testing}. In short term, soak test is intended to identify problems that may appear only after long period of application run time, hence its necessary to run this type of tests during network application development since they usually need to be available for 24 hours per day. The duration of a soak test should have some correlation to the operational mode of the system under test. Following scenarios may contains performance issues detectable by soak tests:
 
@@ -91,28 +107,28 @@ Unclean code usually leads to inefficient algorithms, application deadlocks or m
 \end{itemize}
 
 
-\subsection{Response Time}
+\subsection*{Response Time}
 \label{Response Time 1}
 Response time is time it takes system to accept, evaluate and response to the user for his request . Different actions and requests can have significantly different response time and with that provide different load on the system. For example retrieving document from web-server by its ID is considerably faster than searching for the same document by keywords. Response time is measured during \emph{load test} \cite{Manzor:APTB} of the application. Well designed test should consider different type of load on the system, which means various kind of requests, and different 
 number of connected end-users at the same time. usually we put 3 limits for the response time values: 
 
-\begin{itemize}
+\begin{description}
 	\setlength\itemsep{0em}
-	\item \textbf{0.1 second}\,---\,this represent an ideal response time for the application, because user feels that system is reacting instantaneously and does not sense any interruptions,
-	\item \textbf{1 second}\,---\,this is the highest acceptable response time when user still does not feel any interruptions, but user can feel a little delay; so far no bad impact on user experience,
+	\item \textbf{0.1 second}\,---\,this represent an ideal response time for the application, because user feels that system is reacting instantaneously and does not sense any interruptions.
+	\item \textbf{1 second}\,---\,this is the highest acceptable response time when user still does not feel any interruptions, but user can feel a little delay; so far no bad impact on user experience.
 	\item \textbf{10 second}\,---\,this is the limit after which response time become unacceptable and user will probably stop using your application.
-\end{itemize}
+\end{description}
 
 \todo{Prvni iterace}
 
-\subsection{Traffic Spikes}
+\subsection*{Traffic Spikes}
 As \emph{traffic spikes} \cite{Kurkova:Thesis:2017, AMC:SPIKES} we can understand the sudden degradation of one of the performance metrics such as \emph{throughput, bandwidth, error rate, response time} but also recourse usage such as \emph{memory usage, disk space, etc.} In real network, spikes are result of high workload, which can be caused by multiple users trying to concurrently use service over the network. For example after publishing new popular viral context on video servers, start of sales events, reservation of limited count of tickets or subject registration at university.
 
 Traffic spikes can lead to inappropriate system behavior such as \underline{long response time}, \underline{bad throughput} and \underline{limited concurrency}. For prevent influence of traffic spikes on system performance, it's  necessary to do sophistic infrastructure monitoring and network load analysis, because we should recognize normal traffic and attack on the system. Method designed for spikes testing is called \emph{stress testing} \cite{Manzor:APTB} and it's described in Section \ref{Different Types of Performance Testing} in detail. Network system should also be scalable, thus it should be able to redirect traffic to another node with same service in case of high load which can cause performance issues due inappropriate recourse usage.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=15cm]{obrazky-figures/traffic-spikes.pdf}
+  \includegraphics[width=14cm]{obrazky-figures/traffic-spikes.pdf}
   \caption{Recorded a traffic spike during network traffic monitoring around 11th October.}
   \label{fig:spikes}
 \end{figure}
@@ -139,9 +155,9 @@ Stress testing is the specific type of load test, where engineers does not measu
 
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item Monitor the system behavior when maximum number of users logged in at the same time,
-	\item All user performing critical operations at the same time,
-	\item All users accessing the same file at the same time,
+	\item Monitor the system behavior when maximum number of users logged in at the same time.
+	\item All user performing critical operations at the same time.
+	\item All users accessing the same file at the same time.
 	\item Hardware issues such as server in cluster down.
 \end{itemize} 
 
@@ -160,9 +176,9 @@ Soak, or stability/endurance testing refer to method, where goal is to identify 
 
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item Serious memory leaks that will eventually result into system crash,
-	\item Improperly closed database connections could starve the system,
-	\item Improperly closed connections between system layers could stall any of the system modules,
+	\item Serious memory leaks that will eventually result into system crash.
+	\item Improperly closed database connections could starve the system.
+	\item Improperly closed connections between system layers could stall any of the system modules.
 	\item Step-wise degradation could lead to high response time and the system become inefficient.
 \end{itemize}
 
@@ -192,17 +208,19 @@ With software development comes times, when engineers develop new feature and th
 
 During performance testing we can monitoring a lot of metrics, which some are more important than other based on the system purpose. The following metrics are the most common that are monitored during performance testing of all application, no matter of developing language. 
 
+\todo{Doplnit, jak se realne meri metriky vykonu!!!}
+
 \subsection{Throughput}
 Throughput is a metrics, which refer to number of requests per second that the system can handle. In the network, there is \emph{network throughput} that is the rate of successful message deliver over a communication channel. Throughput is usually measured after a warm-up period of time after the commencement of traffic, because it takes a while before the throughput stabilizes. Throughput is measured by load testing; strategy for measuring throughput is to pick up different types of load and see how many pass successfully in an acceptable time. \todo{neco doplnit?}
 
 \subsection{Response Time and Latency}
-Response time was already mentioned in Subsection \ref{Response Time 1}, so we should basically know what does it mean in case of performance testing. Now, we should understand difference between response time and \emph{latency} \cite{Broadwell:RPT, BHATT:PERF}. In fact, response time is consist of two partial metrics which are latency and \emph{service time}. 
+Response time as issue was already mentioned in Subsection \ref{Response Time 1}; response time as metric is consist of two parts which are \emph{latency} and \emph{service time}. \todo{Smysluplne dopsat ?}
 
-\subsection*{Service Time}
+\subsubsection*{Service Time}
 Service time is time it takes system to evaluate and send response for users request. In particular, when user send request for web page to server, it takes the server time to evaluate request and send proper response back to the user, this is the service time. Measurement can be perform easily with stopwatch which starts at receive request and stops after response send. Service time could be affected by any item which leads to performance degradation as it was described in Subsection \ref{Performance Degradation}. 
 
-\subsection*{Latency}
-Second part of the response time is latency, which is a delay between sending request on the client side and receive it for evaluate on the server side. Hence latency is common problem in the network systems such as data center, web server, etc., because request/response needs to travel over the physical medium between client and server. Client and server could be located on different continents, thus the message have to travel long distance and latency is increasing.  
+\subsubsection*{Latency}
+Second part of the response time is latency \cite{Broadwell:RPT, BHATT:PERF}, which is a delay between sending request on the client side and receive it for evaluate on the server side. Hence latency is common problem in the network systems such as data center, web server, etc., because request/response needs to travel over the physical medium between client and server. Client and server could be located on different continents, thus the message have to travel long distance and latency is increasing.  
 
 \begin{figure}[H]
   \centering
@@ -211,7 +229,7 @@ Second part of the response time is latency, which is a delay between sending re
   \label{fig:latency}
 \end{figure}
 
-\subsection*{Average and Percentile Response Time}
+\subsubsection*{Average and Percentile Response Time}
 There are two ways of measuring response time \cite{Kopp:RPT}; Average (mean) response time is calculated as sum of all measured time divided by count of users requests. This sounds cool and easy, but many times, average response time does not reflect real response time of the system. How is that possible? In reality, most application have few very heavy outlines such as very slow transactions. In the Figure \ref{fig:average_percentil_1} you can see few slow transactions which drag the average of response time to the right. Thus leads to inaccurate determine of response time.
 
 
@@ -236,13 +254,13 @@ In this case, a considerable percentage of transactions are very fast (first 20 
 \subsection{Resource Usage}
 At long run applications running at servers, there is a limited amount of resource available for use. Thus makes resource usage another important metric, which needs to be monitored since not enough resources could shut down the whole system. Main resources for monitoring and utilization are:
 
-\begin{itemize}
+\begin{description}
 	\setlength\itemsep{0em}
-	\item CPU usage\,---\,inappropriate using of CPU could lead to performance degradation, because low priority processes may occupy CPU ahead of higher priority processes, 
-	\item Memory usage\,---\,full operation memory could cause performance degradation,
-	\item Disk space\,---\,for example when using storage disk as a database, there should be preventive measures to backup the data and free up disk space,
-	\item Operating System limits\,---\,\todo{doplnit}
-\end{itemize}
+	\item \textbf{CPU usage}\,---\,inappropriate using of CPU could lead to performance degradation, because low priority processes may occupy CPU ahead of higher priority processes.
+	\item \textbf{Memory usage}\,---\,full operation memory could cause performance degradation.
+	\item \textbf{Disk space}\,---\,for example when using storage disk as a database, there should be preventive measures to backup the data and free up disk space.
+	\item \textbf{Operating System limits}\,---\,\todo{doplnit}
+\end{description}
 
 
 \subsection{Error Rate}
@@ -252,6 +270,7 @@ Error rate is a significant metric because it tells to engineers how many reques
 \chapter{Messaging Performance Tool}
 \label{Messaging Performance Tool}
 % https://github.com/orpiske/msg-perf-tool
+
 
 \section{Measures Process}
 \label{Measures Process}

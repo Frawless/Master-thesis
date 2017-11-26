@@ -1,60 +1,517 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="251mm" height="115mm" viewBox="0 0 25100 11500" version="1.1" xmlns="http://www.w3.org/2000/svg" stroke-width="28.222" stroke-linejoin="round" xml:space="preserve">
- <path fill="rgb(255,255,255)" stroke="none" d="M 12533,11508 L 0,11508 0,0 25066,0 25066,11508 12533,11508 Z"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 13559,9601 L 2553,9601 2553,1600 24565,1600 24565,9601 13559,9601 Z"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 24564,9600 L 2552,9600"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 24564,8456 L 2552,8456"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 24564,7313 L 2552,7313"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 24564,6170 L 2552,6170"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 24564,5028 L 2552,5028"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 24564,3885 L 2552,3885"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 24564,2742 L 2552,2742"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 24564,1598 L 2552,1598"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 2552,9750 L 2552,9600"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 2552,9750 L 2552,9600"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 7555,9750 L 7555,9600"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 7555,9750 L 7555,9600"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 12557,9750 L 12557,9600"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 12557,9750 L 12557,9600"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 17560,9750 L 17560,9600"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 17560,9750 L 17560,9600"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 22563,9750 L 22563,9600"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 22563,9750 L 22563,9600"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 2552,9600 L 24564,9600"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 2402,9600 L 2552,9600"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 2402,9600 L 2552,9600"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 2402,8456 L 2552,8456"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 2402,8456 L 2552,8456"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 2402,7313 L 2552,7313"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 2402,7313 L 2552,7313"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 2402,6170 L 2552,6170"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 2402,6170 L 2552,6170"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 2402,5028 L 2552,5028"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 2402,5028 L 2552,5028"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 2402,3885 L 2552,3885"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 2402,3885 L 2552,3885"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 2402,2742 L 2552,2742"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 2402,2742 L 2552,2742"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 2402,1598 L 2552,1598"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 2402,1598 L 2552,1598"/>
- <path fill="none" stroke="rgb(179,179,179)" stroke-linejoin="round" d="M 2552,9600 L 2552,1598"/>
- <path fill="rgb(51,153,255)" fill-opacity="0.298" stroke="rgb(255,255,255)" stroke-opacity="0.298" d="M 3053,6170 L 4053,6065 5054,6246 6055,5763 7055,5967 8056,6319 9056,5508 10057,6017 11058,5770 12058,6072 13058,2771 14058,6524 15059,5763 16059,6524 17060,6319 18061,7343 19061,6524 20062,5517 21062,5588 22063,5718 23064,6065 24064,5839 24064,9600 3053,9600 3053,6170 Z"/>
- <path fill="none" stroke="rgb(0,0,153)" stroke-width="51" stroke-linejoin="round" d="M 3053,6170 L 4053,6065 5054,6246 6055,5763 7055,5967 8056,6319 9056,5508 10057,6017 11058,5770 12058,6072 13058,2771 14058,6524 15059,5763 16059,6524 17060,6319 18061,7343 19061,6524 20062,5517 21062,5588 22063,5718 23064,6065 24064,5839 24064,9600 3053,9600 3053,6170 Z"/>
- <text class="TextShape"><tspan class="TextParagraph" font-family="CMU Serif" font-size="353px" font-weight="400"><tspan class="TextPosition" x="2537" y="10168"><tspan fill="rgb(0,0,0)" stroke="none">Oct 01</tspan></tspan></tspan></text>
- <text class="TextShape"><tspan class="TextParagraph" font-family="CMU Serif" font-size="353px" font-weight="400"><tspan class="TextPosition" x="7540" y="10168"><tspan fill="rgb(0,0,0)" stroke="none">Oct 06</tspan></tspan></tspan></text>
- <text class="TextShape"><tspan class="TextParagraph" font-family="CMU Serif" font-size="353px" font-weight="400"><tspan class="TextPosition" x="12543" y="10168"><tspan fill="rgb(0,0,0)" stroke="none">Oct 11</tspan></tspan></tspan></text>
- <text class="TextShape"><tspan class="TextParagraph" font-family="CMU Serif" font-size="353px" font-weight="400"><tspan class="TextPosition" x="17546" y="10168"><tspan fill="rgb(0,0,0)" stroke="none">Oct 16</tspan></tspan></tspan></text>
- <text class="TextShape"><tspan class="TextParagraph" font-family="CMU Serif" font-size="353px" font-weight="400"><tspan class="TextPosition" x="22549" y="10168"><tspan fill="rgb(0,0,0)" stroke="none">Oct 21</tspan></tspan></tspan></text>
- <text class="TextShape"><tspan class="TextParagraph" font-family="CMU Serif" font-size="353px" font-weight="400"><tspan class="TextPosition" x="2117" y="9721"><tspan fill="rgb(0,0,0)" stroke="none">0</tspan></tspan></tspan></text>
- <text class="TextShape"><tspan class="TextParagraph" font-family="CMU Serif" font-size="353px" font-weight="400"><tspan class="TextPosition" x="1746" y="8577"><tspan fill="rgb(0,0,0)" stroke="none">500</tspan></tspan></tspan></text>
- <text class="TextShape"><tspan class="TextParagraph" font-family="CMU Serif" font-size="353px" font-weight="400"><tspan class="TextPosition" x="1561" y="7434"><tspan fill="rgb(0,0,0)" stroke="none">1000</tspan></tspan></tspan></text>
- <text class="TextShape"><tspan class="TextParagraph" font-family="CMU Serif" font-size="353px" font-weight="400"><tspan class="TextPosition" x="1561" y="6291"><tspan fill="rgb(0,0,0)" stroke="none">1500</tspan></tspan></tspan></text>
- <text class="TextShape"><tspan class="TextParagraph" font-family="CMU Serif" font-size="353px" font-weight="400"><tspan class="TextPosition" x="1561" y="5148"><tspan fill="rgb(0,0,0)" stroke="none">2000</tspan></tspan></tspan></text>
- <text class="TextShape"><tspan class="TextParagraph" font-family="CMU Serif" font-size="353px" font-weight="400"><tspan class="TextPosition" x="1561" y="4005"><tspan fill="rgb(0,0,0)" stroke="none">2500</tspan></tspan></tspan></text>
- <text class="TextShape"><tspan class="TextParagraph" font-family="CMU Serif" font-size="353px" font-weight="400"><tspan class="TextPosition" x="1561" y="2862"><tspan fill="rgb(0,0,0)" stroke="none">3000</tspan></tspan></tspan></text>
- <text class="TextShape"><tspan class="TextParagraph" font-family="CMU Serif" font-size="353px" font-weight="400"><tspan class="TextPosition" x="1561" y="1718"><tspan fill="rgb(0,0,0)" stroke="none">3500</tspan></tspan></tspan></text>
- <text class="TextShape"><tspan class="TextParagraph" font-family="CMU Serif" font-size="459px" font-weight="400"><tspan class="TextPosition" x="11210" y="927"><tspan fill="rgb(0,0,0)" stroke="none">Traffic Spikes</tspan></tspan></tspan></text>
- <text class="TextShape"><tspan class="TextParagraph" font-family="CMU Serif" font-size="353px" font-weight="400"><tspan class="TextPosition" x="12692" y="10904"><tspan fill="rgb(0,0,0)" stroke="none">Date</tspan></tspan></tspan></text>
- <text class="TextShape" transform="translate(875,6936) rotate(-90) translate(-875,-6936)"><tspan class="TextParagraph" font-family="CMU Serif" font-size="353px" font-weight="400"><tspan class="TextPosition" x="875" y="6936"><tspan fill="rgb(0,0,0)" stroke="none">Sessions Count</tspan></tspan></tspan></text>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="251mm"
+   height="115mm"
+   viewBox="0 0 25100 11500"
+   version="1.1"
+   stroke-width="28.222"
+   stroke-linejoin="round"
+   xml:space="preserve"
+   id="svg10762"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="traffic-spikes.svg"><metadata
+     id="metadata10976"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+     id="defs10974"><marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lstart"
+       style="overflow:visible"
+       inkscape:isstock="true"><path
+         id="path11550"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#ff0000;fill-opacity:1"
+         transform="scale(0.8) translate(12.5,0)" /></marker></defs><sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1053"
+     id="namedview10972"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:zoom="0.56767622"
+     inkscape:cx="282.69067"
+     inkscape:cy="347.63602"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg10762"><sodipodi:guide
+       position="13367.215,13025.422"
+       orientation="0,1"
+       id="guide11542" /></sodipodi:namedview><path
+     d="M 12533,11508 L 0,11508 0,0 25066,0 25066,11508 12533,11508 Z"
+     id="path10764"
+     stroke="none"
+     fill="rgb(255,255,255)" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 13559,9601 L 2553,9601 2553,1600 24565,1600 24565,9601 13559,9601 Z"
+     id="path10766" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 24564,9600 L 2552,9600"
+     id="path10768" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 24564,8456 L 2552,8456"
+     id="path10770" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 24564,7313 L 2552,7313"
+     id="path10772" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 24564,6170 L 2552,6170"
+     id="path10774" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 24564,5028 L 2552,5028"
+     id="path10776" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 24564,3885 L 2552,3885"
+     id="path10778" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 24564,2742 L 2552,2742"
+     id="path10780" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 24564,1598 L 2552,1598"
+     id="path10782" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 2552,9750 L 2552,9600"
+     id="path10784" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 2552,9750 L 2552,9600"
+     id="path10786" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 7555,9750 L 7555,9600"
+     id="path10788" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 7555,9750 L 7555,9600"
+     id="path10790" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 12557,9750 L 12557,9600"
+     id="path10792" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 12557,9750 L 12557,9600"
+     id="path10794" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 17560,9750 L 17560,9600"
+     id="path10796" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 17560,9750 L 17560,9600"
+     id="path10798" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 22563,9750 L 22563,9600"
+     id="path10800" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 22563,9750 L 22563,9600"
+     id="path10802" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 2552,9600 L 24564,9600"
+     id="path10804" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 2402,9600 L 2552,9600"
+     id="path10806" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 2402,9600 L 2552,9600"
+     id="path10808" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 2402,8456 L 2552,8456"
+     id="path10810" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 2402,8456 L 2552,8456"
+     id="path10812" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 2402,7313 L 2552,7313"
+     id="path10814" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 2402,7313 L 2552,7313"
+     id="path10816" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 2402,6170 L 2552,6170"
+     id="path10818" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 2402,6170 L 2552,6170"
+     id="path10820" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 2402,5028 L 2552,5028"
+     id="path10822" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 2402,5028 L 2552,5028"
+     id="path10824" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 2402,3885 L 2552,3885"
+     id="path10826" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 2402,3885 L 2552,3885"
+     id="path10828" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 2402,2742 L 2552,2742"
+     id="path10830" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 2402,2742 L 2552,2742"
+     id="path10832" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 2402,1598 L 2552,1598"
+     id="path10834" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 2402,1598 L 2552,1598"
+     id="path10836" /><path
+     fill="none"
+     stroke="rgb(179,179,179)"
+     stroke-linejoin="round"
+     d="M 2552,9600 L 2552,1598"
+     id="path10838" /><path
+     fill="rgb(51,153,255)"
+     fill-opacity="0.298"
+     stroke="rgb(255,255,255)"
+     stroke-opacity="0.298"
+     d="M 3053,6170 L 4053,6065 5054,6246 6055,5763 7055,5967 8056,6319 9056,5508 10057,6017 11058,5770 12058,6072 13058,2771 14058,6524 15059,5763 16059,6524 17060,6319 18061,7343 19061,6524 20062,5517 21062,5588 22063,5718 23064,6065 24064,5839 24064,9600 3053,9600 3053,6170 Z"
+     id="path10840" /><path
+     fill="none"
+     stroke="rgb(0,0,153)"
+     stroke-width="51"
+     stroke-linejoin="round"
+     d="M 3053,6170 L 4053,6065 5054,6246 6055,5763 7055,5967 8056,6319 9056,5508 10057,6017 11058,5770 12058,6072 13058,2771 14058,6524 15059,5763 16059,6524 17060,6319 18061,7343 19061,6524 20062,5517 21062,5588 22063,5718 23064,6065 24064,5839 24064,9600 3053,9600 3053,6170 Z"
+     id="path10842" /><text
+     class="TextShape"
+     id="text10844"><tspan
+       class="TextParagraph"
+       font-family="CMU Serif"
+       font-size="353px"
+       font-weight="400"
+       id="tspan10846"><tspan
+         class="TextPosition"
+         x="2537"
+         y="10168"
+         id="tspan10848"><tspan
+           fill="rgb(0,0,0)"
+           stroke="none"
+           id="tspan10850">Oct 01</tspan></tspan></tspan></text>
+<text
+     class="TextShape"
+     id="text10852"><tspan
+       class="TextParagraph"
+       font-family="CMU Serif"
+       font-size="353px"
+       font-weight="400"
+       id="tspan10854"><tspan
+         class="TextPosition"
+         x="7540"
+         y="10168"
+         id="tspan10856"><tspan
+           fill="rgb(0,0,0)"
+           stroke="none"
+           id="tspan10858">Oct 06</tspan></tspan></tspan></text>
+<text
+     class="TextShape"
+     id="text10860"><tspan
+       class="TextParagraph"
+       font-family="CMU Serif"
+       font-size="353px"
+       font-weight="400"
+       id="tspan10862"><tspan
+         class="TextPosition"
+         x="12543"
+         y="10168"
+         id="tspan10864"><tspan
+           fill="rgb(0,0,0)"
+           stroke="none"
+           id="tspan10866">Oct 11</tspan></tspan></tspan></text>
+<text
+     class="TextShape"
+     id="text10868"><tspan
+       class="TextParagraph"
+       font-family="CMU Serif"
+       font-size="353px"
+       font-weight="400"
+       id="tspan10870"><tspan
+         class="TextPosition"
+         x="17546"
+         y="10168"
+         id="tspan10872"><tspan
+           fill="rgb(0,0,0)"
+           stroke="none"
+           id="tspan10874">Oct 16</tspan></tspan></tspan></text>
+<text
+     class="TextShape"
+     id="text10876"><tspan
+       class="TextParagraph"
+       font-family="CMU Serif"
+       font-size="353px"
+       font-weight="400"
+       id="tspan10878"><tspan
+         class="TextPosition"
+         x="22549"
+         y="10168"
+         id="tspan10880"><tspan
+           fill="rgb(0,0,0)"
+           stroke="none"
+           id="tspan10882">Oct 21</tspan></tspan></tspan></text>
+<text
+     class="TextShape"
+     id="text10884"><tspan
+       class="TextParagraph"
+       font-family="CMU Serif"
+       font-size="353px"
+       font-weight="400"
+       id="tspan10886"><tspan
+         class="TextPosition"
+         x="2117"
+         y="9721"
+         id="tspan10888"><tspan
+           fill="rgb(0,0,0)"
+           stroke="none"
+           id="tspan10890">0</tspan></tspan></tspan></text>
+<text
+     class="TextShape"
+     id="text10892"><tspan
+       class="TextParagraph"
+       font-family="CMU Serif"
+       font-size="353px"
+       font-weight="400"
+       id="tspan10894"><tspan
+         class="TextPosition"
+         x="1746"
+         y="8577"
+         id="tspan10896"><tspan
+           fill="rgb(0,0,0)"
+           stroke="none"
+           id="tspan10898">500</tspan></tspan></tspan></text>
+<text
+     class="TextShape"
+     id="text10900"><tspan
+       class="TextParagraph"
+       font-family="CMU Serif"
+       font-size="353px"
+       font-weight="400"
+       id="tspan10902"><tspan
+         class="TextPosition"
+         x="1561"
+         y="7434"
+         id="tspan10904"><tspan
+           fill="rgb(0,0,0)"
+           stroke="none"
+           id="tspan10906">1000</tspan></tspan></tspan></text>
+<text
+     class="TextShape"
+     id="text10908"><tspan
+       class="TextParagraph"
+       font-family="CMU Serif"
+       font-size="353px"
+       font-weight="400"
+       id="tspan10910"><tspan
+         class="TextPosition"
+         x="1561"
+         y="6291"
+         id="tspan10912"><tspan
+           fill="rgb(0,0,0)"
+           stroke="none"
+           id="tspan10914">1500</tspan></tspan></tspan></text>
+<text
+     class="TextShape"
+     id="text10916"><tspan
+       class="TextParagraph"
+       font-family="CMU Serif"
+       font-size="353px"
+       font-weight="400"
+       id="tspan10918"><tspan
+         class="TextPosition"
+         x="1561"
+         y="5148"
+         id="tspan10920"><tspan
+           fill="rgb(0,0,0)"
+           stroke="none"
+           id="tspan10922">2000</tspan></tspan></tspan></text>
+<text
+     class="TextShape"
+     id="text10924"><tspan
+       class="TextParagraph"
+       font-family="CMU Serif"
+       font-size="353px"
+       font-weight="400"
+       id="tspan10926"><tspan
+         class="TextPosition"
+         x="1561"
+         y="4005"
+         id="tspan10928"><tspan
+           fill="rgb(0,0,0)"
+           stroke="none"
+           id="tspan10930">2500</tspan></tspan></tspan></text>
+<text
+     class="TextShape"
+     id="text10932"><tspan
+       class="TextParagraph"
+       font-family="CMU Serif"
+       font-size="353px"
+       font-weight="400"
+       id="tspan10934"><tspan
+         class="TextPosition"
+         x="1561"
+         y="2862"
+         id="tspan10936"><tspan
+           fill="rgb(0,0,0)"
+           stroke="none"
+           id="tspan10938">3000</tspan></tspan></tspan></text>
+<text
+     class="TextShape"
+     id="text10940"><tspan
+       class="TextParagraph"
+       font-family="CMU Serif"
+       font-size="353px"
+       font-weight="400"
+       id="tspan10942"><tspan
+         class="TextPosition"
+         x="1561"
+         y="1718"
+         id="tspan10944"><tspan
+           fill="rgb(0,0,0)"
+           stroke="none"
+           id="tspan10946">3500</tspan></tspan></tspan></text>
+<text
+     class="TextShape"
+     id="text10948"><tspan
+       class="TextParagraph"
+       font-family="CMU Serif"
+       font-size="459px"
+       font-weight="400"
+       id="tspan10950"><tspan
+         class="TextPosition"
+         x="11210"
+         y="927"
+         id="tspan10952"><tspan
+           fill="rgb(0,0,0)"
+           stroke="none"
+           id="tspan10954">Traffic Spikes</tspan></tspan></tspan></text>
+<text
+     class="TextShape"
+     id="text10956"><tspan
+       class="TextParagraph"
+       font-family="CMU Serif"
+       font-size="353px"
+       font-weight="400"
+       id="tspan10958"><tspan
+         class="TextPosition"
+         x="12692"
+         y="10904"
+         id="tspan10960"><tspan
+           fill="rgb(0,0,0)"
+           stroke="none"
+           id="tspan10962">Date</tspan></tspan></tspan></text>
+<text
+     class="TextShape"
+     transform="translate(875,6936) rotate(-90) translate(-875,-6936)"
+     id="text10964"><tspan
+       class="TextParagraph"
+       font-family="CMU Serif"
+       font-size="353px"
+       font-weight="400"
+       id="tspan10966"><tspan
+         class="TextPosition"
+         x="875"
+         y="6936"
+         id="tspan10968"><tspan
+           fill="rgb(0,0,0)"
+           stroke="none"
+           id="tspan10970">Sessions Count</tspan></tspan></tspan></text>
+<path
+     style="fill:#ff0000;fill-rule:evenodd;stroke:#000000;stroke-width:37.29616928px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow1Lstart)"
+     d="m 14459.055,4707.6397 1649.642,0 336.441,0 868.234,0"
+     id="path11544"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cccc" /><text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:1128.88891602px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="15199.439"
+     y="4502.564"
+     id="text13038"
+     sodipodi:linespacing="125%"><tspan
+       sodipodi:role="line"
+       id="tspan13040"
+       x="15199.439"
+       y="4502.564"
+       style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:352.777771px;line-height:125%;font-family:'CMU Serif';-inkscape-font-specification:'CMU Serif, Medium';text-align:start;writing-mode:lr-tb;text-anchor:start">Traffic spike</tspan></text>
 </svg>
