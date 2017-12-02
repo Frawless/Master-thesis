@@ -22,48 +22,47 @@
 
 \chapter{Introduction}
 \label{Introduction}
-Good application performance is one of the main goals during the software development. But what makes software performance so important? Software reliability is guaranteed by the owner, but with undesirable performance there could be a lot of issues. Thus can badly influence software behavior. And this can lead to a significant outflow of the consumers, and even brand destruction, financial damage, or loss of trust. These few reasons should be enough to do a proper performance testing before software release, especially for many of large projects where industries guarantee certain level of software behavior and they cannot assure it after insufficient performance testing. Great emphasis on software performance is in particular in space programs, medical facilities, army systems or energy distribution systems. In such cases it is necessary to ensure proper application behavior for a long time under high load and without unexpected behavior such as high response time, frequent delays or timeouts, because every failure could cost a lot of money. 
+Good application performance is one of the main goals during the software development. But what makes software performance so important? Software reliability has to be guaranteed by the owner, but with undesirable performance there could be a lot of issues. Thus can badly influence software behavior. And this can cause a significant outflow of the consumers, and even brand destruction, financial damage, or loss of trust. These few reasons should be enough to do a proper performance testing before every software release, especially for large projects where industries guarantee certain level of software behavior and they would not be able to assure it with insufficient performance testing. Great emphasis on software performance is, in particular, in space programs, medical facilities, army systems or energy distribution systems. In these fields it is necessary to ensure proper application behavior for a long time under high load and without any unexpected behavior such as high response time, frequent delays or timeouts, because every failure is paid dearly. 
 
-Nowadays every developer should try to use well established frameworks which can make theirs work easier. Frameworks handle complex underlying issues such as security, performance, and code clarity since they are designed for it. This way developers can invest more time in the application functionality and meet the application requirements, since frameworks are usually optimized for one particular job. In the past every developer had to spent more time tuning performance which led to spending more time and money for software development. But not everyone has enough knowledge about performance testing and this makes performance analysis and optimization even more difficult. This leads to a need to specialized performance tools which can provide more sophisticated information. However, useful tools are usually proprietary and/or expensive.
+Nowadays every developer should try to use well established frameworks which can make theirs work easier. Frameworks handle complex underlying issues such as security, performance, and code clarity. This way developers can invest more time in the actual functionality and meet the application requirements, since frameworks are usually optimized for one particular job. In the past every developer had to spent significant portion of development time tuning performance which led to spending more time and money for software development. But not everyone has enough knowledge of performance testing and this makes performance analysis and optimization even more difficult. This leads to a need for specialized performance tools which can provide more sophisticated information, however, actually useful tools are usually proprietary and/or too expensive.
 
-A very important part of the performance analysis is the right choice of \emph{key performance indicators} (KPIs) \cite{Molyneaux:TAoAPT} and effective interpretation of the results. This leads to faster detection of performance problems and help developers to fix them and meet the \emph{performance standards} \cite{Molyneaux:TAoAPT} set up by application owner or customer in time before the release. 
+A~very important part of the performance analysis is the right choice of \emph{key performance indicators} (KPIs) \cite{Molyneaux:TAoAPT} and effective interpretation of the results. The right choice of KPIs allows faster detection of performance problems and help developers with fixes and meeting the \emph{performance standards} \cite{Molyneaux:TAoAPT} set up by application owner or customer in time before the release. 
 
-In general an application performance is very important. However smooth network application or hardware performance became much more demanded nowadays since most of the communication is via the internet.  Obviously when you make payment in your internet banking you definitely want to have a stable connection to your bank's website without any delay. Network components like routers and switches influence the network stability, hence it is very important to care about performance of those components. Network performance testing refers to measurement of network service quality of which is directly influenced by \emph{bandwidth, throughput, latency}, etc. 
+In general an application performance is important. However, smooth network application or hardware performance became much more demanded nowadays, since most of the communication is via the Internet.  Obviously when you make a payment in your internet banking you definitely want to have a stable connection to your bank's website without any delay. Network stability is significantly influenced by network components like routers and switches and hence their performance should be under utmost case. We refer to network performance testing as measurement of network service quality which is directly influenced by \emph{bandwidth, throughput, latency}, etc. 
 
-For performance testing of network messaging system developed by \emph{Red Hat Inc.} there is existing solution\,---Messaging Performance Tool (MPT) \cite{ORPISKE:MSGPT}. MPT is specialized for performance testing of \emph{Broker service} \cite{RH:Broker}\,---\,network application level software cooperating with \emph{Qpid-dispatch service} \cite{RH:Interconnect} in the network as the message distributor. Unfortunately, current version of MPT does support performance testing of the Router component, Qpid-dispatch. 
+For performance testing of particular network messaging system developed by \emph{Red Hat Inc.} there is an existing solution\,---Messaging Performance Tool (MPT) \cite{ORPISKE:MSGPT}. MPT is specialized for the performance testing of \emph{Broker service} \cite{RH:Broker}\,---\,network application level software cooperating with \emph{Qpid-dispatch service} \cite{RH:Interconnect} in the network as the message distributor. Unfortunately, the current version of MPT does not support performance testing of enough component like the Router component, Qpid-dispatch. In this work we will focus on this particular short coming and develop a worthy solution allowing proper performance testing of the Qpid-dispatch service.
 
-This thesis is structured as follows. First, define fundamentals of performance testing Chapter \ref{Fundamentals of Software Performance Testing}. The rest of thesis is focuses on performance testing and analysis of Qpid-dispatch, an application level router designed by Red Hat Inc. Qpid-dispatch performance testing is based on MPT described in Chapter \ref{Messaging Performance Tool}. Description includes \emph{measurement process} and \emph{measured data description and evaluation}. Main goal is to analyze MPT and design module for Qpid-dispatch performance testing. This part can be found in Chapter \ref{Analysis and Design} together with protocols which router uses and \emph{Automatic Topology Generator} for semi-automated network generation and deployment. After appropriate design, the implementation is needed, used technologies, tools and  implementation processes of each component are described in Chapter \ref{Implementation}. The most important part of the thesis is in Chapter \ref{Experimental Evaluation}. It contains gathering data from routers located in different types of topology, data evaluation and representation which leads to conclusion about performance of Qpid-dispatch. Finally, Chapter \ref{Conclusion} summarizes the thesis and proposes ideas for future use of developed tool.
+This thesis is structured as follows. First, we define fundamentals of performance testing in Chapter \ref{Fundamentals of Software Performance Testing}. The rest of the thesis focuses on performance testing and analysis of Qpid-dispatch, an application level router designed by Red Hat Inc. Qpid-dispatch performance testing is based on MPT described in Chapter \ref{Messaging Performance Tool}. Description includes \emph{measurement process} and \emph{measured data description and evaluation}.The main goal of the thesis is to analyze MPT and design module for the Qpid-dispatch performance testing as described in Chapter \ref{Analysis and Design} together with used protocols and \emph{Automatic Topology Generator} for semi-automated network generation and deployment. Used technologies, tools and  implementation processes of each component are described in Chapter \ref{Implementation}. The most important part of the thesis is Chapter \ref{Experimental Evaluation}, containing the data gathering  from routers located in different types of topology, data evaluation and representation which leads to conclusion about performance of Qpid-dispatch. Finally, Chapter \ref{Conclusion} summarizes the thesis and proposes ideas for future use of developed tool.
 
 % https://www.seguetech.com/what-is-software-performance-testing/
 
 \chapter{Fundamentals of Software Performance Testing}
 \label{Fundamentals of Software Performance Testing}
-Usual goal of performance testing is to ensure that the application runs reasonably fast enough to keep the attention of users, even with unexpected amount of users using the application at the same time. Why is it so important to have application optimized for best speed? It is simply, when your application have slow response, long load time or bad scalability, the first website which user visit afterwards will be web of your competitor. That is the reason why speed is one of the most significant performance factor of common performance problems. This chapter summarizes fundamentals of performance testing which includes common performance processes, issues, and metrics. This chapter is based on knowledge available in \cite{Molyneaux:TAoAPT, Kurkova:Thesis:2017, DIN:PHD, ISTQB}.
+Usual goal of performance testing is to ensure that the application runs reasonably fast enough to keep the attention of users, even with unexpected amount of clients using the application at the same time. But why is it so important to have the application optimized for the best speed? Simply, when your application have slow response, long load time or bad scalability, the first website which user will visit afterwards will be web of your competitor. That is the reason why speed is currently one of the most significant performance factor of common performance problems. This chapter summarizes the fundamentals of performance testing which includes common performance processes, issues, and metrics, based on knowledge available in \cite{Molyneaux:TAoAPT, Kurkova:Thesis:2017, DIN:PHD, ISTQB}.
 
 
 \section{Performance Testing Process}
 \label{Performance Testing Process}
-The main goal of performance testing is to ensure the following application attributes \cite{GAO:MEASURING}:
+The main goal of the performance testing is to ensure the following application attributes \cite{GAO:MEASURING}:
 
 \begin{description}
 	\setlength\itemsep{0em}
 	\item \textbf{Reliability and Stability}\,---\,the ability of software to perform its functions in system environment under some system load for acceptable period of time,
-	\item \textbf{Scalability}\,---\,the ability of software to behave properly under various types of system load and handle growing up amount of workload (network traffic, server load, data transfer, etc.),
-	\item \textbf{Processing time, Speed}\,---\,the ability of software to react quickly without low response time during any acceptable system load,
+	\item \textbf{Scalability}\,---\,the ability of software to behave properly under various types of system load and handle increasing amount of workload (such as network traffic, server load, data transfer, etc.),
+	\item \textbf{Processing time and Speed}\,---\,the ability of software to react quickly without low response time during any acceptable system load,
 	\item \textbf{Availability}\,---\,the ability of software to make all of its functions available during any acceptable system load.
 \end{description}
 
-Performance testing process, similarly to software development process, consist of all engineering steps ranging from requirements definition to data evaluation. These steps also includes design, implementation of performance tests and execution with data collection. Graphical representation of the performance testing process is depicted in the Figure~\ref{fig:performace_testing_process}. 
+Similarly to software development process, performance testing process consist of usual engineering steps ranging from requirements definition to data evaluation. These steps also includes design, implementation of performance tests and execution with data collection. The graphical representation of the performance testing process is depicted in the Figure~\ref{fig:performace_testing_process}. 
 
 \begin{figure}[H]
-  \centering
   \includegraphics[width=16cm]{obrazky-figures/pyramid.pdf}
   \captionsetup{justification=centering}
-  \caption{Performance Testing Process with four most important parts and theirs steps based on \cite{Sharma:HP}.}
+  \caption{Performance Testing Process with the four most important parts and theirs individual steps based on \cite{Sharma:HP}.}
   \label{fig:performace_testing_process}
 \end{figure}
 
-The first step of performance testing process is the selection of \emph{performance requirements} for the application. In this step, testing engineer has to analyze \emph{software under test - SUT}, performance metrics, which will model the application performance and set performance requirements. The result should include answers such as:
+The first step of performance testing process is the selection of \emph{performance requirements} for the application. In this step, testing engineer has to analyze \emph{software under test - SUT}, suitable performance metrics, that will model the application performance, and set performance requirements. The result should include answers to questions such as:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -72,36 +71,36 @@ The first step of performance testing process is the selection of \emph{performa
 	\item How many end users will be concurrently connected in average at release, after 6 months and 1 year?
 \end{itemize}
 
-Based on answer to these studies, the engineer should be able to select important key performance indicators for performance test cases. Some of these indicators may be \emph{response time}, \emph{stability}, \emph{scalability}, and \emph{speed}. However there is huge amount of possible indicators so it is necessary to analyze whole application and also take into consideration another needs like an error rate, system resources etc.  Result of this phase should be a binding document with all performance requirements to be tested and, in case of detected performance degradation, this defect must be fixed according this document.
+Based on answer to these studies, the engineer should be able to select important key performance indicators for performance test cases. Some of these indicators may be \emph{response time}, \emph{stability}, \emph{scalability}, or \emph{speed}. However, there is huge amount of possible indicators so it is necessary to properly analyze the whole application and also take into consideration another needs like an error rate, system resources, etc.  Result of this phase should be a binding document with all performance requirements to be tested and, in case of detected performance degradation, such defect must be fixed with reference to this document.
 
-The next step is to define the \emph{performance testing strategy}, corresponding to planning and design. It is extremely important to allocate enough time for test application effectively, because, as it was mentioned in Chapter \ref{Introduction}, performance testing is not an easy task and detecting all of the possible issues of tested components is very time consuming process. Every plan should take into account the following considerations:
+The next step is to define the \emph{performance testing strategy}, corresponding to planning and design. It is extremely important to allocate enough time for SUT testing effectively, because, as it was mentioned in Chapter \ref{Introduction}, performance testing is not an easy task and detecting all of the possible issues of tested components is very time consuming process. Every plan should take into account the following considerations:
 
 \begin{description}
 	\setlength\itemsep{0em}
-	\item \textbf{Prepare test environment}\,---\,this step include single out hardware machines for testing and install necessary software which is needed for run load injectors, tested components, etc.
-	\item \textbf{Provide sufficient workload injectors}\,---\,prepare workload injector may take few days; this usually involves a few workstations or servers to simulate real traffic.
-	\item \textbf{Identify and script use cases}\,---\,this include identification of important parts of system which may have an impact on performance; time needed for each use case may be different because some use cases can be simple such as navigating to a web application home page or complex such as filtering specific communication.
+	\item \textbf{Prepare the test environment}\,---\,this step include choosing hardware machines for testing and installing the necessary software for running load injectors, tested components, etc.
+	\item \textbf{Provide sufficient workload injectors}\,---\,preparing the workload injector may take few days; we usually requires a few workstations or servers to simulate real traffic.
+	\item \textbf{Identify and implement use cases}\,---\,this include identification of important parts of the system which may have an impact on performance; time needed for each use case may be different because some use cases can be simple such as navigating to a web application home page, but some may be complex such as filtering specific communication.
 	\item \textbf{Instrument the test environment}\,---\,install and configure the monitoring software on the test environment.
 	\item \textbf{Deal with detected problems}\,---\,test can detect significant performance issues and their fix may take a long time.
 \end{description}
 
-While this process seems trivial, the opposite is true, in particular in case of network applications. Most of performance issues manifest at big workload or high number of users, eg. when million users are sending requests to the network device at the same time it could lead to unacceptable device crash. Workload injectors are designated to simulate real user activity, and allows automatic analysis of performance behavior for tested application or device. Depending on the used technology, there can be a limit on the number of virtual users that can be generated by a single injector. Automated workload injectors are necessary for effective performance testing.
+While this process seems trivial, the opposite is true, in particular in case of network applications. Most of performance issues manifest at big workloads or high number of users, e.g. when million users are sending requests to the network device at the same time it could lead to an unacceptable device crash. Workload injectors are designated to simulate real user activity, and allows automatic analysis of performance behavior for tested application or device. Depending on the used technology, there can be a limit on the number of virtual users that can be generated by a single injector. These automated workload injectors are necessary for effective performance testing.
 
-After determining the plan we implement and execute designed test cases. Environment and workload injectors are ready for execution, so last thing before testing itself is the implementation of tests. Thanks to the previous step, engineers should have enough time to implement designed test cases precisely as they were designed. 
+After describing the plan we implement and execute proposed test cases. Environment and workload injectors are ready for execution, so last step before the testing itself is the implementation of tests. Thanks to the careful planing, engineers should have enough time to implement test cases with reference to proposed design. 
 
-Final step of performance testing process is results evaluation. Output of this step is usually technical report with all selected performance key indicators, used workload and gathered data for each test cases. Then follows the data evaluation with thorough analysis of degradation tracking. Additionally, the report also contains syntactical graphs which display performance metrics along the duration of test execution.
+Final step of performance testing process is results evaluation. Output of this step is usually technical report with all selected performance key indicators, used workload and gathered data for each test case. Then follows the data evaluation with thorough analysis of degradation localization. Additionally, the report usually contains syntactical graphs which display performance metrics along the duration of test execution.
 
 \section{Performance Issues}
 \label{Performance Issues}
-Performance issue is a common label for an unexpected application or device behavior which affects its performance. Usually, those issues are hard to detect because they manifest only under certain circumstances such as high load or long application run time. In the network applications there are several issues that are more frequently occurring  than others. In following, we will describe chosen issues in more detail.
+\emph{Performance issue} is a common label for an unexpected application or device behavior which affects its performance. Usually, those issues are hard to detect because they manifest only under certain circumstances such as high load or long application run time. In the network applications there are several particular issues that are more frequently occurring  than others. In following, we will describe selected issues in more detail.
 
 \subsection*{Performance Degradation}
 \label{Performance Degradation}
-Unclean code usually leads to inefficient algorithms, application deadlocks, or memory leaks, which all can eventually lead to performance degradation. The problem is that these issues are usually detected only during the long run time of application or inability of an application to handle high load. For this kind of issues there is a performance testing method called \emph{soak testing} \cite{BUCH:4TYPES, Manzor:APTB} which is described in Section \ref{Soak Testing}. Soak test is intended to identify problems that may appear only after long period of application run time, hence its necessary to run this type of tests during network application development since they usually need to be available for 24 hours per day. The duration of a soak test should have some correlation to the operational mode of the system under test. Following scenarios may contains performance issues detectable by soak tests:
+Unclean code usually leads to inefficient algorithms, application deadlocks, or memory leaks, which all can eventually cause the performance degradation. The problem is that these issues are usually detected only during the long run time of application or inability of an application to handle high load. For this kind of issues there is a performance testing method called \emph{soak testing} \cite{BUCH:4TYPES, Manzor:APTB} which is described in Section \ref{Soak Testing}. Soak test is intended to identify problems that may appear only after long period of application run-time, hence its necessary to run this type of tests during network application development. The network applications are usually need to be available for 24 hours per day. The duration of a soak test should have some correlation to the operational mode of the system under test. Following scenarios may represent performance issues detectable by soak tests:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item a constant degradation in response time, when the system is run over time,
+	\item a constant degradation in response time, when the system is run over the time,
 	\item any degradation in system resources that are not apparent during short runs but will surface during long run time such as free disk space, memory consumption or machines handles,
 	\item a periodical process that may affect the performance of the system, but can be detected only during long run time as backup process, exporting of data to a 3rd party system, etc.,
 	\item development of new features for already using components.
@@ -110,12 +109,12 @@ Unclean code usually leads to inefficient algorithms, application deadlocks, or 
 
 \subsection*{Response Time}
 \label{Response Time 1}
-Response time is time it takes system to accept, evaluate and response to the user for his request. Different actions and requests can have significantly different response time and with that provide different load on the system. For example retrieving document from web-server by its ID is considerably faster than searching for the same document by keywords. Response time is measured during \emph{load test} \cite{Manzor:APTB} of the application. Well designed test should consider different type of load on the system, which means various kind of requests, and different number of connected end-users at the same time. For user based systems we usually put 3 limits for the response time values: 
+Response time is time it takes system to accept, evaluate and respond to the user for his request e.g. HTTP request for particular website. Different actions and requests can have significantly different response time and with that provide different load on the system. For example retrieving document from web-server by its ID is considerably faster than searching for the same document by keywords. Response time is mostly measured during the \emph{load test} \cite{Manzor:APTB} of the application. Well designed test should consider different types of load on the system, various kind of requests, and different number of connected end-users at the same time. For user based systems we usually consider 3 threshold for the response time values: 
 
 \begin{description}
 	\setlength\itemsep{0em}
-	\item \textbf{0.1 second}\,---\,this represent an ideal response time for the application, because user feels that system is reacting instantaneously and does not sense any interruptions.
-	\item \textbf{1 second}\,---\,this is the highest acceptable response time when user still does not feel any interruptions, but user can feel a little delay; so far no bad impact on user experience.
+	\item \textbf{0.1 second}\,---\,this represent an ideal response time for the application, because user feels that system is reacting instantly and does not notice any interruptions.
+	\item \textbf{1 second}\,---\,this is the highest acceptable response time when user still does not feel any interruptions, but can feel a little delay; this still represent no bad impact on the user experience.
 	\item \textbf{10 second}\,---\,this is the limit after which response time become unacceptable and user will probably stop using your application.
 \end{description}
 
@@ -124,30 +123,30 @@ However response time limits for messaging system are more strict. They could ac
 \todo{Prvni iterace}
 
 \subsection*{Traffic Spikes}
-As \emph{traffic spikes} \cite{Kurkova:Thesis:2017, AMC:SPIKES} we can understand the sudden degradation of one of the performance metrics such as \emph{throughput, bandwidth, error rate, response time} but also recourse usage such as \emph{memory usage, disk space, etc.} In real network, spikes are result of high workload, which can be caused by multiple users trying to concurrently use service over the network. For example after publishing new popular viral context on video servers, start of sales events, reservation of limited count of tickets or subject registration at university.
+As \emph{traffic spike} \cite{Kurkova:Thesis:2017, AMC:SPIKES} we can understand the sudden degradation of one of the performance metrics such as \emph{throughput, bandwidth, error rate, response time} but also resource usage such as \emph{memory usage, disk space, etc.} In real network, spikes are result of high workload, e.g. caused by higher amount of users trying to concurrently use the service over the network. For example we can experience sudden traffic spike in response time after publishing new popular viral context on video servers, start of sales events, reservation of limited amount of tickets or subject registration at university.
 
-Traffic spikes can lead to inappropriate system behavior such as \underline{long response time}, \underline{bad throughput} and \underline{limited concurrency}. To prevent influence of traffic spikes on system performance, it's  necessary to do sophisticated infrastructure monitoring and network load analysis, because we should recognize normal traffic and attack on the system. Method designed for spikes testing is called \emph{stress testing} \cite{Manzor:APTB} and it's described in Section \ref{Different Types of Performance Testing} in detail. Network system should also be scalable, thus it should be able to redirect traffic to another node with same service in case of high load which can cause performance issues due inappropriate recourse usage.
+Traffic spikes can lead to inappropriate system behavior such as \emph{long response time}, \emph{bad throughput} and \emph{limited concurrency}. To prevent the impact of traffic spikes on system performance, it is  necessary to do sophisticated infrastructure monitoring and network load analysis, in order to distinguish between normal traffic and attack on the system. Suitable method for testing of spikes is called \emph{stress testing} \cite{Manzor:APTB} and it is described in Section \ref{Types of Performance Testing} in more details. Network system should also be scalable, thus it should be able to redirect traffic to another node with same service in case of high load which can cause performance issues due inappropriate resource usage.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=14cm]{obrazky-figures/traffic_spike.pdf}
-  \caption{Recorded a traffic spike during network traffic monitoring around October 11th.}
+  \caption{The graph shows amount of concurrent sessions depending on time. During to network traffic monitoring the traffic spike occurring around October 11th.}
   \label{fig:spikes}
 \end{figure}
 
-\section{Different Types of Performance Testing}
-\label{Different Types of Performance Testing}
+\section{Types of Performance Testing}
+\label{Types of Performance Testing}
 % % http://www.wmrichards.com/high_performance_messaging.pdf 2017/10/18
 
-For performance measurements there are many types of tests. Which test you should use is determined by nature of the system, testing requirements and how much time is available for performance testing. The following testing term are generally well known and using in practice and each of them characterizes category or suite of the tests. The following subsections are based on knowledge available in \cite{TuPo:TESTS, BUCH:4TYPES, Molyneaux:TAoAPT}.
+For performance testing there are many types of suitable test methods. Which test you should use is determined by the nature of the system, testing requirements or how much time we have left for the performance testing. The following terms are generally well known and used in practice and each of them characterizes category or suite of the tests. Their description is based on knowledge available in \cite{TuPo:TESTS, BUCH:4TYPES, Molyneaux:TAoAPT, ISTQB}.
 
 \subsection*{Load Testing}
-Load testing is a testing method which examines how developed system behaves during different types of workload within its acceptable limits. Basically it's simulation of real-world load. Main metric to focus on during load test is response time of the system to requests. Requests are generated by users or another system which communicating with SUT. Main goal is to determine if system can handle required workload defined by performance requirements. Load tests are designed to measure response time of system transactions under normal or peak workload. When the system's response time dramatically extends or become unstable, thus system reach its maximum operating capacity. After this, engineers will mark workload requirements as fulfilling or they should analyze gathered data and report issues to the developers. In the Figure \ref{fig:load_test} you can see graph of load test showing workload of raising requests to the web server at the same time where the system response time does not exceed 3.5 seconds.
+Load testing is a testing method which studies how the system behaves during different types of workload within acceptable time range. Basically it simulates the real-world load. During the load test we mainly focus on metric response time of the system for requests. Requests are generated by users or another systems communicating with the SUT. Main goal is to determine if the system can handle required workload according to performance requirements. Load test is designed to measure the response time of system transactions under normal or peak workload. When the response time of the system dramatically increases or becomes unstable, we conclude that system reached its maximum operating capacity. After successful testing, we should mark the workload requirements as fulfilling or analyze gathered data and report issues to the developers. In the Figure \ref{fig:load_test} you can see the graph of load test showing workload of raising requests to the web server at the same time where the system response time does not exceed 3.5 seconds.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=15cm]{obrazky-figures/load_testing.pdf}
-  \caption{Systems response time during load testing affected by load size.}
+  \caption{Response time of the system during the load testing depended on by load size.}
   \label{fig:load_test}
 \end{figure}
 
@@ -242,7 +241,7 @@ There are two ways of measuring response time \cite{Kopp:RPT}; Average (mean) re
 \begin{figure}[H]
   \centering
   \includegraphics[width=15cm]{obrazky-figures/average_median_1.pdf}
-  \caption{\todo{vlastni obrazek - popsat}}
+  \caption{Transactions response time with calculated average and median of response time. Average represent  inaccurate response time in this case which is higher than real one.}
   \label{fig:average_percentil_1}
 \end{figure}
 
@@ -251,7 +250,7 @@ On the other side, better solution how to determine response time is Percentile.
 \begin{figure}[H]
   \centering
   \includegraphics[width=15cm]{obrazky-figures/average_median_2.pdf}
-  \caption{\todo{vlastni obrazek - popsat}}
+  \caption{Transactions response time with calculated average and median of response time. Average represent  inaccurate response time. Average says, that STU is faster than is in reality.}
   \label{fig:average_percentil_2}
 \end{figure}
 
@@ -264,8 +263,8 @@ At long run applications running at servers, there is a limited amount of resour
 	\setlength\itemsep{0em}
 	\item \textbf{CPU usage}\,---\,inappropriate using of CPU could lead to performance degradation, because low priority processes may occupy CPU ahead of higher priority processes.
 	\item \textbf{Memory usage}\,---\,full operation memory could cause performance degradation.
-	\item \textbf{Disk space}\,---\,for example when using storage disk as a database, there should be preventive measures to backup the data and free up disk space.
-	\item \textbf{Operating System limits}\,---\,\todo{doplnit}
+	\item \textbf{Disk space}\,---\,for example when using storage disk as a database, there should be preventive measures to backup the data and free up disk space,
+	\item \textbf{Operating System limits}\,---\,system's memory, and CPU capabilities. 
 \end{description}
 
 
@@ -346,6 +345,9 @@ Using for testing Ansible roles (remove?)
 
 \section{Testing results}
 
-\chapter{Conclusion}
+\chapter{Future work and ideas}
+\label{Future work and ideas}
+
+\chapter{Summary}
 \label{Conclusion}
 %=========================================================================

@@ -6,11 +6,11 @@ set grid
 
 set xlabel 'Relative Time (HH:MM)'
 #set xdata time
-set xrange [1511704800:1511726400]
+set xrange [0:10800]
 set timefmt "%s"
 set format x "%H:%M"
 set xdata time
-set xtics 1800 nomirror
+set xtics 900 nomirror
 
 set ylabel 'Request Count'
 set yrange [0:2500]

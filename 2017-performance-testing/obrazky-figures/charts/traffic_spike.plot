@@ -7,11 +7,11 @@ set grid
 
 set xlabel 'Relative Time'
 #set xdata time
-set xrange [1509494400:1511308800]
+set xrange [0:37800]
 set timefmt "%s"
-set format x "%b %d"
+set format x "%H:%M"
 set xdata time
-set xtics 172800 nomirror
+set xtics 3600 nomirror
 
 set ylabel 'Request Count'
 set yrange [0:3500]
@@ -26,5 +26,5 @@ set style fill solid 1 border lc '#5DA5DA'
 
 # with linespoints - link with points
 
-plot "traffic_spike.dat" using 1:3 ls 2 title 'Spike'  with boxes fs solid 0.15 noborder,\
-     "traffic_spike.dat" using 1:2 ls 1 title 'Traffic' with filledcurves x1
+plot "traffic_spike.dat" using 1:2 ls 1 title 'Traffic' with filledcurves x1,\
+     "traffic_spike.dat" using 1:3 ls 2 title 'Spike'  with boxes fs solid 0.15 noborder transparent

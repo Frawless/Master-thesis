@@ -4,9 +4,9 @@ set output '../stress_testing.pdf'
 set title 'Stress Testing' font ",16"
 set grid
 
-set xlabel 'Relative Time'
+set xlabel 'Relative Time (HH:MM)'
 #set xdata time
-set xrange [1511704800:1511758800]
+set xrange [0:54000]
 set timefmt "%s"
 set format x "%H:%M"
 set xdata time

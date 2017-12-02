@@ -5,7 +5,7 @@ set output '../latency.pdf'
 set title 'Latency' font ",16"
 set grid
 
-set xlabel 'Relative Time'
+set xlabel 'Time'
 #set xdata time
 set xrange [1511704800:1513368000]
 set timefmt "%s"

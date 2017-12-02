@@ -4,7 +4,7 @@ set output '../soak_testing.pdf'
 set title 'Soak Testing' font ",16"
 set grid
 
-set xlabel 'Relative Time'
+set xlabel 'Time'
 #set xdata time
 set xrange [1511704800:1513087200]
 set timefmt "%s"
