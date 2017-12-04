@@ -152,17 +152,17 @@ Load testing is a testing method which studies how the system behaves during dif
 
 \subsection*{Stress Testing}
 \label{Stress Testing}
-Stress testing is the specific type of load test, where engineers does not measure normal workload, but focus on unexpected workloads and traffic spikes. The main purpose is to find how the system behaves in extreme conditions such as enormous number of concurrent requests, using a server with much less memory or a weaker CPU and analyze system performance threshold. Its very useful to know performance threshold because you want to know the difference between performance under normal workload and performance threshold when the system is overloaded. The following enumeration collect common stress test scenarios: 
+Stress testing is the specific type of load test, where we do not measure normal workload, but focus on unexpected workloads or traffic spikes. The main purpose is to study how the system behaves in extreme conditions such as enormous number of concurrent requests, using a server with much less memory or a weaker CPU, and analyze the system performance threshold. Its very useful to know performance threshold in order to know the difference between performance under normal workload and performance threshold. The following enumeration lists common stress test scenarios: 
 
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item Monitor the system behavior when maximum number of users logged in at the same time.
+	\item Monitor the system behavior with maximum number of users logged in at the same time.
 	\item All user performing critical operations at the same time.
 	\item All users accessing the same file at the same time.
 	\item Hardware issues such as server in cluster down.
 \end{itemize} 
 
-When engineers finish stress testing and found system limits, they also can test the system recovery after crash during finding of the system limits.
+When engineers finish stress testing and found the limits of the system, they also can test the system recovery after crash during finding of the system limits.
 
 In the Figure \ref{fig:stress_test} is recorded stress testing with raising load and response time. Everything is fine until the amount of requests exceed 3000. With higher load there comes performance issues which leads to unexpected rise of the response time.
 
@@ -175,17 +175,17 @@ In the Figure \ref{fig:stress_test} is recorded stress testing with raising load
 
 \subsection*{Soak Testing}
 \label{Soak Testing}
-Soak, or stability/endurance testing refer to method, where goal is to identify problems, that may appear only after extended period of time. The system seems stable for one week, but after longer period than that, problems such as memory leaks or not enough disk space can appear. Primary measured metric during soak tests is memory. The following are common issues found by soak test:
+Soak, or stability/endurance testing refer to the method, that tries to identify problems, that may appear only after the extended period of time e.g. The system could seems stable for one week, but after some longer period, problems such as memory leaks or not enough disk space can appear. Soak tests mainly focuses on measuring of memory as performance metric. The following are common issues found by soak test:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item Serious memory leaks that will eventually result into system crash.
-	\item Improperly closed database connections could starve the system.
-	\item Improperly closed connections between system layers could stall any of the system modules.
-	\item Step-wise degradation could lead to high response time and the system become inefficient.
+	\item Serious memory leaks that can eventually result into the system crash.
+	\item Improperly closed database connections that could starve the system.
+	\item Improperly closed connections between system layers that could stall any of the system modules.
+	\item Step-wise degradation that could lead to high response time and the system becomes inefficient.
 \end{itemize}
 
-This sort of test needs for effectively use appropriate monitoring system. Problems detected by soak tests are typically manifested by gradual system slowdown in response time or as sudden lost of system availability.
+This sort of test needs to use appropriate monitoring system to achieve high efficiency. Problems detected by soak tests are typically manifested by gradual system slowdown in response time or as a sudden lost of system availability.
 
 \begin{figure}[H]
   \centering
@@ -197,35 +197,35 @@ This sort of test needs for effectively use appropriate monitoring system. Probl
 In the Figure \ref{fig:soak_test} you can see raising memory usage after period of time. The STU can handle requests but as time goes by memory usage is to high that the STU will crash. This may be caused by memory leak or an inappropriate algorithm use.
 
 \subsection*{Smoke Testing}
-Smoke testing method is inspired by similar hardware technique, when engineers checks for the smoke from the device after tuning power on. Basically, its very similar for software, since main goal of smoke test is to test basic functionality of the system and tell to the engineers if the system is ready for build. However, smoke tests are testing functionality on a surface level, so its not enough for testing deeply basic systems functions. When smoke tests fails, the system are tagged as unstable, because its can't ensure basic functionality and its not tested anymore until the smoke test will pass because it should be waste of time. Smoke test are designed to uncovering obvious errors which saves time, money and effort of the engineers. Smoke tests should be used with every new build, since new features could harm previous system functionality. 
+Smoke testing method is inspired by similar hardware technique, when engineers checks for presource of the smoke from the device after turning the power on. Basically, its similar for software, since main goal of smoke test is to test basic functionality of the system and guarantee that the system is ready for build. However, smoke tests are testing the functionality on a surface level, so it may not be enough for deep testing of basic system functions. When smoke tests fail, the system is tagged as unstable, because it cannot ensure its basic functionality and it is not tested anymore until the smoke test pass. Smoke test are designed to uncover obvious errors which saves time, money and effort of the engineers. These tests should be used with every new build, since new features could harm previous system functionality. 
 
 
 \subsection*{Regression Testing}
-With software development comes times, when engineers develop new feature and they want to update previous build and now is the time for regression testing. \emph{Regression tests} \cite{STF:REGRESSION} are designed to test functionality of the latest build updated with new feature. The main objective is to determine, if new feature affects already functional parts of the system. This type of tests are very important, because engineers do not always know, which part of the system will be indirectly affected. During regression testing, new test cases are not created, but previous test cases are automatic re-executed and analyzed. 
+Whenever engineers develop new feature and want to update the previous build it has to pass the \emph{regression tests} \cite{STF:REGRESSION}. Regression tests are designed to test functionality of the latest build updated with new feature. The main objective is to determine, if new feature affects already functional parts of the system. This type of tests is very important, because engineers do not always realize, which parts of the system will be indirectly affected. During regression testing, new test cases are not created, but previous test cases are automatic re-executed and analyzed. 
 
 
 \subsection*{Benchmark Testing}
-\emph{Benchmark testing} \cite{Aho:Benchmarking} is method, which is collecting performance data during the system run on different hardware machines. Gathered data have significant value when we want smooth run of the system on an older hardware, hence we can discover performance issues under normal load. However, the system does not run smoothly on prepared hardware, only options is to run benchmark tests on different machines with different hardware and under different load.
+\emph{Benchmark testing} \cite{Aho:Benchmarking} is method, which collects performance data during the system run on different hardware machines. Gathered data have significant value when we want smooth run of the system on an older hardware, hence we can discover performance issues under normal load. However, the system does not run smoothly on prepared hardware, only options is to run benchmark tests on different machines with different hardware and under different load.
 
 \section{Performance Metrics}
 \label{Performance Metrics}
 % https://loadstorm.com/load-testing-metrics/ 2017/10/18
 
-During performance testing we can monitoring a lot of metrics, which some are more important than other based on the system purpose. The following metrics are the most common that are monitored during performance testing of all application, no matter of developing language. 
+During the performance testing we can monitor a lot of metrics, which can have different importance based on the system's purpose. The following lists the most common metrics that are monitored during the network performance testing of all applications, no matter of developing language. 
 
 \todo{Doplnit, jak se realne meri metriky vykonu!!!}
 
 \subsection{Throughput}
-Throughput is a metrics, which refer to number of requests per second that the system can handle. In the network, there is \emph{network throughput} that is the rate of successful message deliver over a communication channel. Throughput is usually measured after a warm-up period of time after the commencement of traffic, because it takes a while before the throughput stabilizes \todo{WHY?}. Throughput is measured by load testing; strategy for measuring throughput is to continuously raise the load until response takes longer that acceptable threshold.
+Throughput is a metric, which refers to the number of requests per second that the system can handle. \emph{Network throughput} is the rate of successful message deliveries over a communication channel. Throughput is usually measured after a warm-up period of time after the commencement of traffic, because it takes a while for throughput to stabilize \todo{WHY?}. Throughput is measured by load testing; suitable strategy for measuring throughput is to continuously raise the load until response takes longer that acceptable threshold.
 
 \subsection{Response Time and Latency}
-Response time as issue was already mentioned in Subsection \ref{Response Time 1}; response time as metric is consist of two parts which are \emph{latency} and \emph{service time}.
+Response time as issue was already mentioned in Subsection \ref{Response Time 1}; response time as metric is consists of two parts which are \emph{latency} and \emph{service time}.
 
 \subsubsection*{Service Time}
-Service time is time it takes system to evaluate and send response for users request. In particular, when user send request for web page to server, it takes the server time to evaluate request and send proper response back to the user, this is the service time. Measurement can be perform easily with stopwatch which starts at receive request and stops after response send. Service time could be affected by any item which leads to performance degradation as it was described in Subsection \ref{Performance Degradation}. 
+Service time is the time it takes system to evaluate and send response ti user request. In particular, when user sends request for a web page to a server, it takes the server time to evaluate the request and send proper response back to the user, this is the service time. Measurement can be performed easily using stopwatch which starts at receive of request and stops after the response is send. Service time can be affected by any item which leads to a performance degradation as described in Subsection \ref{Performance Degradation}. 
 
 \subsubsection*{Latency}
-Second part of the response time is latency \cite{Broadwell:RPT, BHATT:PERF}, which is a delay between sending request on the client side and receive it for evaluate on the server side. Hence latency is common problem in the network systems such as data center, web server, etc., because request/response needs to travel over the physical medium between client and server. Client and server could be located on different continents, thus the message have to travel long distance and latency is increasing.  
+Second part of the response time is latency \cite{Broadwell:RPT, BHATT:PERF}, which represent a delay between sending the request on the client side and receiving it for evaluation on the server side. Hence latency is the common problem in the network systems such as data center, web server, etc., because request/response needs to travel over the physical medium between the client and the server. Client and server could be located on different continents, thus the message have to travel long distance and latency is increasing.  
 
 \begin{figure}[H]
   \centering
@@ -235,7 +235,7 @@ Second part of the response time is latency \cite{Broadwell:RPT, BHATT:PERF}, wh
 \end{figure}
 
 \subsubsection*{Average and Percentile Response Time}
-There are two ways of measuring response time \cite{Kopp:RPT}; Average (mean) response time is calculated as sum of all measured time divided by count of users requests. This sounds cool and easy, but many times, average response time does not reflect real response time of the system. How is that possible? In reality, most application have few very heavy outlines such as very slow transactions. In the Figure \ref{fig:average_percentil_1} you can see few slow transactions which drag the average of response time to the right. Thus leads to inaccurate determine of response time.
+There are two common ways of measuring the response time \cite{Kopp:RPT}: Average (mean) response time is calculated as the sum of all measured times divided by the count of users requests. While this seems trivial, in many times, the average response time does not actually reflect the real response time of the system. How is that possible? In reality, most application have few heavy outlines such as very slow transactions. In the Figure \ref{fig:average_percentil_1} you can see few slow transactions which drag the average of the response time to the right. This naturally leads to an inaccurate specification of response time.
 
 
 \begin{figure}[H]
@@ -245,7 +245,7 @@ There are two ways of measuring response time \cite{Kopp:RPT}; Average (mean) re
   \label{fig:average_percentil_1}
 \end{figure}
 
-On the other side, better solution how to determine response time is Percentile. In the Figure \ref{fig:average_percentil_1} you can see \emph{median} value, which reflect more realistic value of the system response time. In this case, there is no problem, because user will expect slower response time than it has in real. In the figure \ref{fig:average_percentil_2} there is different situation. Average response time is better than median, which reflect into expectation of faster system response time than it has.
+The better solution how to determine the actual response time is Percentile. In the Figure \ref{fig:average_percentil_1} you can see the \emph{median} value, which reflects more realistic value of the system response time. In this case, there is no problem, because user will expect slower response time than it has. The Figure \ref{fig:average_percentil_2} shows different situation. Average response time is seems better than median, which reflects the expectation of faster system response time than it has.
 
 \begin{figure}[H]
   \centering
@@ -257,20 +257,20 @@ On the other side, better solution how to determine response time is Percentile.
 In this case, a considerable percentage of transactions are very fast (first 20 percent), while the bulk of transactions are several times slower. Thus, calculated median gets more realistic values than average response time.
 
 \subsection{Resource Usage}
-At long run applications running at servers, there is a limited amount of resource available for use. Thus makes resource usage another important metric, which needs to be monitored since not enough resources could shut down the whole system. Main resources for monitoring and utilization are:
+Applications running at servers with long run-time competes over a limited amount of resource available for use. Thus makes resource usage another important metric, which needs to be monitored since not enough resources could shut down the whole system. Main resources for monitoring and utilization are:
 
 \begin{description}
 	\setlength\itemsep{0em}
-	\item \textbf{CPU usage}\,---\,inappropriate using of CPU could lead to performance degradation, because low priority processes may occupy CPU ahead of higher priority processes.
-	\item \textbf{Memory usage}\,---\,full operation memory could cause performance degradation.
+	\item \textbf{CPU usage}\,---\,inappropriate usage of CPU could lead to performance degradation, because low priority processes may occupy CPU ahead of the higher priority processes.
+	\item \textbf{Memory usage}\,---\,full consumption of memory could cause performance degradation.
 	\item \textbf{Disk space}\,---\,for example when using storage disk as a database, there should be preventive measures to backup the data and free up disk space,
 	\item \textbf{Operating System limits}\,---\,system's memory, and CPU capabilities. 
 \end{description}
 
 
 \subsection{Error Rate}
-Error Rate is a metric, which commonly occur in the network systems, especially under high load. During communication between client and server there could be error caused by another network device (router, switch, hub, etc.) or signal disturb. The Error Rate is the mathematical calculation that produces a percentage of problem requests compared to all requests. In the ideal system, there should be zero network error present; however, the reality that there is always be some. Thus usually leads to performance degradation and slow down throughput, because damaged data need to be resend.
-Error rate is a significant metric because it tells to engineers how many requests failed at a particular point in time of performance testing. This metric is more evident when you can see the percentage of problem strongly increasing, hence you can detect problem easily.
+Error Rate is a metric, which commonly occurs in the network systems, especially under high load. During the communication between client and server there could be error caused by another network device (router, switch, hub, etc.) or signal disturb. The Error Rate is the mathematical calculation that produces a percentage of problem requests compared to all requests. In the ideal system, there should be zero network error present, however, in reality is in-feasible. This usually leads to a performance degradation and low throughput, because damaged data need to be resent.
+Error rate is a significant metric because it tells engineers how many requests failed at a particular point in time of performance testing. This metric is more evident when you can see the percentage of problem strongly increasing, hence you can detect problem easily.
 
 \chapter{Messaging Performance Tool}
 \label{Messaging Performance Tool}
