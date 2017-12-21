@@ -18,4 +18,12 @@ CPU
 memory
 endurance
 service time
-system under test - SUT
+system under test - S.U.T
+maestro
+kafka
+AMQP
+MOM - message-oriente middleware
+STOMP
+OpenWire
+COre protocols
+

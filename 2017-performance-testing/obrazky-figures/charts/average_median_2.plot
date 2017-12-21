@@ -28,6 +28,9 @@ set parametric
 
 set trange [0:9]
 
+set key left
+
 plot "average_median_2.dat" using 1:2 ls 1 notitle with boxes,\
-     9.00, t with lines title 'Median' lc rgb 'green' dashtype 4 lw 3,\
-     7.48, t with lines title 'Average' lc rgb 'yellow' dashtype 4 lw 3
+     9.00, t with lines title 'Median' lc rgb '#FF0000' dashtype 4 lw 3,\
+     7.48, t with lines title 'Average' lc rgb '#00008B' dashtype 4 lw 3,\
+     11.00, t with lines title '90th percentile' lc rgb '#FFFF00' dashtype 4 lw 3

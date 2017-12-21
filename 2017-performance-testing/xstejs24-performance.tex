@@ -43,6 +43,19 @@
 %---tt------------
 \renewcommand{\ttdefault}{lmtt}% zavede Latin Modern tt jako tt
 
+
+%% CHAPTER X                                                                                                              
+%% NAME                                                                                                                    
+%%                                                                                                                        
+%% ->                                                                                                                      
+%% X NAME                                                                                                                  
+%%                                                                                                                        
+ \makeatletter                                                                                                                                                                                                                                   \def\@makechapterhead#1{%                                                                                                  
+ \vspace*{50\p@}%                                                                                                        
+ {\parindent \z@ \raggedright \normalfont                                                                                
+ \interlinepenalty\@M                                                                                                                                                                                                                                \Huge \bfseries \thechapter\ #1\par\nobreak                                                                                                                                                                                                        \vskip 40\p@                                                                                                                                                                                                                                  }}                                                                                                                        \makeatother
+
+
 % vypne funkci šablony, která automaticky nahrazuje uvozovky,
 % aby nebyly prováděny nevhodné náhrady v popisech API apod.
 % disables function of the template which replaces quotation marks
