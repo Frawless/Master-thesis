@@ -343,6 +343,7 @@ On the Figure \ref{fig:msg_perf_tool} you can see architecture of Maestro. The w
 Configuration of each test case is specified by several options defined in Groovy \footnote{Object-oriented programming language for Java platform \url{http://groovy-lang.org/}} script. This script specify test behavior with following items:
 
 \begin{itemize}
+	\setlength\itemsep{0em}
 	\item \textbf{message size}\,---\,message size in bytes,
 	\item \textbf{number of connected clients}\,---\,count of senders and receivers connected to the S.U.T,
 	\item \textbf{test duration (time or load)}\,---\,end condition of each test, could be specified by time or message count,
@@ -353,12 +354,48 @@ The test script is also responsible for starting and stopping the test. We can a
 
 \section*{Measures Process}
 \label{Measures Process}
-Measures process starts after dynamic test generation with option passed from configuration files. Sender or senders, depends on configuration file, will start sending messages to the S.U.T. Inspector starts monitoring the behavior of the S.U.T and report logs from S.U.T to Maestro Broker. However, there are two problem factors; the first is that inspector cannot influence performance of the S.U.T \todo{Email} The second is large size of the stored logs. This leads to use some of the compression methods for reduction logs size. However, compressed logs can fill whole hard drive during long test-run...\todo{Automatic collecting and archivation by the front-end. size: 1Gb uncompressed per hour of testing}
+Measures process starts after dynamic test generation with option passed from the test file. Sender or senders, depends on test file, will start sending messages to the S.U.T. Inspector starts monitoring the behavior of the S.U.T and report logs from S.U.T to Maestro Broker. For monitoring, Inspector uses the Broker management interface. That is a REST interface that exposes (via HTTP protocol) internal JVM \footnote{Java Virtual Machine} and Broker detailed information. That information would be normally available via JMX \footnote{Java Management Extensions}. Data collection by Inspector is simple and pretty straightforward:
+
+\begin{itemize}
+	\setlength\itemsep{0em}
+	\item Inspector sent an HTTP request with the JSON \footnote{JavaScript Object Notation \url{https://www.json.org/}} content to the Broker REST interface.
+	\item Broker evaluate the request and sent response to the Inspector.
+	\item Inspector collect the response.
+\end{itemize}
+Errors occurred during the information collection may cause the test case fail.
+
+However, there are two problem factors; the first is that inspector shouldn't influence performance of the S.U.T. Current method for information collecting working like the management interface call method with request for information and get response. During this call, the method usually involve locks to guarantee thread safety and exclusive access. However, calling this methods too often could cause Broker performance degradation. In order to reduce this risk, the inspector enforces a collection interval of 10 seconds and use only certain operations. That reduce the hits on management interface on 2 or 3 hits every 10 seconds.
+
+The second is large size of the stored logs. This leads to use some of the compression methods for reduction logs size. However, compressed logs can fill whole hard drive during long test-run, so old logs has to been erase at some point of time. The collected logs can be safely erased when the test is completed. The Maestro generates about 1Gb of uncompressed data per hour of testing.
+
+%Inspector also monitor node with broker (CPU, memory size)?
+
+%No. There's a new module being developed for that, which runs on top of Prometheus and monitors both the system and the test cluster: http://msg-qe-dev-01.tpb.lab.eng.brq.redhat.com:3000
 
 
 \section{Testing Metrics}
 \label{Testing Metrics}
-Throughput, latency, memory usage  \todo{Do you monitoring anything else?}
+Which metrics are collected depending on the component. In the Table \ref{tab:maestro_metrics} we can see summary of the metrics, which are collected for each component.
+
+\begin{table}[]
+\centering
+\caption{The Maestro metrics summary.}
+\label{tab:maestro_metrics}
+\begin{tabular}{|p{2.5cm}|p{3.5cm}|p{7cm}|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Component}} & \multicolumn{1}{c|}{\textbf{Metrics}} & \multicolumn{1}{c|}{\textbf{Description}}                       \\ \hline
+\textbf{Sender}                          & Throughput                            & Throughput of the sender                                        \\ \hline
+\textbf{Receiver}                        & Throughput                            & Throughput of the receiver                                      \\ \hline
+\textbf{}                                & Latency                               & Time between send and receive message                           \\ \hline
+\textbf{Broker}			                & JVM heap memory                       & maximum, minimum, and current Eden, Survivor, and Tenured space \\ \hline
+                                         & JVM non-heap                          & PermGen or Metaspace                                            \\ \hline
+                                         & Broker internals                      & Queue size and expiration count                                 \\ \hline
+                                         & OS basic memory                       & Physical and swap memory usage                                  \\ \hline
+                                         & OS resources                          & Count of file descriptors                                       \\ \hline
+\end{tabular}
+\end{table}
+
+ \todo{Dopsat}
 
 \section{Collected Data and Their Evaluation}
 \label{Collected Data and Their Evaluation}

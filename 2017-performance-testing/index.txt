@@ -26,4 +26,6 @@ MOM - message-oriente middleware
 STOMP
 OpenWire
 COre protocols
-
+REST
+JVM
+JMX
