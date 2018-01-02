@@ -316,9 +316,7 @@ Performance of \emph{Message-Oriented Middleware} (MOM) \cite{CURRY:MOM} is one 
 
 A Message Broker is an example of MOM. Its purpose is receive, store and distribute messages, which are sent and received by clients. The performance capabilities of a Message Broker are important for its users, because being able to handle a large amount of transactions in a timely manner is an important characteristic of MOM. Users usually uses MOM for message distribution in their own systems where is necessary to send and receive message in short time. For example in automated systems, where components communicates with each other by command exchange. Amount of exchanged command is dependent on system size. We want to get systems results as soon as possible and for that is important to ensure smooth and quick message exchange.
 
-\emph{The Maestro} \cite{ORPISKE:MSGPT} is a testing system designed especially for testing the performance of MOM. \todo{ROzepsat}
-
-On the Figure \ref{fig:msg_perf_tool} you can see architecture of Maestro. The whole Maestro is deployed as a cluster system on several machines. A typical Maestro deployment consist of one node for Maestro Broker, one or more for Senders, one or more for Receivers and the S.U.T. The Maestro system consists of several components:
+\emph{The Maestro} \cite{ORPISKE:MSGPT} is a testing system designed especially for testing the performance of MOM. On the Figure \ref{fig:msg_perf_tool} you can see architecture of Maestro. The whole Maestro is deployed as a cluster system on several machines. A typical Maestro deployment consist of one node for Maestro Broker, one or more for Senders, one or more for Receivers and the S.U.T. The Maestro system consists of several components:
 
 \begin{description}
 	\setlength\itemsep{0em}
@@ -379,7 +377,7 @@ Which metrics are collected depending on the component. In the Table \ref{tab:ma
 
 \begin{table}[]
 \centering
-\caption{The Maestro metrics summary.}
+\caption{Maestro metrics summary.}
 \label{tab:maestro_metrics}
 \begin{tabular}{|p{2.5cm}|p{3.5cm}|p{7cm}|}
 \hline
@@ -399,6 +397,9 @@ Which metrics are collected depending on the component. In the Table \ref{tab:ma
 
 \section{Collected Data and Their Evaluation}
 \label{Collected Data and Their Evaluation}
+As it was mentioned, data are collected by Inspector. 
+
+\todo{Ask Otavio about inspector messages}
 
 
 
@@ -422,9 +423,17 @@ AMQP, MQTT - possibly?
 
 \subsection{Structure of Input and Output}
 
-\subsection{Topology Creation}
+\subsection{Topology Creation and Deployment}
 
 \section{Qpid-Dispatch Performance Module}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm]{obrazky-figures/msg_perf_tool_for_router.pdf}
+  \caption{Architecture of updated Maestro for testing of Qpid-dispatch router.}
+  \label{fig:msg_perf_tool}
+\end{figure}
+
 
 \subsection{\todo{more subsections about module}}
 
