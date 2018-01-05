@@ -324,7 +324,7 @@ A Message Broker is an example of MOM. Its purpose is receive, store and distrib
 	\item \textbf{Meastro Clients}\,---\,this component contains the client API as well as the test scripts for each test case. A sub-component called Reporter takes care of data reporting to the user, which means data visualization on the web.
 	\item \textbf{MPT Back-end}\,---\,consists of sender part, receiver part and inspector part. Sender and receiver ensure messaging sending to the S.U.T and receiving from it. Inspector monitoring workload over the S.U.T and reporting collected performance metrics to the testing cluster. Maestro has two back-ends:
 	\begin{itemize}
-		\item \textbf{Java}\,---\,using for JMS-based testing, including AMQP, OpenWire and Core protocols.
+		\item \textbf{Java}\,---\,using for JMS-based testing, including \emph{AMQP} \cite{OASIS:AMQP}, OpenWire and Core protocols.
 		\item \textbf{C}\,---\,using for AMQP and STOMP protocol testing.
 	\end{itemize}
 \end{description}
@@ -399,7 +399,7 @@ Which metrics are collected depending on the component. In the Table \ref{tab:ma
 \label{Collected Data and Their Evaluation}
 As it was mentioned, data are collected by Inspector. 
 
-\todo{Ask Otavio about inspector messages}
+\todo{Ask Otavio about inspector messages (format, data...)}
 
 
 
@@ -411,19 +411,82 @@ SpecJMS
 
 \chapter{Analysis and Design}
 \label{Analysis and Design}
+MPT is generally designed for performance testing of Broker. However, with the service growth. the need for performance testing of Qpid-Dispatch comes. This Chapter is focused on two things: firstly, analyze Qpid-Dispatch service, describe its capabilities and methodology and secondly describe design of Topology generator and Qpid-Dispatch Performance Module for MPT.
 
 \section{Qpid-Dispatch Router}
+Qpid-Dispatch is a lightweight AMQP message router for building scalable available and performant messaging networks. With respect to ISO/OSI \footnote{\url{http://www.studytonight.com/computer-networks/complete-osi-model}} model, this router is an application layer program running as a normal user program or as a daemon. Key features of Qpid-Dispatch are:
 
-\section{Usable Protocols}
-AMQP, MQTT - possibly?
+\begin{itemize}
+	\setlength\itemsep{0em}
+	\item Connects clients and brokers into an internet-scale messaging network with uniform addressing.
+	\item Supports high-performance direct messaging.
+	\item Uses redundant network paths to route around failures.
+	\item Streamlines the management of large deployments.
+\end{itemize}
+
+The following theory about Qpid-Dispatch router is based on knowledge available~in~\cite{RH:Interconnect}.
+
+\subsection{Theory of Operation}
+The router accepts AMQP connections from clients and create AMQP connections to brokers or similar AMQP-based services. Through this connection is client (sender) able to reach message receiver, which can be another client in the network or broker. The client can  exchange messages directly with another client without involving a broker at all. The router classifies incoming messages and routers them between senders and receivers. The router is designed to be deployed in topologies of multiple routers, preferably with redundant paths to provide continued connectivity in the case of any router in the network fails. For routing Qpid-Dispatch uses link-state routing protocols \footnote{\url{https://www.certificationkits.com/cisco-certification/ccna-articles/cisco-ccna-intro-to-routing-basics/cisco-ccna-link-state-routing-protocols/}} and algorithms similar to OSPF or IS-IS to calculate best path (path with the lowest cost) from sender to receiver through the whole network and to recover from failures. 
+
+\subsection{Addresses and Connections}
+Qpid-Dispatch is able to connects clients servers AMQP services, and other router implementations through network connections. The router provides multiple components and settings for specify service on the other side of connection link. 
+
+\begin{description}
+	\item \textbf{Addresses\footnotemark}\,---\,are used to control the flow of messages across a network of routers. Addresses can specify messages and they are also used during the creation of links since links are bounded to specific address field of a source and a target. The addresses can refer to topics or queues that match multiple consumers to multiple consumers. There are two types of addresses:
+	\begin{itemize}
+		\item \textbf{mobile}\,---\,The address is a rendezvous between senders and receivers. The router is message distributor.
+		\item \textbf{link route}	\,---\,The addresses defines a private messaging path between sender and receiver. The router only passes messages between end points.
+	\end{itemize}	
+	\item \textbf{Listener}\,---\,accept client connections. Listeners has several types that are defined by their role:
+	\begin{itemize}
+		\item \textbf{normal}\,---\,The connection is used for AMQP clients using normal message delivery.
+		\item \textbf{inter-router}	\,---\,The connection is to another router. Inter-router connection can only be establish over inter-route listeners.
+		\item \textbf{route-container}	\,---\,The connection is to a broker or other resource that holds known addresses.
+	\end{itemize}
+	\item \textbf{Connector}\,---\,used as an interface for create connection with brokers or other AMQP entities using connectors. Such as listeners, connector has several types that are defined by their role:
+	\begin{itemize}
+		\item \textbf{normal}\,---\,The connection is used for AMQP clients using normal message delivery. The router will initiate the connection but links are created by the peer that accepts the connection.
+		\item \textbf{inter-router}	\,---\,The connection is to another router. Inter-router connection can only be establish over inter-route connectors.
+		\item \textbf{route-container}	\,---\,The connection is to a broker or other resource that holds known addresses
+	\end{itemize}	
+\end{description}
+
+To ensure security the router uses SSL/TLS protocol and related certificates and SASL protocol mechanisms to encrypt and authenticate remote peers. Router listeners act as network servers and connectors act as network clients. Both connection components may be configured securely with SSL/TLS and SASL.
+
+\footnotetext{Addresses in this discussion refer to AMQP protocol addresses, not to TCP/IP addresses.}
+
+\subsection{Message Routing}
+Addresses have semantics associated with them. This semantics control how routers behave when they see the address being used. There are two ways how the router can routing messages based on addresses:
+
+\begin{description}
+	\item \textbf{Routing pattern}\,---\,define the paths which message with a mobile address can take. Routing patterns can be used in both case of message delivery; with broker or directly through the router.
+	\begin{itemize}
+		\item \textbf{Balanced}\,---\,An anycast method which allows multiple receivers to use the same address.
+		\item \textbf{Closest}\,---\,An anycast method in which every message is sent along the shortest path to reach the destination.
+		\item \textbf{Multicast}\,---\,method for send copy of the message to every receiver with the same address.
+	\end{itemize}
+	\item \textbf{Routing mechanism}\,---\,define the path to endpoint for message from sender to receiver. \todo{Dopsat}
+	\begin{itemize}
+		\item \textbf{Message routed}\,---\,message delivery is done based on address in message's \emph{to} field. The router check destination address of the message and find the same address in its routing table. The message is sent to all links with that address.
+		\item \textbf{Link routed}\,---\,this method uses same routing table like Message routing but the difference is that the routing occurs during the link-attach operation and link attaches are propagated along the appropriate path to the destination. It results into a chain of links from source to destination.
+	\end{itemize}
+\end{description}
+
+Message may be delivered with various degrees of reliability such as 'at most once', 'at least once' and 'exactly once'.
 
 \section{Automatic Topology Generator}
 
 \subsection{Network Components}
+Router
+
+Broker
 
 \subsection{Structure of Input and Output}
+Meta data - inventory and config file
 
 \subsection{Topology Creation and Deployment}
+networkX, graph site, ansible for deploy
 
 \section{Qpid-Dispatch Performance Module}
 

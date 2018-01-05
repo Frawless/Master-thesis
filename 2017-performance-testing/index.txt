@@ -29,3 +29,9 @@ COre protocols
 REST
 JVM
 JMX
+SASL
+SSL/TLS
+MQTT
+ISO/OSI
+OSP
+IS-IS
