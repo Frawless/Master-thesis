@@ -7,7 +7,64 @@
 
 %\chapter{Manuál}
 
-%\chapter{Konfigurační soubor} % Configuration file
+\chapter{Configuration Files} % Configuration file
+
+\section{Inventory}
+\label{AP:Inventory}
+An example of Inventory file for Topology Generator and Ansible deployment scripts.
+
+\begin{verbatim}
+[clients]
+sender ansible_host=10.0.0.1					
+receiver ansible_host=10.0.0.2
+
+[routers]
+router1 ansible_host=10.0.0.3
+router2 ansible_host=10.0.0.4
+
+[brokers]
+broker1 ansible_host=10.0.0.5
+
+[nodes:children]
+brokers
+clients
+routers
+\end{verbatim}
+
+\section{Graph Metadata}
+\label{AP:Graph Metadata}
+An example of graph metadata file for Topology Generator. Generator will generate graph with 2 routers and 3 brokers where routers are connected together and each broker is connected to one router.
+
+\begin{verbatim}
+---
+directed: false
+graph: {}
+nodes:
+- type: router						%node type
+  id: router1						%node name
+- type: router
+  id: router2
+- type: broker
+  id: broker1
+- type: broker
+  id: broker2
+links:
+- source: router2					%source node for link
+  target: router1					%target node for link
+- source: router2
+  target: broker2
+- source: router1
+  target: broker1
+multigraph: false
+\end{verbatim}
+
+\section{Topology Generator Output}
+\label{AP:Topology Generator Output}
+Path to output file?
+
+\section{Qpid-Dispatch Configuration File Template}
+\label{AP:Qpid-Dispatch Configuration File Template}
+Path to template file?
 
 %\chapter{RelaxNG Schéma konfiguračního souboru} % Scheme of RelaxNG configuration file
 

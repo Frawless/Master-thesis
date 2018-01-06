@@ -352,11 +352,11 @@ The test script is also responsible for starting and stopping the test. We can a
 
 \section*{Measures Process}
 \label{Measures Process}
-Measures process starts after dynamic test generation with option passed from the test file. Sender or senders, depends on test file, will start sending messages to the S.U.T. Inspector starts monitoring the behavior of the S.U.T and report logs from S.U.T to Maestro Broker. For monitoring, Inspector uses the Broker management interface. That is a REST interface that exposes (via HTTP protocol) internal JVM \footnote{Java Virtual Machine} and Broker detailed information. That information would be normally available via JMX \footnote{Java Management Extensions}. Data collection by Inspector is simple and pretty straightforward:
+Measures process starts after dynamic test generation with option passed from the test file. Sender or senders, depends on test file, will start sending messages to the S.U.T. Inspector starts monitoring the behavior of the S.U.T and report logs from S.U.T to Maestro Broker. For monitoring, Inspector uses the Broker management interface. That is a REST interface that exposes (via HTTP protocol) internal JVM \footnote{JVM - Java Virtual Machine} and Broker detailed information. That information would be normally available via JMX \footnote{JMX - Java Management Extensions}. Data collection by Inspector is simple and pretty straightforward:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item Inspector sent an HTTP request with the JSON \footnote{JavaScript Object Notation \url{https://www.json.org/}} content to the Broker REST interface.
+	\item Inspector sent an HTTP request with the JSON \footnote{JSON - JavaScript Object Notation \url{https://www.json.org/}} content to the Broker REST interface.
 	\item Broker evaluate the request and sent response to the Inspector.
 	\item Inspector collect the response.
 \end{itemize}
@@ -430,63 +430,124 @@ The following theory about Qpid-Dispatch router is based on knowledge available~
 The router accepts AMQP connections from clients and create AMQP connections to brokers or similar AMQP-based services. Through this connection is client (sender) able to reach message receiver, which can be another client in the network or broker. The client can  exchange messages directly with another client without involving a broker at all. The router classifies incoming messages and routers them between senders and receivers. The router is designed to be deployed in topologies of multiple routers, preferably with redundant paths to provide continued connectivity in the case of any router in the network fails. For routing Qpid-Dispatch uses link-state routing protocols \footnote{\url{https://www.certificationkits.com/cisco-certification/ccna-articles/cisco-ccna-intro-to-routing-basics/cisco-ccna-link-state-routing-protocols/}} and algorithms similar to OSPF or IS-IS to calculate best path (path with the lowest cost) from sender to receiver through the whole network and to recover from failures. 
 
 \subsection{Addresses and Connections}
+\label{Addresses and Connections}
 Qpid-Dispatch is able to connects clients servers AMQP services, and other router implementations through network connections. The router provides multiple components and settings for specify service on the other side of connection link. 
 
 \begin{description}
+	\setlength\itemsep{0em}
 	\item \textbf{Addresses\footnotemark}\,---\,are used to control the flow of messages across a network of routers. Addresses can specify messages and they are also used during the creation of links since links are bounded to specific address field of a source and a target. The addresses can refer to topics or queues that match multiple consumers to multiple consumers. There are two types of addresses:
 	\begin{itemize}
+		\setlength\itemsep{0em}
 		\item \textbf{mobile}\,---\,The address is a rendezvous between senders and receivers. The router is message distributor.
 		\item \textbf{link route}	\,---\,The addresses defines a private messaging path between sender and receiver. The router only passes messages between end points.
 	\end{itemize}	
 	\item \textbf{Listener}\,---\,accept client connections. Listeners has several types that are defined by their role:
 	\begin{itemize}
+		\setlength\itemsep{0em}
 		\item \textbf{normal}\,---\,The connection is used for AMQP clients using normal message delivery.
 		\item \textbf{inter-router}	\,---\,The connection is to another router. Inter-router connection can only be establish over inter-route listeners.
 		\item \textbf{route-container}	\,---\,The connection is to a broker or other resource that holds known addresses.
 	\end{itemize}
 	\item \textbf{Connector}\,---\,used as an interface for create connection with brokers or other AMQP entities using connectors. Such as listeners, connector has several types that are defined by their role:
 	\begin{itemize}
+		\setlength\itemsep{0em}
 		\item \textbf{normal}\,---\,The connection is used for AMQP clients using normal message delivery. The router will initiate the connection but links are created by the peer that accepts the connection.
 		\item \textbf{inter-router}	\,---\,The connection is to another router. Inter-router connection can only be establish over inter-route connectors.
 		\item \textbf{route-container}	\,---\,The connection is to a broker or other resource that holds known addresses
 	\end{itemize}	
 \end{description}
-
-To ensure security the router uses SSL/TLS protocol and related certificates and SASL protocol mechanisms to encrypt and authenticate remote peers. Router listeners act as network servers and connectors act as network clients. Both connection components may be configured securely with SSL/TLS and SASL.
+To ensure security the router uses \emph{SSL/TLS - Sockets Layer and Transport Layer Security}\footnotemark protocol and related certificates and \emph{SASL - Simple Authentication and Security Layer}\footnotemark protocol mechanisms to encrypt and authenticate remote peers. Router listeners act as network servers and connectors act as network clients. Both connection components may be configured securely with SSL/TLS and SASL.
 
 \footnotetext{Addresses in this discussion refer to AMQP protocol addresses, not to TCP/IP addresses.}
+\footnotetext{SSL - \url{https://tools.ietf.org/html/rfc6101}; TLS - \url{https://tools.ietf.org/html/rfc5246}}
+\footnotetext{SASL - \url{https://tools.ietf.org/html/rfc4422}}
 
 \subsection{Message Routing}
+\label{Message Routing}
 Addresses have semantics associated with them. This semantics control how routers behave when they see the address being used. There are two ways how the router can routing messages based on addresses:
 
 \begin{description}
+	\setlength\itemsep{0em}
 	\item \textbf{Routing pattern}\,---\,define the paths which message with a mobile address can take. Routing patterns can be used in both case of message delivery; with broker or directly through the router.
 	\begin{itemize}
+		\setlength\itemsep{0em}
 		\item \textbf{Balanced}\,---\,An anycast method which allows multiple receivers to use the same address.
 		\item \textbf{Closest}\,---\,An anycast method in which every message is sent along the shortest path to reach the destination.
 		\item \textbf{Multicast}\,---\,method for send copy of the message to every receiver with the same address.
 	\end{itemize}
-	\item \textbf{Routing mechanism}\,---\,define the path to endpoint for message from sender to receiver. \todo{Dopsat}
+	\item \textbf{Routing mechanism}\,---\,define the path to endpoint for message from sender to receiver. \todo{Dopsat?}
 	\begin{itemize}
+		\setlength\itemsep{0em}
 		\item \textbf{Message routed}\,---\,message delivery is done based on address in message's \emph{to} field. The router check destination address of the message and find the same address in its routing table. The message is sent to all links with that address.
 		\item \textbf{Link routed}\,---\,this method uses same routing table like Message routing but the difference is that the routing occurs during the link-attach operation and link attaches are propagated along the appropriate path to the destination. It results into a chain of links from source to destination.
 	\end{itemize}
 \end{description}
-
-Message may be delivered with various degrees of reliability such as 'at most once', 'at least once' and 'exactly once'.
+Message may be delivered with various degrees of reliability such as \emph{at most once}, \emph{at least once} and \emph{exactly once}.
 
 \section{Automatic Topology Generator}
+For various kind of messaging systems testing we needs multiple topologies with different components and setting. Manually create and deploy topology for each test scenario is slow and annoying, after few scenarios. Solution of this problem is divided into two parts: simple topology generator, that transform metadata, defined by user, into configuration files for each component contained in metadata, and automatic \emph{Ansible} scripts, which deploy whole topology to physical machines. User has to define metadata file, single file for whole topology instead of single file for each component, and then start Ansible script which ensure configuration files generation and deployment.
 
-\subsection{Network Components}
-Router
 
-Broker
+\subsection{Topology Components}
+Messaging system are consists of multiple components with specific role. In our case, testing topologies will consider clients, brokers and routers. Clients refer to message senders and receivers and there is no need for specific configuration of each clients at all. Message settings is another case, but MPT deal with it as was mentioned at Chapter \ref{Messaging Performance Tool}.
 
-\subsection{Structure of Input and Output}
-Meta data - inventory and config file
+\subsubsection*{Broker}
+Broker configuration file offers various setting and protocols such as specialized queueing behaviors, message persistence, and manageability. The following itemize shows several capabilities of broker:
 
-\subsection{Topology Creation and Deployment}
-networkX, graph site, ansible for deploy
+\begin{itemize}
+	\setlength\itemsep{0em}
+	\item \textbf{User access}\,---\,allows guest access or authentication access for users. 
+	\item \textbf{Multiple Protocol Support}\,---\,broker supports AMQP, MQTT, STOMP, OpenWire and Core protocols.
+	\item \textbf{Connections}\,---\,can establish connection to another AMQP-based service such as another broker or router.
+	\item \textbf{Queues}\,---\,user can specify new queues in configuration file or allow auto-create option.
+	\item \textbf{Messaging types}\,---\,refer to approach how to deliver messages, examples are point-to-point and publish-subscribe approach.
+	\item \textbf{Logging level}\,---\,broker offers to setup different logging levels.
+\end{itemize}
+However, broker configuration is not implemented yet, but design of automatic configuration generation will be shared with router configuration generation.
+
+\subsubsection*{Router}
+Just like broker configuration, router offer various types of configurations. The basics were explained in Subsections \ref{Addresses and Connections} and \ref{Message Routing}, but for better understanding of all capabilities I~recommend Qpid-Dispatch documentation \cite{RH:Interconnect}. 
+
+\subsection{Format of Input and Output}
+Input structure should be user-friendly and easy to update even in case of large topologies. As input is choose one file called \texttt{config.yml} in \emph{YAML}\footnotemark  language, which is same as JSON but its better readable for humans. Generator needs information about all hosts in topology and which type of topology it should generate. For that purpose is there two attributes in configuration file; first is \emph{inventory path} which refer to location of \emph{Inventory}. Inventory is file, containing all hosts in topology in specific format. This format is available in \ref{AP:Inventory}. It is simple configuration file with enumeration of host names and their IP addresses. Second attribute is which type of topology it should generate. User can specify there one of the simple types of graph, such as line, circle, complete, etc., which do not need any other information except Inventory or he can specify path to graph metadata. Graph metadata are deeply described in Subsection \ref{Graph Metadata}.
+
+On the other hand, output format should be easy for automatic parsing. The best format for machine parsing is JSON or YAML format, since both of them are loaded with same functions in ansible. Output of the generator will be pass to ansible script immediately after create without any user intervention. However, user should have option to see generator output in YAML format, because in case of larger topologies JSON is badly readable for human eyes. Output will be one JSON file with variables for template. Each node from Inventory will have its own variables separated from variables of other nodes.
+
+\footnotetext{YAML - \url{http://docs.ansible.com/ansible/latest/YAMLSyntax.html}}
+
+\subsection{Graph Metadata}
+\label{Graph Metadata}
+At first, we should specify technology which will be used for implementation of Topology Generator. \emph{NetworkX} is a Python package for creation and manipulation of complex networks. This package offer features for creating graphs, multigraphs, random graph generators, plot created graph, and etc. NetworkX also offers graph import and export in YAML structured file. This type of file is very useful as graph metadata, simple example of this file is show at \ref{AP:Graph Metadata}.
+
+User can specify here any setting for each node. For example, user can specify listener for router1 and connector for router2 as you can see on the example below.
+
+\begin{verbatim}
+---
+directed: false
+graph: {}
+nodes:
+- type: router					
+  id: router1
+  listener:
+  	- host: 0.0.0.0
+  	  port: 1080 	
+  	  role: inter-router
+- type: router					
+  id: router2
+  connector:
+  	- name: router1
+  	  host: router1
+  	  port: 5675 	
+  	  role: inter-router  
+multigraph: false	  
+\end{verbatim}
+From this metadata NetworkX create two nodes with type, id, and listener or connector attributes. This attributes will be used for generate configuration files for each node. All possible attributes that user can specify for each node is available in \ref{AP:Qpid-Dispatch Configuration File Template}.
+
+However, specify all attributes of each node is not very user-friendly approach, especially in case of large topologies. User could only specify nodes and links between them and generator will add all necessary attributes for establish connection between nodes. Example of this metadata file you can see in \ref{AP:Graph Metadata}.
+
+\section{Topology Deployment}
+Every node specified in Inventory has to receive proper configuration files for services running on it. This job will be handle by Ansible, since it can connect to all nodes from Inventory and copy configuration files to proper destination folders. Ansible script load data from Topology Generator and create configuration files based on loaded variables and common template for Qpid-Dispatch. Created file will be sent to proper node based on node name from Inventory, which has to be same like router name specified in generated variables.
+
 
 \section{Qpid-Dispatch Performance Module}
 
