@@ -7,7 +7,7 @@
 
 \chapter{Introduction}
 \label{Introduction}
-Good application performance is one of the main goals during the software development. But what makes software performance so important? Software reliability has to be guaranteed by the owner, but with undesirable performance there could be a lot of issues. Thus can badly influence software behavior. And this can cause a significant outflow of the consumers, and even brand destruction, financial damage, or loss of trust. These few reasons should be enough to do a proper performance testing before every software release, especially for large projects where industries guarantee certain level of software behavior and they would not be able to assure it with insufficient performance testing. Great emphasis on software performance is, in particular, in space programs, medical facilities, army systems or energy distribution systems. In these fields it is necessary to ensure proper application behavior for a long time under high load and without any unexpected behavior such as high response time, frequent delays or timeouts, because every failure is paid dearly. 
+Good application performance is one of the main goals during the software development. But what makes software performance so important? Software reliability has to be guaranteed by the owner, but with undesirable performance there could be a lot of issues. Thus can badly influence software behavior. And this can cause a significant outflow of the consumers, and even brand destruction, financial damage, or loss of trust. These few reasons should be enough to do a proper performance testing before every software release, especially for large projects where industries guarantee certain level of software behavior and they would not be able to assure it with insufficient performance testing. Great emphasis on software performance is, in particular, in space programs, medical facilities, army systems, or energy distribution systems. In these fields it is necessary to ensure proper application behavior for a long time under high load and without any unexpected behavior such as high response time, frequent delays, or timeouts, because every failure is paid dearly. 
 
 Nowadays every developer should try to use well established frameworks which can make theirs work easier. Frameworks handle complex underlying issues such as security, performance, and code clarity. This way developers can invest more time in the actual functionality and meet the application requirements, since frameworks are usually optimized for one particular job. In the past every developer had to spent significant portion of development time tuning performance which led to spending more time and money for software development. But not everyone has enough knowledge of performance testing and this makes performance analysis and optimization even more difficult. This leads to a need for specialized performance tools which can provide more sophisticated information, however, actually useful tools are usually proprietary and/or too expensive.
 
@@ -33,12 +33,12 @@ The main goal of the performance testing is to ensure the following application 
 \begin{description}
 	\setlength\itemsep{0em}
 	\item \textbf{Reliability and Stability}\,---\,the ability of software to perform its functions in system environment under some system load for acceptable \footnote{During software development there is a document with Software Requirements Specification which specifies software metrics, including performance.} period of time,
-	\item \textbf{Scalability}\,---\,the ability of software to behave properly under various types of system load and handle increasing amount of workload (such as network traffic, server load, data transfer, etc.),
+	\item \textbf{Scalability}\,---\,the ability of software to behave properly under various types of system load and handle increasing amount of workload (such as network traffic, server load, data transfer, etc.) which need new hardware for cluster expand,
 	\item \textbf{Processing time and Speed}\,---\,the ability of software to react quickly without low response time during any acceptable system load,
-	\item \textbf{Availability}\,---\,the ability of software to make all of its functions available during any acceptable system load.
+	\item \textbf{Availability}\,---\,the ability of software to make all of its functions available during any acceptable system load. The ability of software, deployed in cluster, to provide all functions during node crash is called High Availability.
 \end{description}
 
-Similarly to software development process, performance testing process consist of usual engineering steps ranging from requirements definition to data evaluation. These steps also includes design, implementation of performance tests and execution with data collection. The graphical representation of the performance testing process is depicted in the Figure~\ref{fig:performace_testing_process}. 
+Similarly to software development process, performance testing process consist of usual engineering steps ranging from requirements definition to data evaluation. These steps also includes design, implementation, and execution of performance tests with data collection. The graphical representation of the performance testing process is depicted in the Figure~\ref{fig:performace_testing_process}. 
 
 \begin{figure}[H]
   \includegraphics[width=16cm]{obrazky-figures/pyramid.pdf}
@@ -46,8 +46,9 @@ Similarly to software development process, performance testing process consist o
   \caption{Performance Testing Process with the four most important parts and theirs individual steps based on \cite{Sharma:HP}.}
   \label{fig:performace_testing_process}
 \end{figure}
+In the Figure \ref{fig:performace_testing_process} you can see scheme of performance testing process where each level represent time for each step. Lower level refer to more time spend on that step.
 
-The first step of performance testing process is the selection of \emph{performance requirements} for the application. In this step, testing engineer has to analyze \emph{software under test - S.U.T}, suitable performance metrics, that will model the application performance, and set performance requirements. The result should include answers to questions such as:
+The first step of performance testing process is the selection of \emph{performance requirements} for the application. In this step, testing engineer has to analyze \emph{software under test - SUT}, suitable performance metrics, that will model the application performance, and set performance requirements usually with customer and project manager. The result should include answers to questions such as:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -58,18 +59,18 @@ The first step of performance testing process is the selection of \emph{performa
 
 Based on answer to these studies, the engineer should be able to select important key performance indicators for performance test cases. Some of these indicators may be \emph{response time}, \emph{stability}, \emph{scalability}, or \emph{speed}. However, there is huge amount of possible indicators so it is necessary to properly analyze the whole application and also take into consideration another needs like an error rate, system resources, etc.  Result of this phase should be a binding document with all performance requirements to be tested and, in case of detected performance degradation, such defect must be fixed with reference to this document.
 
-The next step is to define the \emph{performance testing strategy}, corresponding to planning and design. It is extremely important to allocate enough time for S.U.T testing effectively, because, as it was mentioned in Chapter \ref{Introduction}, performance testing is not an easy task and detecting all of the possible issues of tested components is very time consuming process. Every plan should take into account the following considerations:
+The next step is to define the \emph{performance testing strategy}, corresponding to planning and design. It is extremely important to allocate enough time for SUT testing effectively, because, as it was mentioned in Chapter \ref{Introduction}, performance testing is not an easy task and detecting all of the possible issues of tested components is very time consuming process. Every plan should take into account the following considerations:
 
 \begin{description}
 	\setlength\itemsep{0em}
-	\item \textbf{Prepare the test environment}\,---\,this step include choosing hardware machines for testing and installing the necessary software for running load injectors, tested components, etc.
+	\item \textbf{Prepare the test environment}\,---\,this step include choosing right hardware for testing, then installing the necessary software for running load injectors, tested components, etc., and other equipment depend on application purpose such as routers, switchers, mobile devices, etc.
 	\item \textbf{Provide sufficient workload injectors}\,---\,preparing the workload injector may take few days; we usually requires a few workstations or servers to simulate real traffic.
 	\item \textbf{Identify and implement use cases}\,---\,this include identification of important parts of the system which may have an impact on performance; time needed for each use case may be different because some use cases can be simple such as navigating to a web application home page, but some may be complex such as filtering specific communication.
 	\item \textbf{Instrument the test environment}\,---\,install and configure the monitoring software on the test environment.
-	\item \textbf{Deal with detected problems}\,---\,test can detect significant performance issues and their fix may take a long time.
+	\item \textbf{Deal with detected problems}\,---\,test can detect significant performance issues, but their investigation and fix may take a long time. After fix the retest of issue is needed.
 \end{description}
 
-While this process seems trivial, the opposite is true, in particular in case of network applications. Most of performance issues manifest at big workloads or high number of users, e.g. when million users are sending requests to the network device at the same time it could lead to an unacceptable device crash. Workload injectors are designated to simulate real user activity, and allows automatic analysis of performance behavior for tested application or device. Depending on the used technology, there can be a limit on the number of virtual users that can be generated by a single injector. These automated workload injectors are necessary for effective performance testing.
+While this process seems trivial, the opposite is true, in especially in case of network applications. Most of performance issues manifest at big workloads or high number of users, e.g. when million users are sending requests to the network device at the same time it could lead to an unacceptable device crash. Workload injectors are designated to simulate real user activity, and allows automatic analysis of performance behavior for tested application or device. Depending on the used technology, there can be a limit on the number of virtual users that can be generated by a single injector. These automated workload injectors are necessary for effective performance testing.
 
 After describing the plan we implement and execute proposed test cases. Environment and workload injectors are ready for execution, so last step before the testing itself is the implementation of tests. Thanks to the careful planing, engineers should have enough time to implement test cases with reference to proposed design. 
 
@@ -77,24 +78,25 @@ Final step of performance testing process is results evaluation. Output of this 
 
 \section{Performance Issues}
 \label{Performance Issues}
-\emph{Performance issue} is a common label for an unexpected application or device behavior which affects its performance. Usually, those issues are hard to detect because they manifest only under certain circumstances such as high load or long application run time. In the network applications there are several particular issues that are more frequently occurring  than others. In following, we will describe selected issues in more detail.
+\emph{Performance issue} is a common label for an unexpected application or device behavior which affects its performance. Usually, those issues are hard to detect because they manifest only under certain circumstances such as high load or long application run time. In the network applications there are several particular issues that are more frequently occurring  than others. In following, I will describe selected issues in more detail.
 
 \subsection*{Performance Degradation}
 \label{Performance Degradation}
-Unclean code usually leads to inefficient algorithms, application deadlocks, or memory leaks, which all can eventually cause the performance degradation. The problem is that these issues are usually detected only during the long run time of application or inability of an application to handle high load. For this kind of issues there is a performance testing method called \emph{soak testing} \cite{BUCH:4TYPES, Manzor:APTB} which is described in Section \ref{Soak Testing}. Soak test is intended to identify problems that may appear only after long period of application run-time, hence its necessary to run this type of tests during network application development. The network applications are usually need to be available for 24 hours per day. The duration of a soak test should have some correlation to the operational mode of the system under test. Following scenarios may represent performance issues detectable by soak tests:
+Unclean code usually leads to inefficient algorithms, application deadlocks, or memory leaks, which all can eventually cause the performance degradation. The problem is that these issues are usually detected only during the long run time of application or inability of an application to handle high load. For this kind of issues there is a performance testing method called \emph{soak testing} \cite{BUCH:4TYPES, Manzor:APTB} which is described in Section \ref{Endurance Testing}. Soak test is intended to identify problems that may appear only after long period of application run-time\footnotemark, hence its necessary to run this type of tests during application development. The network applications are usually need to be available for 24 hours per day. The duration of a soak test should have some correlation to the operational mode of the system under test. Following scenarios may represent performance issues detectable by soak tests:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
 	\item a constant degradation in response time, when the system is run over the time,
-	\item any degradation in system resources that are not apparent during short runs but will surface during long run time such as free disk space, memory consumption or machines handles,
+	\item any degradation in system resources that are not apparent during short runs but will surface during long run time such as free disk space, or memory consumption
 	\item a periodical process that may affect the performance of the system, but can be detected only during long run time as backup process, exporting of data to a 3rd party system, etc.,
-	\item development of new features for already using components.
+	\item development of new features for already exists components.
 \end{itemize}
 
+\footnotetext{Soak Test - refer to HW testing method during which engineers soak device into water and check for bubble leaks.}
 
 \subsection*{Response Time}
 \label{Response Time 1}
-Response time is time it takes system to accept, evaluate and respond to the user for his request e.g. HTTP request for particular website. Different actions and requests can have significantly different response time and with that provide different load on the system. For example retrieving document from web-server by its ID is considerably faster than searching for the same document by keywords. Response time is mostly measured during the \emph{load test} \cite{Manzor:APTB} of the application. Well designed test should consider different types of load on the system, various kind of requests, and different number of connected end-users at the same time. For user based systems we usually consider 3 threshold for the response time values: 
+Response time is how long it takes system to accept, evaluate, and respond to the user for his request e.g. HTTP request for particular website. Different actions and requests can have significantly different response time and with that provide different load on the system. For example retrieving document from web-server by its ID is considerably faster than searching for the same document by keywords. Response time is mostly measured during the \emph{load test} \cite{Manzor:APTB} of the application. Well designed test should consider different types of load on the system, various kind of requests, and different number of connected end-users at the same time. For user based systems we usually consider 3 threshold for the response time values: 
 
 \begin{description}
 	\setlength\itemsep{0em}
@@ -103,7 +105,7 @@ Response time is time it takes system to accept, evaluate and respond to the use
 	\item \textbf{10 second}\,---\,this is the limit after which response time become unacceptable and user will probably stop using your application.
 \end{description}
 
-However response time limits for messaging system are more strict. They could acquire values in milliseconds or less.
+However response time limits for non-human interactive system are more strict. They could acquire values in milliseconds or less.
 
 \todo{Prvni iterace}
 
@@ -123,10 +125,16 @@ Traffic spikes can lead to inappropriate system behavior such as \emph{long resp
 \label{Types of Performance Testing}
 % % http://www.wmrichards.com/high_performance_messaging.pdf 2017/10/18
 
-For performance testing there are many types of suitable test methods. Which test you should use is determined by the nature of the system, testing requirements or how much time we have left for the performance testing. The following terms are generally well known and used in practice and each of them characterizes category or suite of the tests. Their description is based on knowledge available in \cite{TuPo:TESTS, BUCH:4TYPES, Molyneaux:TAoAPT, ISTQB}.
+For performance testing there are many types of suitable test methods. Which test you should use is determined by the nature of the system, testing requirements or how much time we have left for the performance testing. The following terms are generally well known and used in practice and each of them characterizes category or suite of the tests:
+\begin{itemize}
+	\item \textbf{Testing methods}\,---\,load testing, stress testing, endurance testing, \todo{scalability, volume, recovery}
+	\item \textbf{Testing approaches}\,---\,smoke testing, regression testing, benchmark testing
+\end{itemize}
+
+Their description is based on knowledge available in \cite{TuPo:TESTS, BUCH:4TYPES, Molyneaux:TAoAPT, ISTQB}.
 
 \subsection*{Load Testing}
-Load testing is a testing method which studies how the system behaves during different types of workload within acceptable time range. Basically it simulates the real-world load. During the load test we mainly focus on metric response time of the system for requests. Requests are generated by users or another systems communicating with the S.U.T. Main goal is to determine if the system can handle required workload according to performance requirements. Load test is designed to measure the response time of system transactions under normal or peak workload. When the response time of the system dramatically increases or becomes unstable, we conclude that system reached its maximum operating capacity. After successful testing, we should mark the workload requirements as fulfilling or analyze collected data and report issues to the developers. In the Figure \ref{fig:load_test} you can see the graph of load test showing workload of raising requests to the web server at the same time where the system response time does not exceed 3.5 seconds.
+Finding maximal load is a testing method which studies how the system behaves during different types of workload within acceptable time range. Basically it simulates the real-world load. During the load test we mainly focus on metric response time of the system for requests. Requests are generated by users or another systems communicating with the SUT. Main goal is to determine if the system can handle required workload according to performance requirements. Load test is designed to measure the response time of system transactions under normal or peak workload. When the response time of the system dramatically increases or becomes unstable, we conclude that system reached its maximum operating capacity. After successful testing, we should mark the workload requirements as fulfilling or analyze collected data and report issues to the developers. In the Figure \ref{fig:load_test} you can see the graph of load test showing workload of raising requests to the web server at the same time where the system response time does not exceed 3.5 seconds.
 
 \begin{figure}[H]
   \centering
@@ -148,6 +156,7 @@ Typical system issues covered by load testing:
 	\item Concurrent users connections can eventually result into slow response time or system crash.
 	\item Network systems without redundancy connections can shutdown whole network under normal defined workload.
 	\item Data availability during multiple session to data server.
+	\item Connection rejection (timeout).
 \end{itemize}
 
 \subsection*{Stress Testing}
@@ -155,7 +164,7 @@ Typical system issues covered by load testing:
 Stress testing is the specific type of load testing, where we do not measure normal workload, but focus on unexpected workloads or traffic spikes. The main purpose is to study how the system behaves in extreme conditions such as enormous number of concurrent requests, using a server with much less memory or a weaker CPU, and analyze the system performance threshold. Its very useful to know performance threshold in order to know the difference between performance under normal workload and performance threshold. The following enumeration lists common stress test scenarios: 
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item Monitor the system behavior with maximum number of users logged in at the same time.
+	\item Monitor the system behavior with over maximum of users logged in at the same time.
 	\item All user performing critical operations at the same time.
 	\item All users accessing the same file at the same time.
 	\item Hardware issues such as server in cluster down.
@@ -163,12 +172,15 @@ Stress testing is the specific type of load testing, where we do not measure nor
 Typical issues, which are covered by stress testing:
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item \todo{todo}
+	\item Sudden performance degradation.
+	\item System will recover after stress test (system is operational after test).
+	\item System does not crash during stress test.
+	\item All subsystems such as database, load balancer, etc. remains operational.
 \end{itemize}
 
 When engineers finish stress testing and found the limits of the system, they also can test the system recovery after crash during finding of the system limits.
 
-In the Figure \ref{fig:stress_test} is recorded stress testing with raising load and response time. Everything is fine until the amount of requests exceed 3000. With higher load there comes performance issues which leads to unexpected rise of the response time.
+In the Figure \ref{fig:stress_test} is recorded stress testing with raising load and response time. Everything is fine until the amount of requests exceed 3000 requests per second. With higher load there comes performance issues which leads to unexpected rise of the response time.
 
 \begin{figure}[H]
   \centering
@@ -177,9 +189,9 @@ In the Figure \ref{fig:stress_test} is recorded stress testing with raising load
   \label{fig:stress_test}
 \end{figure}
 
-\subsection*{Soak Testing}
-\label{Soak Testing}
-Soak, or stability/endurance testing refer to the method, that tries to identify problems, that may appear only after the extended period of time e.g. The system could seems stable for one week, but after some longer period, problems such as memory leaks or not enough disk space can appear. Soak tests mainly focuses on measuring of memory as performance metric. The following are common issues found by soak test:
+\subsection*{Endurance Testing}
+\label{Endurance Testing}
+Endurance, or stability/soak testing refer to the method, that tries to identify problems, that may appear only after the extended period of time e.g. The system could seems stable for one week, but after some longer period, problems such as memory leaks or not enough disk space can appear. Soak tests mainly focuses on measuring of memory as performance metric. The following are common issues found by soak test:
 \begin{itemize}
 	\setlength\itemsep{0em}
 	\item Serious memory leaks that can eventually result into the system crash.
@@ -192,7 +204,7 @@ Typical scenarios for use soak testing:
 	\setlength\itemsep{0em}
 	\item Developed system uses multiple database connections.
 	\item There is a chance for inappropriately allocated memory, and memory free.
-	\item Disk space limitation for store logs.
+	\item Disk space limitation for store logs or other data.
 \end{itemize}
 
 
@@ -205,26 +217,25 @@ This sort of test needs to use appropriate monitoring system to achieve high eff
   \label{fig:soak_test}
 \end{figure}
 
-In the Figure \ref{fig:soak_test} you can see raising memory usage after period of time. The STU can handle requests but as time goes by memory usage is to high that the STU will crash. This may be caused by memory leak or an inappropriate algorithm use.
+In the Figure \ref{fig:soak_test} you can see raising memory usage after period of time. The SUT can handle requests but as time goes by memory usage is to high that the SUT will crash. This may be caused by memory leak or an inappropriate algorithm use.
 
 \subsection*{Smoke Testing}
-Smoke testing method is inspired by similar hardware technique, when engineers checks for presource of the smoke from the device after turning the power on. Basically, its similar for software, since main goal of smoke test is to test basic functionality of the system and guarantee that the system is ready for build. However, smoke tests are testing the functionality on a surface level, so it may not be enough for deep testing of basic system functions. When smoke tests fail, the system is tagged as unstable, because it cannot ensure its basic functionality and it is not tested anymore until the smoke test pass. Smoke test are designed to uncover obvious errors which saves time, money and effort of the engineers. These tests should be used with every new build, since new features could harm previous system functionality.
+Smoke testing approach is inspired by similar hardware technique, when engineers checks for presource of the smoke from the device after turning the power on. Basically, its similar for software, since main goal of smoke test is to test basic functionality of the system and guarantee that the system is ready for build. However, smoke tests are testing the functionality on a surface level, so it may not be enough for deep testing of basic system functions. When smoke tests fail, the system is tagged as unstable, because it cannot ensure its basic functionality and it is not tested anymore until the smoke test pass. Smoke test are designed to uncover obvious errors which saves time, money and effort of the engineers. These tests should be used with every new build, since new features could harm previous system functionality.
 The following lists show common scenarios for smoke testing:
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item New system's build or version is ready for release.
-	\item \todo{Anything else?}
+	\item New system's build or version is ready for further testing or productilization.
 \end{itemize}
 Typical system issues covered by smoke testing testing:
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item System without main functionality is useless.
-	\item Main functionality can result into system crash.%%
+	\item System without main functionality is useless, because test coverage of functionality is low.
+	\item Main functionality can result into system crash.
 \end{itemize} 
 
 
 \subsection*{Regression Testing}
-Whenever engineers develop new feature and want to update the previous build it has to pass the \emph{regression tests} \cite{STF:REGRESSION}. Regression tests are designed to test functionality of the latest build updated with new feature. The main objective is to determine, if new feature affects already functional parts of the system. This type of tests is very important, because engineers do not always realize, which parts of the system will be indirectly affected. During regression testing, new test cases are not created, but previous test cases are automatic re-executed and analyzed. 
+Whenever engineers develop new feature and want to update the previous build it has to pass the \emph{regression tests}\footnotemark \cite{STF:REGRESSION}. Regression tests are designed to test functionality of the latest build updated with new feature. The main objective is to determine, if new feature affects already functional parts of the system. This type of tests is very important, because engineers do not always realize, which parts of the system will be indirectly affected. During regression testing, new test cases are not created, but previous test cases are automatic re-executed and analyzed. 
 Typical scenarios for regression testing:
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -236,15 +247,23 @@ Common issues covered by regression testing:
 	\item New feature could adversely affect already working components of the system.
 \end{itemize}
 
+\footnotetext{{\label{note1}Approach for test suits, where are used other methods like Load testing, Stress testing, etc.}}
 
 \subsection*{Benchmark Testing}
-\emph{Benchmark testing} \cite{Aho:Benchmarking} is method, which collects performance data during the system run on different hardware machines. Collected data have significant value when we want smooth run of the system on an older hardware, hence we can discover performance issues under normal load. However, the system does not run smoothly on prepared hardware, only options is to run benchmark tests on different machines with different hardware and under different load.
+\emph{Benchmark testing}\textsuperscript{\ref{note1}} \cite{Aho:Benchmarking} is approach, which collects performance data during the system run on different hardware machines. Collected data have significant value when we want smooth run of the system on an older hardware, hence we can discover performance issues under normal load. However, the system does not run smoothly on prepared hardware, only options is to run benchmark tests on different machines with different hardware and under different load.
+
+\begin{itemize}
+	\item Can identify minimal requirements for HW, metrics, etc.
+	\item Can validate supported HW configuration.
+\end{itemize}
+
+
 
 \section{Performance Metrics}
 \label{Performance Metrics}
 % https://loadstorm.com/load-testing-metrics/ 2017/10/18
 
-During the performance testing we can monitor a lot of metrics, which can have different importance based on the system's purpose. The following lists the most common metrics that are monitored during the network performance testing of all applications, no matter of developing language. 
+During the performance testing we can monitor a lot of metrics, which can have different importance based on the system's purpose. The following lists the most common metrics that are monitored during the performance testing of all applications, no matter of developing language. 
 
 In the testing systems, performance metrics are collected during long process of collecting, analyzing and reporting information regarding performance of whole system or individual component. This process can be different for each metric, since each metric needs different type of the system analysis.
 
@@ -256,7 +275,7 @@ Throughput is a metric, which refers to the number of requests per second that t
 Response time as issue was already mentioned in Subsection \ref{Response Time 1}; response time as metric is consists of two parts which are \emph{latency} and \emph{service time}.
 
 \subsubsection*{Service Time}
-Service time is the time it takes system to evaluate and send response ti user request. In particular, when user sends request for a web page to a server, it takes the server time to evaluate the request and send proper response back to the user, this is the service time. Measurement can be performed easily using stopwatch which starts at receive of request and stops after the response is send. Service time can be affected by any item which leads to a performance degradation as described in Subsection \ref{Performance Degradation}. 
+Service time is the time it takes system to evaluate and send response to user request. In particular, when user sends request for a web page to a server, it takes the server time to evaluate the request and send proper response back to the user, this is the service time. Measurement can be performed easily using stopwatch which starts at receive of request and stops after the response is send. Service time can be affected by any item which leads to a performance degradation as described in Subsection \ref{Performance Degradation}. 
 
 \subsubsection*{Latency}
 Second part of the response time is latency \cite{Broadwell:RPT, BHATT:PERF}, which represent a delay between sending the request on the client side and receiving it for evaluation on the server side. Hence latency is the common problem in the network systems such as data center, web server, etc., because request/response needs to travel over the physical medium between the client and the server. Client and server could be located on different continents, thus the message have to travel long distance and latency is increasing.  
@@ -269,7 +288,7 @@ Second part of the response time is latency \cite{Broadwell:RPT, BHATT:PERF}, wh
 \end{figure}
 
 \subsubsection*{Average and Percentile Response Time}
-There are two common ways of measuring the response time \cite{Kopp:RPT}: Average (mean) response time is calculated as the sum of all measured times divided by the count of users requests. While this seems trivial, in many times, the average response time does not actually reflect the real response time of the system. How is that possible? In reality, most application have few heavy outlines such as very slow transactions. In the Figure \ref{fig:average_percentil_1} you can see few slow transactions which drag the average of the response time to the right. This naturally leads to an inaccurate specification of response time.
+There are two common ways of measuring the response time \cite{Kopp:RPT}: Average (mean) response time is calculated as the sum of all measured times divided by the count of users requests. While this seems trivial, in many times, the average response time does not actually reflect the real response time of the system. How is that possible? In reality, most application have few heavy outliers such as very slow transactions. In the Figure \ref{fig:average_percentil_1} you can see few slow transactions which drag the average of the response time to the right. This naturally leads to an inaccurate specification of response time.
 
 
 \begin{figure}[H]
@@ -288,14 +307,14 @@ The better solution how to determine the actual response time is Percentile. The
   \label{fig:average_percentil_2}
 \end{figure}
 
-The Figure \ref{fig:average_percentil_2} shows different situation. Average response time seems better than median, which reflects the expectation of faster system response time than it has. In real systems, we usually use values of the 90th percentile and the 99th percentile. 90th percentile mean, that there is only 10 \% transactions slower then marked response time. In this case, a considerable percentage of transactions are very fast (first 50 percent), while the bulk of transactions are several times slower. Thus, calculated percentile gets more realistic values than average response time.
+The Figure \ref{fig:average_percentil_2} shows different situation. Average response time seems better than median, which reflects the expectation of faster system response time than it has. In real systems, we usually use values of the 90th percentile and the 99th percentile. 90th percentile mean, that there is only 10 \% transactions slower then marked response time. In the Figure \ref{fig:average_percentil_2}, a considerable percentage of transactions are very fast (first 50 percent), while the bulk of transactions are several times slower. Thus, calculated percentile gets more realistic values than average response time.
 
 \subsection{Resource Usage}
 Applications running at servers with long run-time competes over a limited amount of resource available for use. Thus makes resource usage another important metric, which needs to be monitored since not enough resources could shut down the whole system. Main resources for monitoring and utilization are:
 
 \begin{description}
 	\setlength\itemsep{0em}
-	\item \textbf{CPU usage}\,---\,inappropriate usage of CPU could lead to performance degradation, because low priority processes may occupy CPU ahead of the higher priority processes.
+	\item \textbf{CPU usage}\,---\,inappropriate usage of CPU could lead to performance degradation, because low priority processes may occupy CPU ahead of the higher priority processes. CPU usage is structuring into system usage and user usage. High system usage can cause problems or bottlenecks.
 	\item \textbf{Memory usage}\,---\,full consumption of memory could cause performance degradation.
 	\item \textbf{Disk space}\,---\,for example when using storage disk as a database, there should be preventive measures to backup the data and free up disk space.
 	\item \textbf{Operating System limits}\,---\,system's memory, and CPU capabilities. 
@@ -303,7 +322,7 @@ Applications running at servers with long run-time competes over a limited amoun
 
 
 \subsection{Error Rate}
-Error Rate is a metric, which commonly occurs in the network systems, especially under high load. During the communication between client and server there could be error caused by another network device (router, switch, hub, etc.) or signal disturb which can corrupt the data during the transfer. The Error Rate is the mathematical calculation that produces a percentage of problem requests compared to all requests. In the ideal system, there should be zero network error present, however, in reality is in-feasible. This usually leads to a performance degradation and low throughput, because damaged data need to be resent.
+Error Rate is a metric, which commonly occurs in the network systems, especially under high load. During the communication between client and server there could be error caused by another network device (router, switch, etc.) or signal disruption of the data during the transfer. The Error Rate is the mathematical calculation that produces a percentage of problem requests compared to all requests. In the ideal system, there should be zero network error present, however, in reality is in-feasible. This usually leads to a performance degradation and low throughput, because damaged data need to be resent.
 Error rate is a significant metric because it tells engineers how many requests failed at a particular point in time of performance testing. This metric is more evident when you can see the percentage of problem strongly increasing, hence you can detect problem easily.
 
 
@@ -312,20 +331,20 @@ Error rate is a significant metric because it tells engineers how many requests 
 \chapter{Messaging Performance Tool}
 \label{Messaging Performance Tool}
 % https://github.com/orpiske/msg-perf-tool
-Performance of \emph{Message-Oriented Middleware} (MOM) \cite{CURRY:MOM} is one of the most critical elements of quality assurence for enterprise integration system. There are multiple messaging components developed in Red Hat such as clients, Message Broker, Message Router (Qpid-dispatch service) and stream-like message distributions tools. \todo{Kafka - free to disclose?} 
+Performance of \emph{Message-Oriented Middleware} (MOM) \cite{CURRY:MOM} is one of the most critical elements of quality assurence for enterprise integration system. There are multiple messaging components developed in Red Hat such as messaging clients, Message Broker, Message Router (Qpid-dispatch service) and stream-like message distributions tools. Since now, client has meaning of messaging client. \todo{Kafka - free to disclose? eric} 
 
-A Message Broker is an example of MOM. Its purpose is receive, store and distribute messages, which are sent and received by clients. The performance capabilities of a Message Broker are important for its users, because being able to handle a large amount of transactions in a timely manner is an important characteristic of MOM. Users usually uses MOM for message distribution in their own systems where is necessary to send and receive message in short time. For example in automated systems, where components communicates with each other by command exchange. Amount of exchanged command is dependent on system size. We want to get systems results as soon as possible and for that is important to ensure smooth and quick message exchange.
+A Message Broker is an example of MOM. Its purpose is receive, store and distribute messages, which are sent and received by clients. The performance capabilities of a Message Broker are important for its users, because being able to handle a large amount of transactions in a timely manner is an important characteristic of MOM. Users choose MOM for message distribution so they do not have to develop their own messaging distribution systems Another benefit of specialized MOM than own implementation is robustness and ensured performance. For example in automated systems, where components communicates with each other by command exchange. Amount of exchanged command is dependent on system size. We want to get systems results as soon as possible and for that is important to ensure smooth and quick message exchange.
 
-\emph{The Maestro} \cite{ORPISKE:MSGPT} is a testing system designed especially for testing the performance of MOM. On the Figure \ref{fig:msg_perf_tool} you can see architecture of Maestro. The whole Maestro is deployed as a cluster system on several machines. A typical Maestro deployment consist of one node for Maestro Broker, one or more for Senders, one or more for Receivers and the S.U.T. The Maestro system consists of several components:
+\emph{The Maestro} \cite{ORPISKE:MSGPT} is a testing system designed especially for testing the performance of MOM. On the Figure \ref{fig:msg_perf_tool} you can see architecture of Maestro. The whole Maestro is deployed as a cluster system on several machines. A typical Maestro deployment consist of one node for Maestro Broker, one or more for Senders, one or more for Receivers and the SUT. The Maestro system consists of several components:
 
 \begin{description}
 	\setlength\itemsep{0em}
-	\item \textbf{Maestro Broker}\,---\,any MQTT-capable broker with several topics. This component takes care about distribution of control messages between other cluster components such as Maestro Clients and MPT Back-end. Also, sending collected data to data server where user can browse between logs and show collected data as charts. 
+	\item \textbf{Maestro Broker}\,---\,any \emph{Message Queuing Telemetry Transport - MQTT\footnotemark}-capable broker with several topics. This component takes care about distribution of control messages between other cluster components such as Maestro Clients and MPT Back-end. 
 	\item \textbf{Meastro Clients}\,---\,this component contains the client API as well as the test scripts for each test case. A sub-component called Reporter takes care of data reporting to the user, which means data visualization on the web.
-	\item \textbf{MPT Back-end}\,---\,consists of sender part, receiver part and inspector part. Sender and receiver ensure messaging sending to the S.U.T and receiving from it. Inspector monitoring workload over the S.U.T and reporting collected performance metrics to the testing cluster. Maestro has two back-ends:
+	\item \textbf{MPT Back-end}\,---\,consists of sender part, receiver part and inspector part. Sender, and receiver ensure messaging sending to the SUT and receiving from it. Inspector monitoring workload over the SUT and reporting collected performance metrics to the testing cluster. Maestro currently has two back-ends:
 	\begin{itemize}
-		\item \textbf{Java}\,---\,using for JMS-based testing, including \emph{AMQP} \cite{OASIS:AMQP}, OpenWire and Core protocols.
-		\item \textbf{C}\,---\,using for AMQP and STOMP protocol testing.
+		\item \textbf{Java}\,---\,using for JMS-based\footnotemark testing, including \emph{Advanced Message Queuing Protocol - AMQP} \cite{OASIS:AMQP}, OpenWire and Core protocols.
+		\item \textbf{C}\,---\,using for AMQP and \emph{Streaming Text Oriented Messaging Protocol - STOMP}\footnotemark protocol testing.
 	\end{itemize}
 \end{description}
 
@@ -336,40 +355,44 @@ A Message Broker is an example of MOM. Its purpose is receive, store and distrib
   \label{fig:msg_perf_tool}
 \end{figure}
 
+\footnotetext{MQTT - \url{http://mqtt.org/}}
+\footnotetext{JMS - Java Message Service}
+\footnotetext{STOMP - \url{https://stomp.github.io/}}
 
-\section*{Test Case Configuration}
+\section*{Test Case Scenario}
 Configuration of each test case is specified by several options defined in Groovy \footnote{Object-oriented programming language for Java platform \url{http://groovy-lang.org/}} script. This script specify test behavior with following items:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
 	\item \textbf{message size}\,---\,message size in bytes,
-	\item \textbf{number of connected clients}\,---\,count of senders and receivers connected to the S.U.T,
+	\item \textbf{number of connected clients}\,---\,count of senders and receivers connected to the SUT,
 	\item \textbf{test duration (time or load)}\,---\,end condition of each test, could be specified by time or message count,
 	\item \textbf{message rate}\,---\,the desired rate that the system should try to maintain (0 for unbounded).
 \end{itemize}
 
-The test script is also responsible for starting and stopping the test. We can also specify the test profile. Depending on the test profile, the script may also be responsible for increasing or decreasing the workload on the S.U.T during the test scenario. The load can be modified by increasing the target rate or the number of parallel connections. Multiple combinations of this options can create a lot of test cases with different load for the S.U.T. Every test will produce his own logs which are processed by the reporting sub-component on the client side and used for monitoring the metrics. Maestro Reporter produce data visualization, such as charts, from stored logs.
+The test script is also responsible for starting and stopping the test. We can also specify the test profile. Depending on the test profile, the script may also be responsible for increasing or decreasing the workload on the S.U.T during the test scenario. The load can be modified by increasing the target rate or the number of parallel connections. Multiple combinations of this options can create a lot of test cases with different load for the SUT. Every test will produce his own logs which are processed by the reporting sub-component on the client side and used for monitoring the metrics. Maestro Reporter produce data visualization, such as charts, from stored logs.
 
 \section*{Measures Process}
 \label{Measures Process}
-Measures process starts after dynamic test generation with option passed from the test file. Sender or senders, depends on test file, will start sending messages to the S.U.T. Inspector starts monitoring the behavior of the S.U.T and report logs from S.U.T to Maestro Broker. For monitoring, Inspector uses the Broker management interface. That is a REST interface that exposes (via HTTP protocol) internal JVM \footnote{JVM - Java Virtual Machine} and Broker detailed information. That information would be normally available via JMX \footnote{JMX - Java Management Extensions}. Data collection by Inspector is simple and pretty straightforward:
+Measures process starts after dynamic test generation with option passed from the test file. Sender or senders, depends on test file, will start sending messages to the SUT. Inspector starts monitoring the behavior of the SUT and write it to disk. For monitoring, Inspector uses the Broker management interface. That is a REST interface that exposes (via HTTP protocol) internal JVM \footnote{JVM - Java Virtual Machine} and Broker detailed information. That information would be normally available via JMX \footnote{JMX - Java Management Extensions}. Data collection by Inspector is simple and pretty straightforward:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item Inspector sent an HTTP request with the JSON \footnote{JSON - JavaScript Object Notation \url{https://www.json.org/}} content to the Broker REST interface.
+	\item Inspector sent an HTTP request with the \emph{JavaScript Object Notation - JSON}\footnotemark content to the Broker REST interface.
 	\item Broker evaluate the request and sent response to the Inspector.
 	\item Inspector collect the response.
 \end{itemize}
 Errors occurred during the information collection may cause the test case fail.
 
-However, there are two problem factors; the first is that inspector shouldn't influence performance of the S.U.T. Current method for information collecting working like the management interface call method with request for information and get response. During this call, the method usually involve locks to guarantee thread safety and exclusive access. However, calling this methods too often could cause Broker performance degradation. In order to reduce this risk, the inspector enforces a collection interval of 10 seconds and use only certain operations. That reduce the hits on management interface on 2 or 3 hits every 10 seconds.
+However, there are two problem factors; the first is that inspector shouldn't influence performance of the SUT. Current method for information collecting working like the management interface call method with request for information and get response. During this call, the method usually involve locks to guarantee thread safety and exclusive access. However, calling this methods too often could cause Broker performance degradation. In order to reduce this risk, the inspector enforces a collection interval of 10 seconds and use only certain operations. That reduce the hits on management interface on 2 or 3 hits every 10 seconds.
 
-The second is large size of the stored logs. This leads to use some of the compression methods for reduction logs size. However, compressed logs can fill whole hard drive during long test-run, so old logs has to been erase at some point of time. The collected logs can be safely erased when the test is completed. The Maestro generates about 1Gb of uncompressed data per hour of testing.
+The second is large size of the stored logs. This is mitigated by usage of the compression methods for reduction logs size. However, compressed logs can fill whole hard drive during long test-run, so old logs has to been erase at some point of time. The collected logs can be safely erased when the test is completed. The Maestro generates about 1\,Gb of uncompressed data per hour of testing.
 
 %Inspector also monitor node with broker (CPU, memory size)?
 
 %No. There's a new module being developed for that, which runs on top of Prometheus and monitors both the system and the test cluster: http://msg-qe-dev-01.tpb.lab.eng.brq.redhat.com:3000
 
+\footnotetext{JSON - \url{https://www.json.org/}}
 
 \section{Testing Metrics}
 \label{Testing Metrics}
@@ -377,10 +400,9 @@ Which metrics are collected depending on the component. In the Table \ref{tab:ma
 
 \begin{table}[]
 \centering
-\caption{Maestro metrics summary.}
-\label{tab:maestro_metrics}
 \begin{tabular}{|p{2.5cm}|p{3.5cm}|p{7cm}|}
 \hline
+\rowcolor[HTML]{C5E3DF} 
 \multicolumn{1}{|c|}{\textbf{Component}} & \multicolumn{1}{c|}{\textbf{Metrics}} & \multicolumn{1}{c|}{\textbf{Description}}                       \\ \hline
 \textbf{Sender}                          & Throughput                            & Throughput of the sender                                        \\ \hline
 \textbf{Receiver}                        & Throughput                            & Throughput of the receiver                                      \\ \hline
@@ -391,6 +413,8 @@ Which metrics are collected depending on the component. In the Table \ref{tab:ma
                                          & OS basic memory                       & Physical and swap memory usage                                  \\ \hline
                                          & OS resources                          & Count of file descriptors                                       \\ \hline
 \end{tabular}
+\caption{Maestro metrics summary.}
+\label{tab:maestro_metrics}
 \end{table}
 
  \todo{Dopsat}
@@ -414,7 +438,7 @@ SpecJMS
 MPT is generally designed for performance testing of Broker. However, with the service growth. the need for performance testing of Qpid-Dispatch comes. This Chapter is focused on two things: firstly, analyze Qpid-Dispatch service, describe its capabilities and methodology and secondly describe design of Topology generator and Qpid-Dispatch Performance Module for MPT.
 
 \section{Qpid-Dispatch Router}
-Qpid-Dispatch is a lightweight AMQP message router for building scalable available and performant messaging networks. With respect to ISO/OSI \footnote{\url{http://www.studytonight.com/computer-networks/complete-osi-model}} model, this router is an application layer program running as a normal user program or as a daemon. Key features of Qpid-Dispatch are:
+Qpid-Dispatch is a lightweight AMQP message router for building scalable available and performant messaging networks. With respect to ISO/OSI \footnotemark model, this router is an application layer program running as a normal user program or as a daemon. Key features of Qpid-Dispatch are:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -423,11 +447,14 @@ Qpid-Dispatch is a lightweight AMQP message router for building scalable availab
 	\item Uses redundant network paths to route around failures.
 	\item Streamlines the management of large deployments.
 \end{itemize}
-
 The following theory about Qpid-Dispatch router is based on knowledge available~in~\cite{RH:Interconnect}.
 
+\footnotetext{ISO/OSI - \url{http://www.studytonight.com/computer-networks/complete-osi-model}}
+
 \subsection{Theory of Operation}
-The router accepts AMQP connections from clients and create AMQP connections to brokers or similar AMQP-based services. Through this connection is client (sender) able to reach message receiver, which can be another client in the network or broker. The client can  exchange messages directly with another client without involving a broker at all. The router classifies incoming messages and routers them between senders and receivers. The router is designed to be deployed in topologies of multiple routers, preferably with redundant paths to provide continued connectivity in the case of any router in the network fails. For routing Qpid-Dispatch uses link-state routing protocols \footnote{\url{https://www.certificationkits.com/cisco-certification/ccna-articles/cisco-ccna-intro-to-routing-basics/cisco-ccna-link-state-routing-protocols/}} and algorithms similar to OSPF or IS-IS to calculate best path (path with the lowest cost) from sender to receiver through the whole network and to recover from failures. 
+The router accepts AMQP connections from clients and create AMQP connections to brokers or similar AMQP-based services. Through this connection is client (sender) able to reach message receiver, which can be another client in the network or broker. The client can  exchange messages directly with another client without involving a broker at all. The router classifies incoming messages and routers them between senders and receivers. The router is designed to be deployed in topologies of multiple routers, preferably with redundant paths to provide continued connectivity in the case of any router in the network fails. For routing Qpid-Dispatch uses link-state routing protocols \footnotemark and algorithms similar to OSPF or IS-IS to calculate best path (path with the lowest cost) from sender to receiver through the whole network and to recover from failures. 
+
+\footnotetext{Link-state protocols - \url{https://www.certificationkits.com/cisco-certification/ccna-articles/cisco-ccna-intro-to-routing-basics/cisco-ccna-link-state-routing-protocols/}}
 
 \subsection{Addresses and Connections}
 \label{Addresses and Connections}

@@ -18,7 +18,7 @@ CPU
 memory
 endurance
 service time
-system under test - S.U.T
+system under test - SUT
 maestro
 kafka
 AMQP
