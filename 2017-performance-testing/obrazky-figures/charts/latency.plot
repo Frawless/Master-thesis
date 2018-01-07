@@ -5,7 +5,7 @@ set output '../latency.pdf'
 set title 'Latency' font ",16"
 set grid
 
-set xlabel 'Time'
+set xlabel 'Time [Days]'
 #set xdata time
 set xrange [1511704800:1513368000]
 set timefmt "%s"
@@ -13,7 +13,7 @@ set format x "%b %d"
 set xdata time
 set xtics 172800 nomirror
 
-set ylabel 'Latency'
+set ylabel 'Latency [s]'
 set yrange [0:5]
 set ytics 0.5 nomirror
 

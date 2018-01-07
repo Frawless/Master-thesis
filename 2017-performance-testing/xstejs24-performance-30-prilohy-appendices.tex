@@ -33,7 +33,7 @@ routers
 
 \section{Graph Metadata}
 \label{AP:Graph Metadata}
-An example of graph metadata file for Topology Generator. Generator will generate graph with 2 routers and 3 brokers where routers are connected together and each broker is connected to one router.
+Example of graph metadata file for Topology Generator. Generator will generate graph with 2 routers and 3 brokers where routers are connected together and each broker is connected to one router.
 
 \begin{verbatim}
 ---
@@ -60,11 +60,69 @@ multigraph: false
 
 \section{Topology Generator Output}
 \label{AP:Topology Generator Output}
-Path to output file?
+Example of Topology Generator output in YAML format. This output is for two directly connected routers.
+
+\begin{verbatim}
+---
+confs:
+- machine: router1
+  router:
+  - id: router1
+    mode: standalone
+  listener:
+  - host: 0.0.0.0
+    role: inter-router
+    port: 6000
+  - host: 0.0.0.0
+    authenticatePeer: 'no'
+    role: normal
+    port: 5000
+    saslMechanisms: ANONYMOUS
+  connector:
+  - host: router2
+    role: inter-router
+    port: 6001
+  address:
+  - prefix: closest
+    distribution: closest
+  - prefix: multicast
+    distribution: multicast
+  - prefix: unicast
+    distribution: closest
+- machine: router2
+  router:
+  - id: router2
+    mode: standalone
+  listener:
+  - host: 0.0.0.0
+    role: inter-router
+    port: 6001
+  - host: 0.0.0.0
+    authenticatePeer: 'no'
+    role: normal
+    port: 5001
+    saslMechanisms: ANONYMOUS
+  connector:
+  - host: router1
+    role: inter-router
+    port: 6000
+  address:
+  - prefix: closest
+    distribution: closest
+  - prefix: multicast
+    distribution: multicast
+  - prefix: unicast
+    distribution: closest
+
+\end{verbatim}
 
 \section{Qpid-Dispatch Configuration File Template}
 \label{AP:Qpid-Dispatch Configuration File Template}
-Path to template file?
+Template for configuration files for current version of Qpid-Dispatch is available at \url{https://github.com/rh-messaging-qe/ansible-qpid-dispatch/blob/master/test/files/templates/qdrouterd-roland.conf.j2}.
+
+\section{Topology Generator Source Code}
+\label{Topology Generator Source Code}
+Complete source code of Topology Generator is available at \url{https://github.com/rh-messaging-qe/iqa-topology-generator}.
 
 %\chapter{RelaxNG Schéma konfiguračního souboru} % Scheme of RelaxNG configuration file
 

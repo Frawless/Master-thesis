@@ -17,7 +17,7 @@ In general an application performance is important. However, smooth network appl
 
 For performance testing of particular network messaging system developed by \emph{Red Hat Inc.} there is an existing solution\,---Messaging Performance Tool (MPT) \cite{ORPISKE:MSGPT}. MPT is specialized for the performance testing of \emph{Message Broker} (Broker) \cite{RH:Broker}\,---\,network application level software cooperating with \emph{Qpid-dispatch service} \cite{RH:Interconnect} in the network as the message distributor. Unfortunately, the current version of MPT does not support performance testing of enough component like the Router component, Qpid-dispatch. In this work we will focus on this particular short coming and develop a worthy solution allowing proper performance testing of the Qpid-dispatch service.
 
-This thesis is structured as follows. First, we define fundamentals of performance testing in Chapter \ref{Fundamentals of Software Performance Testing}. The rest of the thesis focuses on performance testing and analysis of Qpid-dispatch, an application level router designed by Red Hat Inc. Qpid-dispatch performance testing is based on MPT described in Chapter \ref{Messaging Performance Tool}. Description includes \emph{measurement process} and \emph{measured data description and evaluation}.The main goal of the thesis is to analyze MPT and design module for the Qpid-dispatch performance testing as described in Chapter \ref{Analysis and Design} together with used protocols and \emph{Automatic Topology Generator} for semi-automated network generation and deployment. Used technologies, tools and  implementation processes of each component are described in Chapter \ref{Implementation}. The most important part of the thesis is Chapter \ref{Experimental Evaluation}, containing the data gathering  from routers located in different types of topology, data evaluation and representation which leads to conclusion about performance of Qpid-dispatch. Finally, Chapter \ref{Conclusion} summarizes the thesis and proposes ideas for future use of developed tool.
+This thesis is structured as follows. First, we define fundamentals of performance testing in Chapter \ref{Fundamentals of Software Performance Testing}. The rest of the thesis focuses on performance testing and analysis of Qpid-dispatch, an application level router designed by Red Hat Inc. Qpid-dispatch performance testing is based on MPT described in Chapter \ref{Messaging Performance Tool}. Description includes \emph{measurement process} and \emph{measured data description and evaluation}.The main goal of the thesis is to analyze MPT and design module for the Qpid-dispatch performance testing as described in Chapter \ref{Analysis and Design} together with used protocols and \emph{Automatic Topology Generator} for semi-automated network generation and deployment. Used technologies, tools and  implementation processes of each component are described in Chapter \ref{Implementation}. The most important part of the thesis is Chapter \ref{Experimental Evaluation}, containing the data gathering  from routers located in different types of topology, data evaluation and representation which leads to conclusion about performance of Qpid-dispatch. Finally, Chapter \ref{Summary} summarizes the thesis and proposes ideas for future use of developed tool.
 
 % https://www.seguetech.com/what-is-software-performance-testing/
 
@@ -110,9 +110,9 @@ However response time limits for non-human interactive system are more strict. T
 \todo{Prvni iterace}
 
 \subsection*{Traffic Spikes}
-As \emph{traffic spike} \cite{Kurkova:Thesis:2017, AMC:SPIKES} we can understand the sudden degradation of one of the performance metrics such as \emph{throughput, bandwidth, error rate, response time} but also resource usage such as \emph{memory usage, disk space, etc.} during the network traffic. In real network, spikes are result of high workload, e.g. caused by higher amount of users trying to concurrently use the service over the network. For example we can experience sudden traffic spike in response time after publishing new popular viral context on video servers, start of sales events, reservation of limited amount of tickets or subject registration at university.
+As \emph{traffic spike} \cite{Kurkova:Thesis:2017, AMC:SPIKES} we can understand the sudden surge in demand from users. Typically doubling or multiplying of traffic level in short period of time. In real network, spikes are result of high workload, e.g. caused by higher amount of users trying to concurrently use the service over the network. For example we can experience sudden traffic spike in response time after publishing new popular viral context on video servers, start of sales events, reservation of limited amount of tickets or subject registration at university. Scheduled automatic backup or system upgrade for whole company during early morning hours can cause traffic spikes.
 
-Traffic spikes can lead to inappropriate system behavior such as \emph{long response time}, \emph{bad throughput} and \emph{limited concurrency}. To prevent the impact of traffic spikes on system performance, it is  necessary to do sophisticated infrastructure monitoring and network load analysis, in order to distinguish between normal traffic and attack on the system. Suitable method for testing of spikes is called \emph{stress testing} \cite{Manzor:APTB} and it is described in Section \ref{Types of Performance Testing} in more details. Network system should also be scalable, thus it should be able to redirect traffic to another node with same service in case of high load which can cause performance issues due inappropriate resource usage.
+Traffic spikes can lead to inappropriate system behavior such as \emph{long response time}, \emph{bad throughput}, and \emph{limited concurrency}. To prevent the impact of traffic spikes on system performance, it is  necessary to do sophisticated infrastructure monitoring and network load analysis, in order to distinguish between normal traffic and attack on the system. Suitable methods for testing of spikes is one of variant of \emph{stress testing} \cite{Manzor:APTB} and it is described in Section \ref{Types of Performance Testing} in more details. Network system should offer load balancing, thus it should be able to redirect traffic to another node with same service in case of high load which can cause performance issues due inappropriate resource usage.
 
 \begin{figure}[H]
   \centering
@@ -247,17 +247,17 @@ Common issues covered by regression testing:
 	\item New feature could adversely affect already working components of the system.
 \end{itemize}
 
-\footnotetext{{\label{note1}Approach for test suits, where are used other methods like Load testing, Stress testing, etc.}}
+\footnotetext{Approach for test suits, where are used other methods like Load testing, Stress testing, etc.}
 
 \subsection*{Benchmark Testing}
-\emph{Benchmark testing}\textsuperscript{\ref{note1}} \cite{Aho:Benchmarking} is approach, which collects performance data during the system run on different hardware machines. Collected data have significant value when we want smooth run of the system on an older hardware, hence we can discover performance issues under normal load. However, the system does not run smoothly on prepared hardware, only options is to run benchmark tests on different machines with different hardware and under different load.
+\emph{Benchmark testing}\footnotemark \cite{Aho:Benchmarking} is approach, which collects performance data during the system run on different hardware machines. Collected data have significant value when we want smooth run of the system on an older hardware, hence we can discover performance issues under normal load. However, the system does not run smoothly on prepared hardware, only options is to run benchmark tests on different machines with different hardware and under different load.
 
 \begin{itemize}
 	\item Can identify minimal requirements for HW, metrics, etc.
 	\item Can validate supported HW configuration.
 \end{itemize}
 
-
+\footnotetext{Approach for test suits, where are used other methods like Load testing, Stress testing, etc.}
 
 \section{Performance Metrics}
 \label{Performance Metrics}
@@ -287,6 +287,8 @@ Second part of the response time is latency \cite{Broadwell:RPT, BHATT:PERF}, wh
   \label{fig:latency}
 \end{figure}
 
+In the Figure \ref{fig:latency} you can see network latency monitoring during period of time with traffic spikes. These spikes can represent adding new system to the network or system backup.
+
 \subsubsection*{Average and Percentile Response Time}
 There are two common ways of measuring the response time \cite{Kopp:RPT}: Average (mean) response time is calculated as the sum of all measured times divided by the count of users requests. While this seems trivial, in many times, the average response time does not actually reflect the real response time of the system. How is that possible? In reality, most application have few heavy outliers such as very slow transactions. In the Figure \ref{fig:average_percentil_1} you can see few slow transactions which drag the average of the response time to the right. This naturally leads to an inaccurate specification of response time.
 
@@ -294,20 +296,21 @@ There are two common ways of measuring the response time \cite{Kopp:RPT}: Averag
 \begin{figure}[H]
   \centering
   \includegraphics[width=15cm]{obrazky-figures/average_median_1.pdf}
-  \caption{Transactions response time with calculated average and median of response time. Average represent  inaccurate response time in this case which is higher than real one.}
+  \caption{Transactions response time with calculated average and median of response time.}
   \label{fig:average_percentil_1}
 \end{figure}
+In the Figure \ref{fig:average_percentil_1} the average represent inaccurate response time, which is higher than real one.
 
 The better solution how to determine the actual response time is Percentile. The percentile is statistic method, which cut measured ordered values into hundredths and then characterize the value below which a given percentage of measurements in a group of particular measurements falls. In the Figure \ref{fig:average_percentil_1} you can see the \emph{median} value, which reflects more realistic value of the system response time. Median value is same such as the 50th percentile. In this case, there is no problem, because user will expect slower response time than it has. 
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=15cm]{obrazky-figures/average_median_2.pdf}
-  \caption{Transactions response time with calculated average and median of response time. Average represent  inaccurate response time. Average says, that STU is faster than is in reality.}
+  \caption{Transactions response time with calculated average and median of response time.}
   \label{fig:average_percentil_2}
 \end{figure}
 
-The Figure \ref{fig:average_percentil_2} shows different situation. Average response time seems better than median, which reflects the expectation of faster system response time than it has. In real systems, we usually use values of the 90th percentile and the 99th percentile. 90th percentile mean, that there is only 10 \% transactions slower then marked response time. In the Figure \ref{fig:average_percentil_2}, a considerable percentage of transactions are very fast (first 50 percent), while the bulk of transactions are several times slower. Thus, calculated percentile gets more realistic values than average response time.
+The Figure \ref{fig:average_percentil_2} shows different situation. Average represent inaccurate response time, which says, that STU is faster than is in reality. Average response time seems better than median, which reflects the expectation of faster system response time than it has. In real systems, we usually use values of the 90th percentile and the 99th percentile. 90th percentile mean, that there is only 10 \% transactions slower then marked response time. In the Figure \ref{fig:average_percentil_2}, a considerable percentage of transactions are very fast (first 50 percent), while the bulk of transactions are several times slower. Thus, calculated percentile gets more realistic values than average response time.
 
 \subsection{Resource Usage}
 Applications running at servers with long run-time competes over a limited amount of resource available for use. Thus makes resource usage another important metric, which needs to be monitored since not enough resources could shut down the whole system. Main resources for monitoring and utilization are:
@@ -339,12 +342,12 @@ A Message Broker is an example of MOM. Its purpose is receive, store and distrib
 
 \begin{description}
 	\setlength\itemsep{0em}
-	\item \textbf{Maestro Broker}\,---\,any \emph{Message Queuing Telemetry Transport - MQTT\footnotemark}-capable broker with several topics. This component takes care about distribution of control messages between other cluster components such as Maestro Clients and MPT Back-end. 
+	\item \textbf{Maestro Broker}\,---\,any \emph{Message Queuing Telemetry Transport - MQTT\footnote{MQTT - \url{http://mqtt.org/}}}-capable broker with several topics. This component takes care about distribution of control messages between other cluster components such as Maestro Clients and MPT Back-end. 
 	\item \textbf{Meastro Clients}\,---\,this component contains the client API as well as the test scripts for each test case. A sub-component called Reporter takes care of data reporting to the user, which means data visualization on the web.
 	\item \textbf{MPT Back-end}\,---\,consists of sender part, receiver part and inspector part. Sender, and receiver ensure messaging sending to the SUT and receiving from it. Inspector monitoring workload over the SUT and reporting collected performance metrics to the testing cluster. Maestro currently has two back-ends:
 	\begin{itemize}
-		\item \textbf{Java}\,---\,using for JMS-based\footnotemark testing, including \emph{Advanced Message Queuing Protocol - AMQP} \cite{OASIS:AMQP}, OpenWire and Core protocols.
-		\item \textbf{C}\,---\,using for AMQP and \emph{Streaming Text Oriented Messaging Protocol - STOMP}\footnotemark protocol testing.
+		\item \textbf{Java}\,---\,using for JMS-based\footnote{JMS - Java Message Service} testing, including \emph{Advanced Message Queuing Protocol - AMQP} \cite{OASIS:AMQP}, OpenWire and Core protocols.
+		\item \textbf{C}\,---\,using for AMQP and \emph{Streaming Text Oriented Messaging Protocol - STOMP}\footnote{STOMP - \url{https://stomp.github.io/}} protocol testing.
 	\end{itemize}
 \end{description}
 
@@ -355,11 +358,8 @@ A Message Broker is an example of MOM. Its purpose is receive, store and distrib
   \label{fig:msg_perf_tool}
 \end{figure}
 
-\footnotetext{MQTT - \url{http://mqtt.org/}}
-\footnotetext{JMS - Java Message Service}
-\footnotetext{STOMP - \url{https://stomp.github.io/}}
 
-\section*{Test Case Scenario}
+\section{Test Case Scenario}
 Configuration of each test case is specified by several options defined in Groovy \footnote{Object-oriented programming language for Java platform \url{http://groovy-lang.org/}} script. This script specify test behavior with following items:
 
 \begin{itemize}
@@ -372,7 +372,11 @@ Configuration of each test case is specified by several options defined in Groov
 
 The test script is also responsible for starting and stopping the test. We can also specify the test profile. Depending on the test profile, the script may also be responsible for increasing or decreasing the workload on the S.U.T during the test scenario. The load can be modified by increasing the target rate or the number of parallel connections. Multiple combinations of this options can create a lot of test cases with different load for the SUT. Every test will produce his own logs which are processed by the reporting sub-component on the client side and used for monitoring the metrics. Maestro Reporter produce data visualization, such as charts, from stored logs.
 
-\section*{Measures Process}
+\section{Communication Between Components}
+\label{Communication Between Components}
+\todo{Describe Maestro commands and communication with Maestro Broker - ask Otavio}
+
+\section{Measures Process}
 \label{Measures Process}
 Measures process starts after dynamic test generation with option passed from the test file. Sender or senders, depends on test file, will start sending messages to the SUT. Inspector starts monitoring the behavior of the SUT and write it to disk. For monitoring, Inspector uses the Broker management interface. That is a REST interface that exposes (via HTTP protocol) internal JVM \footnote{JVM - Java Virtual Machine} and Broker detailed information. That information would be normally available via JMX \footnote{JMX - Java Management Extensions}. Data collection by Inspector is simple and pretty straightforward:
 
@@ -384,6 +388,8 @@ Measures process starts after dynamic test generation with option passed from th
 \end{itemize}
 Errors occurred during the information collection may cause the test case fail.
 
+\footnotetext{JSON - \url{https://www.json.org/}}
+
 However, there are two problem factors; the first is that inspector shouldn't influence performance of the SUT. Current method for information collecting working like the management interface call method with request for information and get response. During this call, the method usually involve locks to guarantee thread safety and exclusive access. However, calling this methods too often could cause Broker performance degradation. In order to reduce this risk, the inspector enforces a collection interval of 10 seconds and use only certain operations. That reduce the hits on management interface on 2 or 3 hits every 10 seconds.
 
 The second is large size of the stored logs. This is mitigated by usage of the compression methods for reduction logs size. However, compressed logs can fill whole hard drive during long test-run, so old logs has to been erase at some point of time. The collected logs can be safely erased when the test is completed. The Maestro generates about 1\,Gb of uncompressed data per hour of testing.
@@ -392,13 +398,12 @@ The second is large size of the stored logs. This is mitigated by usage of the c
 
 %No. There's a new module being developed for that, which runs on top of Prometheus and monitors both the system and the test cluster: http://msg-qe-dev-01.tpb.lab.eng.brq.redhat.com:3000
 
-\footnotetext{JSON - \url{https://www.json.org/}}
 
-\section{Testing Metrics}
+\section*{Testing Metrics}
 \label{Testing Metrics}
 Which metrics are collected depending on the component. In the Table \ref{tab:maestro_metrics} we can see summary of the metrics, which are collected for each component.
 
-\begin{table}[]
+\begin{table}[H]
 \centering
 \begin{tabular}{|p{2.5cm}|p{3.5cm}|p{7cm}|}
 \hline
@@ -417,7 +422,7 @@ Which metrics are collected depending on the component. In the Table \ref{tab:ma
 \label{tab:maestro_metrics}
 \end{table}
 
- \todo{Dopsat}
+ \todo{Some description? Ask Otavio}
 
 \section{Collected Data and Their Evaluation}
 \label{Collected Data and Their Evaluation}
@@ -435,7 +440,7 @@ SpecJMS
 
 \chapter{Analysis and Design}
 \label{Analysis and Design}
-MPT is generally designed for performance testing of Broker. However, with the service growth. the need for performance testing of Qpid-Dispatch comes. This Chapter is focused on two things: firstly, analyze Qpid-Dispatch service, describe its capabilities and methodology and secondly describe design of Topology generator and Qpid-Dispatch Performance Module for MPT.
+MPT is generally designed for performance testing of Broker. However, with the service growth. the need for performance testing of Qpid-Dispatch comes. This Chapter is focused on two things: firstly, analyze Qpid-Dispatch service, describe its capabilities and methodology and secondly describe design of Topology Generator and Qpid-Dispatch Performance Module for MPT.
 
 \section{Qpid-Dispatch Router}
 Qpid-Dispatch is a lightweight AMQP message router for building scalable available and performant messaging networks. With respect to ISO/OSI \footnotemark model, this router is an application layer program running as a normal user program or as a daemon. Key features of Qpid-Dispatch are:
@@ -483,11 +488,13 @@ Qpid-Dispatch is able to connects clients servers AMQP services, and other route
 		\item \textbf{route-container}	\,---\,The connection is to a broker or other resource that holds known addresses
 	\end{itemize}	
 \end{description}
-To ensure security the router uses \emph{SSL/TLS - Sockets Layer and Transport Layer Security}\footnotemark protocol and related certificates and \emph{SASL - Simple Authentication and Security Layer}\footnotemark protocol mechanisms to encrypt and authenticate remote peers. Router listeners act as network servers and connectors act as network clients. Both connection components may be configured securely with SSL/TLS and SASL.
 
 \footnotetext{Addresses in this discussion refer to AMQP protocol addresses, not to TCP/IP addresses.}
-\footnotetext{SSL - \url{https://tools.ietf.org/html/rfc6101}; TLS - \url{https://tools.ietf.org/html/rfc5246}}
+
+To ensure security the router uses \emph{SSL/TLS - Sockets Layer and Transport Layer Security}\footnote{SSL - \url{https://tools.ietf.org/html/rfc6101}; TLS - \url{https://tools.ietf.org/html/rfc5246}} protocol and related certificates and \emph{SASL - Simple Authentication and Security Layer}\footnotemark protocol mechanisms to encrypt and authenticate remote peers. Router listeners act as network servers and connectors act as network clients. Both connection components may be configured securely with SSL/TLS and SASL.
+
 \footnotetext{SASL - \url{https://tools.ietf.org/html/rfc4422}}
+
 
 \subsection{Message Routing}
 \label{Message Routing}
@@ -502,7 +509,7 @@ Addresses have semantics associated with them. This semantics control how router
 		\item \textbf{Closest}\,---\,An anycast method in which every message is sent along the shortest path to reach the destination.
 		\item \textbf{Multicast}\,---\,method for send copy of the message to every receiver with the same address.
 	\end{itemize}
-	\item \textbf{Routing mechanism}\,---\,define the path to endpoint for message from sender to receiver. \todo{Dopsat?}
+	\item \textbf{Routing mechanism}\,---\,define the path to endpoint for message from sender to receiver.
 	\begin{itemize}
 		\setlength\itemsep{0em}
 		\item \textbf{Message routed}\,---\,message delivery is done based on address in message's \emph{to} field. The router check destination address of the message and find the same address in its routing table. The message is sent to all links with that address.
@@ -516,7 +523,7 @@ For various kind of messaging systems testing we needs multiple topologies with 
 
 
 \subsection{Topology Components}
-Messaging system are consists of multiple components with specific role. In our case, testing topologies will consider clients, brokers and routers. Clients refer to message senders and receivers and there is no need for specific configuration of each clients at all. Message settings is another case, but MPT deal with it as was mentioned at Chapter \ref{Messaging Performance Tool}.
+Messaging system are consists of multiple components with specific role. In our case, testing topologies will consider clients, brokers, and routers. Clients refer to message senders and receivers and there is no need for specific configuration of each clients at all. Message settings is another case, but MPT deal with it as was mentioned at Chapter \ref{Messaging Performance Tool}.
 
 \subsubsection*{Broker}
 Broker configuration file offers various setting and protocols such as specialized queueing behaviors, message persistence, and manageability. The following itemize shows several capabilities of broker:
@@ -536,9 +543,16 @@ However, broker configuration is not implemented yet, but design of automatic co
 Just like broker configuration, router offer various types of configurations. The basics were explained in Subsections \ref{Addresses and Connections} and \ref{Message Routing}, but for better understanding of all capabilities I~recommend Qpid-Dispatch documentation \cite{RH:Interconnect}. 
 
 \subsection{Format of Input and Output}
-Input structure should be user-friendly and easy to update even in case of large topologies. As input is choose one file called \texttt{config.yml} in \emph{YAML}\footnotemark  language, which is same as JSON but its better readable for humans. Generator needs information about all hosts in topology and which type of topology it should generate. For that purpose is there two attributes in configuration file; first is \emph{inventory path} which refer to location of \emph{Inventory}. Inventory is file, containing all hosts in topology in specific format. This format is available in \ref{AP:Inventory}. It is simple configuration file with enumeration of host names and their IP addresses. Second attribute is which type of topology it should generate. User can specify there one of the simple types of graph, such as line, circle, complete, etc., which do not need any other information except Inventory or he can specify path to graph metadata. Graph metadata are deeply described in Subsection \ref{Graph Metadata}.
+Input structure should be user-friendly and easy to update even in case of large topologies. As input is choose one file called \texttt{config.yml} in \emph{YAML}\footnotemark  language, which is same as JSON but its better readable for humans. Generator needs information about all hosts in topology and which type of topology it should generate. For that purpose is there two attributes in configuration file; first is \emph{inventory path} which refer to location of \emph{Inventory}. Inventory is file, containing all hosts in topology in specific format. This format is available in \ref{AP:Inventory}. It is simple configuration file with enumeration of host names and their IP addresses. Second attribute is which type of topology it should generate. User can specify there one of the simple types of graph, such as line, circle, complete, etc., which do not need any other information except Inventory or he can specify path to graph metadata. Graph metadata are more described in Subsection \ref{Graph Metadata}.
 
-On the other hand, output format should be easy for automatic parsing. The best format for machine parsing is JSON or YAML format, since both of them are loaded with same functions in ansible. Output of the generator will be pass to ansible script immediately after create without any user intervention. However, user should have option to see generator output in YAML format, because in case of larger topologies JSON is badly readable for human eyes. Output will be one JSON file with variables for template. Each node from Inventory will have its own variables separated from variables of other nodes.
+On the other hand, output format should be easy for automatic parsing. The best format for machine parsing is JSON or YAML format, since both of them are loaded with same functions in ansible. Output of the generator will be pass to ansible script immediately after create without any user intervention. However, user should have option to see generator output in YAML format, because in case of larger topologies JSON is badly readable for human eyes. Output will be one JSON file with variables for template. Each node from Inventory will have its own variables separated from variables of other nodes. Scheme of the input and output for Topology Generator you can see in the Figure \ref{fig:generator}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=10cm]{obrazky-figures/generator.pdf}
+  \caption{Topology Generator with input and output scheme.}
+  \label{fig:generator}
+\end{figure}
 
 \footnotetext{YAML - \url{http://docs.ansible.com/ansible/latest/YAMLSyntax.html}}
 
@@ -546,7 +560,7 @@ On the other hand, output format should be easy for automatic parsing. The best 
 \label{Graph Metadata}
 At first, we should specify technology which will be used for implementation of Topology Generator. \emph{NetworkX} is a Python package for creation and manipulation of complex networks. This package offer features for creating graphs, multigraphs, random graph generators, plot created graph, and etc. NetworkX also offers graph import and export in YAML structured file. This type of file is very useful as graph metadata, simple example of this file is show at \ref{AP:Graph Metadata}.
 
-User can specify here any setting for each node. For example, user can specify listener for router1 and connector for router2 as you can see on the example below.
+User can specify here any setting for each node. For example, user can specify listener for router\,1, and connector for router\,2 as you can see on the example below.
 
 \begin{verbatim}
 ---
@@ -570,27 +584,58 @@ multigraph: false
 \end{verbatim}
 From this metadata NetworkX create two nodes with type, id, and listener or connector attributes. This attributes will be used for generate configuration files for each node. All possible attributes that user can specify for each node is available in \ref{AP:Qpid-Dispatch Configuration File Template}.
 
-However, specify all attributes of each node is not very user-friendly approach, especially in case of large topologies. User could only specify nodes and links between them and generator will add all necessary attributes for establish connection between nodes. Example of this metadata file you can see in \ref{AP:Graph Metadata}.
+However, specify all attributes of each node is not very user-friendly approach, especially in case of large topologies. User could only specify nodes, and links between them and generator will add all necessary attributes for establish connection between nodes. Example of this metadata file you can see in \ref{AP:Graph Metadata}.
 
-\section{Topology Deployment}
-Every node specified in Inventory has to receive proper configuration files for services running on it. This job will be handle by Ansible, since it can connect to all nodes from Inventory and copy configuration files to proper destination folders. Ansible script load data from Topology Generator and create configuration files based on loaded variables and common template for Qpid-Dispatch. Created file will be sent to proper node based on node name from Inventory, which has to be same like router name specified in generated variables.
-
-
-\section{Qpid-Dispatch Performance Module}
+\subsection{Topology Deployment}
+Every node specified in Inventory has to receive proper configuration files for services running on it. This job will be handle by Ansible, since it can connect to all nodes from Inventory and copy configuration files to proper destination folders. Ansible script load data from Topology Generator and create configuration files based on loaded variables and common template for Qpid-Dispatch. Created file will be sent to proper node based on node name from Inventory, which has to be same like router name specified in generated variables. You can see scheme of configuration deployment in the Figure \ref{fig:deployment}.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=15cm]{obrazky-figures/msg_perf_tool_for_router.pdf}
-  \caption{Architecture of updated Maestro for testing of Qpid-dispatch router.}
-  \label{fig:msg_perf_tool}
+  \includegraphics[width=12cm]{obrazky-figures/deployment.pdf}
+  \caption{Scheme of configuration files deployment to the nodes.}
+  \label{fig:deployment}
 \end{figure}
 
 
-\subsection{\todo{more subsections about module}}
+\section{Qpid-Dispatch Performance Module}
+We saw architecture of Maesto in the Figure \ref{fig:msg_perf_tool}. This architecture cannot use all performance testing and network recovery possibilities of router. For better performance analysis and measurements is necessary to design and implement additional functionality of MPT.
+
+In the Figure \ref{fig:msg_perf_tool_update} is updated version of Maestro architecture. Proper performance testing of router and network analysis with few routers needs some kind of agent, which can manipulate with each nodes. In particular, MPT should be able to shut down one of the router node and collected data about network behavior during this situation. This actions will be handle by new back-end component called \emph{Agent}.
+
+\begin{figure}[]
+\centering
+\begin{minipage}{.4\textwidth}
+  \centering
+  \includegraphics[width=.85\linewidth]{obrazky-figures/agent_1.pdf}
+  \captionof{figure}{Simple network with router agent.}
+  \label{fig:agent_1}
+\end{minipage}%
+\begin{minipage}{.4\textwidth}
+  \centering
+  \includegraphics[width=.85\linewidth]{obrazky-figures/agent_2.pdf}
+  \captionof{figure}{Simple network with router shut-down demonstration.}
+  \label{fig:agent_2}
+\end{minipage}
+\end{figure}
+
+In the Figure \ref{fig:agent_1} you can see simple scheme of topology and one agent monitoring router\,2. Communication passing through router\,2 and message is delivered to receiver without problems. Shut-down demonstration is in the Figure \ref{fig:agent_2} where you can see command from agent to router\,2. In that case, the network will choose redundant link through router\,3. This scenario can answer the question \emph{How this incident influence latency between sender and receiver?}
+
+Another part is communication inside Maestro cluster with new component. Communication between cluster back-end and user client is happening through Maestro Broker and for proper message distribution new topic has to be added. As was mentioned in Section \ref{Collected Data and Their Evaluatio}, Maestro Clients communicating with back-end via specialized command. Router Agent will accept new set of command for router control. This set has to be added to existing Maestro Clients. All additional components or components for update are highlighted by red color in the Figure \ref{fig:msg_perf_tool_update}. Example of simple testing topology consists of two routers and two brokers is also available in that Figure.
+
+
+\begin{figure}[]
+  \centering
+  \includegraphics[width=15cm]{obrazky-figures/msg_perf_tool_for_router.pdf}
+  \caption{Architecture of updated Maestro for testing of Qpid-dispatch router.}
+  \label{fig:msg_perf_tool_update}
+\end{figure}
+
 
 \section{Performance and Testing Metrics of Qpid-Dispatch Performance Module}
+\todo{After interconnect perf. demo}
 
 \section{Collected Data Evaluation}
+\todo{Same as MPT, ask Otavio}
 
 \chapter{Implementation}
 \label{Implementation}
@@ -625,5 +670,9 @@ Using for testing Ansible roles (remove?)
 \label{Future work and ideas}
 
 \chapter{Summary}
-\label{Conclusion}
+\label{Summary}
+During term project is collected relative information about performance testing. This information are processed and recorded in this work in the Chaper \ref{Fundamentals of Software Performance Testing}. I also get introduction into functionality of Messaging Performance Tool which is going to be upgraded and used for performance testing of Qpid-Dispatch. In the Chaper \ref{Analysis and Design} I summarized design of necessary upgrades for MPT and design of Topology Generator which going to be used for semi-automatic topology configuration generation and together with automatic deployment on testing nodes. Topology is currently implemented, tested and published under version 0.1.10. Current version is able to generate any topology by manner as is described in the Chapter \ref{Analysis and Design}. Link to public source-code is available in \ref{Topology Generator Source Code}.
+
+Next step of this thesis will lead to implement module for Qpid-Dispatch performance testing, integrated it into MPT and improved Topology Generator.After this, I will be ready for proper performance testing of Qpid-Dispatch with data analysis.
+
 %=========================================================================

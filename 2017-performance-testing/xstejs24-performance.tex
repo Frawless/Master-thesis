@@ -100,6 +100,9 @@
 \usepackage{caption}
 \usepackage{graphics}
 
+\usepackage{perpage} %the perpage package
+\MakePerPage{footnote} %the perpage package command
+
 % Informace o práci/projektu / Information about the thesis
 %---------------------------------------------------------------------------
 \projectinfo{
@@ -157,15 +160,14 @@
 %Declaration (for thesis in english should be in english)
 %\declaration{}
 
- \declaration{Hereby I declare that this bachelor's thesis was prepared as an original author’s work under the supervision of Mr. X
-The supplementary information was provided by Mr. Y
-All the relevant information sources, which were used during preparation of this thesis, are properly cited and included in the list of references. \todo{dopsat}}
+ \declaration{Hereby I declare that this master's thesis was prepared as an original author’s work under the supervision of Mr. Ing. Tomáš Fiedor
+The supplementary information was provided by Mr. Ing. Zdeněk Kraus and Otavio Rodolfo Piske from Red Hat, Inc.
+All the relevant information sources, which were used during preparation of this thesis, are properly cited and included in the list of references.}
 
 %Podekovani (nepovinne, nejlepe v jazyce prace) / Acknowledgement (optional, ideally in the language of the thesis)
 %\acknowledgment{V této sekci je možno uvést poděkování vedoucímu práce a těm, kteří poskytli odbornou pomoc
 %(externí zadavatel, konzultant, apod.). - TODO}
-\acknowledgment{Here it is possible to express thanks to the supervisor and to the people which provided professional help
-(external submitter, consultant, etc.).}
+\acknowledgment{I would like to thank to my supervisors, Ing. Tomáš Fiedor from BUT VUT and Ing. Zdeněk Kraus from Red Hat, Inc. for guiding and important information about performance problems. Also to my colleagues Otavio Rodolfo Piske for his time during introduction and explanation of his Messaging Performance Tool and Dominik Lenoch for Qpid-Dispatch introduction.}
 
 % řeší první/poslední řádek odstavce na předchozí/následující stránce
 % solves first/last row of the paragraph on the previous/next page

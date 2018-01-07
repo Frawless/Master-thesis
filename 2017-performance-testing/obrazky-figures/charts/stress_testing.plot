@@ -4,20 +4,20 @@ set output '../stress_testing.pdf'
 set title 'Stress Testing' font ",16"
 set grid
 
-set xlabel 'Relative Time (HH:MM)'
+set xlabel 'Relative Time [HH:MM]'
 #set xdata time
-set xrange [0:54000]
+set xrange [0:59400]
 set timefmt "%s"
 set format x "%H:%M"
 set xdata time
 set xtics 7200 nomirror
 
-set ylabel 'Request Count'
-set yrange [0:4000]
+set ylabel 'Request Count [RPS]'
+set yrange [0:5000]
 set ytics 1000 nomirror
 
-set y2label 'Response Time (seconds)'
-set y2range [0:5]
+set y2label 'Response Time [seconds]'
+set y2range [0:5.5]
 set y2tics 1 nomirror
 #set format y2 "%0.2f"
 
