@@ -56,3 +56,7 @@ normostrany:
 
 plot:
 	./plot.sh
+
+evince: all
+	evince $(CO).pdf
+	make normostrany
