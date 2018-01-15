@@ -99,9 +99,10 @@
 \usepackage[all]{hypcap}
 \usepackage{caption}
 \usepackage{graphics}
+\usepackage{subfig}
+\usepackage[export]{adjustbox}
 
-\usepackage{perpage} %the perpage package
-\MakePerPage{footnote} %the perpage package command
+
 
 % Informace o práci/projektu / Information about the thesis
 %---------------------------------------------------------------------------
@@ -149,12 +150,12 @@
 }
 
 %Abstrakt (cesky, slovensky ci anglicky) / Abstract (in czech, slovak or english)
-\abstract[cs]{\todo{Doplnit}}
-\abstract[en]{\todo{Doplnit}}
+\abstract[cs]{Výkonností testování aplikací nabírá v poslední době na důležitosti během vývoje aplikací všeho druhu. Tato práce mapuje základy testování výkonu, které jsou aplikovatelné na libovolné aplikace. Následně analýzuje testování výkonu komponent používaných v Messaging systémech a to konkrétně Messaging Broker a Qpid-Dispatch. Využívané metody testování výkonu je zaměřeno zejména na Messaging Broker pomocí Messaging Performance Tool. Dále je popsáno vylepšení této aplikaci o rozšíření testování systému Qpid-Dispatch a její možnosti při automatizovaném testování. Výsledná zpráva vyhodnocuje navrženou aplikaci, zhodnocuje výkon komponenty Qpid-Dispatch a rozvíjí myšlenky pro další rozšíření.}
+\abstract[en]{Application performance testing has recently become more important during the application development of all kinds. This paper maps the fundamentals of performance testing that are commonly used. It analyze performance testing of components used in Messaging systems, especially Messaging Broker and Qpid-Dispatch. Currently used methods for performance testing of this components are primarily focused on Messaging Broker by Messaging Performance Tool. This paper also describes improvements of Messaging Performance Tool to extend performance testing of Qpid-Dispatch and its capabilities in automatic testing. The final report evaluates the proposed application, the performance of Qpid-Dispatch component and develops ideas for future works.}
 
 %Klicova slova (cesky, slovensky ci anglicky) / Keywords (in czech, slovak or english)
-\keywords[cs]{Testování, analýza výkonu, síťové technologie, router, Qpid-Dispatch}
-\keywords[en]{Testing, performance analysis, network technologies, router, Qpid-Dispatch}
+\keywords[cs]{Testování, analýza výkonu, testování výkonu, síťové technologie, router, Qpid-Dispatch}
+\keywords[en]{Testing, performance analysis, performance testing, network technologies, router, Qpid-Dispatch}
 
 %Prohlaseni (u anglicky psane prace anglicky, u slovensky psane prace slovensky)
 %Declaration (for thesis in english should be in english)

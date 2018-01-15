@@ -32,11 +32,13 @@ The main goal of the performance testing is to ensure the following application 
 
 \begin{description}
 	\setlength\itemsep{0em}
-	\item \textbf{Reliability and Stability}\,---\,the ability of software to perform its functions in system environment under some system load for acceptable \footnote{During software development there is a document with Software Requirements Specification which specifies software metrics, including performance.} period of time,
+	\item \textbf{Reliability and Stability}\,---\,the ability of software to perform its functions in system environment under some system load for acceptable\footnotemark{} period of time,
 	\item \textbf{Scalability}\,---\,the ability of software to behave properly under various types of system load and handle increasing amount of workload (such as network traffic, server load, data transfer, etc.) which need new hardware for cluster expand,
 	\item \textbf{Processing time and Speed}\,---\,the ability of software to react quickly without low response time during any acceptable system load,
 	\item \textbf{Availability}\,---\,the ability of software to make all of its functions available during any acceptable system load. The ability of software, deployed in cluster, to provide all functions during node crash is called High Availability.
 \end{description}
+
+\footnotetext{During software development there is a document with Software Requirements Specification which specifies software metrics, including performance.}
 
 Similarly to software development process, performance testing process consist of usual engineering steps ranging from requirements definition to data evaluation. These steps also includes design, implementation, and execution of performance tests with data collection. The graphical representation of the performance testing process is depicted in the Figure~\ref{fig:performace_testing_process}. 
 
@@ -78,7 +80,7 @@ Final step of performance testing process is results evaluation. Output of this 
 
 \section{Performance Issues}
 \label{Performance Issues}
-\emph{Performance issue} is a common label for an unexpected application or device behavior which affects its performance. Usually, those issues are hard to detect because they manifest only under certain circumstances such as high load or long application run time. In the network applications there are several particular issues that are more frequently occurring  than others. In following, I will describe selected issues in more detail.
+\emph{Performance issue} is a common label for an unexpected application or device behavior which affects its performance. Usually, those issues are hard to detect because they manifest only under certain circumstances such as high load or long application run time. In the network applications there are several particular issues that are more frequently occurring  than others. In following, I~will describe selected issues in more detail.
 
 \subsection*{Performance Degradation}
 \label{Performance Degradation}
@@ -336,14 +338,14 @@ Error rate is a significant metric because it tells engineers how many requests 
 % https://github.com/orpiske/msg-perf-tool
 Performance of \emph{Message-Oriented Middleware} (MOM) \cite{CURRY:MOM} is one of the most critical elements of quality assurence for enterprise integration system. There are multiple messaging components developed in Red Hat such as messaging clients, Message Broker, Message Router (Qpid-dispatch service) and stream-like message distributions tools. Since now, client has meaning of messaging client. \todo{Kafka - free to disclose? eric} 
 
-A Message Broker is an example of MOM. Its purpose is receive, store and distribute messages, which are sent and received by clients. The performance capabilities of a Message Broker are important for its users, because being able to handle a large amount of transactions in a timely manner is an important characteristic of MOM. Users choose MOM for message distribution so they do not have to develop their own messaging distribution systems Another benefit of specialized MOM than own implementation is robustness and ensured performance. For example in automated systems, where components communicates with each other by command exchange. Amount of exchanged command is dependent on system size. We want to get systems results as soon as possible and for that is important to ensure smooth and quick message exchange.
+A~Message Broker is an example of MOM. Its purpose is receive, store and distribute messages, which are sent and received by clients. The performance capabilities of a Message Broker are important for its users, because being able to handle a large amount of transactions in a timely manner is an important characteristic of MOM. Users choose MOM for message distribution so they do not have to develop their own messaging distribution systems Another benefit of specialized MOM than own implementation is robustness and ensured performance. For example in automated systems, where components communicates with each other by command exchange. Amount of exchanged command is dependent on system size. We want to get systems results as soon as possible and for that is important to ensure smooth and quick message exchange.
 
-\emph{The Maestro} \cite{ORPISKE:MSGPT} is a testing system designed especially for testing the performance of MOM. On the Figure \ref{fig:msg_perf_tool} you can see architecture of Maestro. The whole Maestro is deployed as a cluster system on several machines. A typical Maestro deployment consist of one node for Maestro Broker, one or more for Senders, one or more for Receivers and the SUT. The Maestro system consists of several components:
+\emph{The Maestro} \cite{ORPISKE:MSGPT} is a testing system designed especially for testing the performance of MOM. On the Figure \ref{fig:msg_perf_tool} you can see architecture of Maestro. The whole Maestro is deployed as a cluster system on several machines. A~typical Maestro deployment consist of one node for Maestro Broker, one or more for Senders, one or more for Receivers and the SUT. The Maestro system consists of several components:
 
 \begin{description}
 	\setlength\itemsep{0em}
 	\item \textbf{Maestro Broker}\,---\,any \emph{Message Queuing Telemetry Transport - MQTT\footnote{MQTT - \url{http://mqtt.org/}}}-capable broker with several topics. This component takes care about distribution of control messages between other cluster components such as Maestro Clients and MPT Back-end. 
-	\item \textbf{Meastro Clients}\,---\,this component contains the client API as well as the test scripts for each test case. A sub-component called Reporter takes care of data reporting to the user, which means data visualization on the web.
+	\item \textbf{Meastro Clients}\,---\,this component contains the client API as well as the test scripts for each test case. A~sub-component called Reporter takes care of data reporting to the user, which means data visualization on the web.
 	\item \textbf{MPT Back-end}\,---\,consists of sender part, receiver part and inspector part. Sender, and receiver ensure messaging sending to the SUT and receiving from it. Inspector monitoring workload over the SUT and reporting collected performance metrics to the testing cluster. Maestro currently has two back-ends:
 	\begin{itemize}
 		\item \textbf{Java}\,---\,using for JMS-based\footnote{JMS - Java Message Service} testing, including \emph{Advanced Message Queuing Protocol - AMQP} \cite{OASIS:AMQP}, OpenWire and Core protocols.
@@ -375,7 +377,42 @@ The test script is also responsible for starting and stopping the test. We can a
 
 \section{Communication Between Components}
 \label{Communication Between Components}
-\todo{\url{https://github.com/orpiske/msg-perf-tool/tree/master/doc/maestro/protocol}}
+The Maestro Protocol is a binary protocol implemented on tom of MessagePack\footnotemark{}. For message exchange between node it currently uses MQTT protocol (version 3.1.1) and for server the testing data on data server uses HTTP protocol (version 1.1). The messages exchanged between the peers of testing cluster are called notes in the following description.
+
+\footnotetext{Messagepack - \url{https://msgpack.org/}}
+
+The notes has specific format, it contains three parts. First is \emph{Type} which is short integer that identifies the purpose of the note:
+
+\begin{itemize}
+	\setlength\itemsep{0em}
+	\item \textbf{Request (0)}\,---\,a note sent by a controller node to the test peers.
+	\item \textbf{Response (1)}\,---\,a note sent by a testing peer as a response for a request.
+	\item \textbf{Notification (2)}\,---\,a note sent by a testing peer as a reaction to an event.
+\end{itemize}
+Second part is \emph{Command} which identifies the action to be executed or, in some cases. that was executed. Currently, there are 17 command represented by a long integer. Third part is \emph{Payload} which refers to data carried by the note as part of its command. The commands available are:
+
+\begin{itemize}
+	\setlength\itemsep{0em}
+	\item \textbf{MAESTRO\_NOTE\_START\_RECEIVER (0)}
+	\item \textbf{MAESTRO\_NOTE\_STOP\_RECEIVER (1)}
+	\item \textbf{MAESTRO\_NOTE\_START\_SENDER (2)}
+	\item \textbf{MAESTRO\_NOTE\_STOP\_SENDER (3)}
+	\item \textbf{MAESTRO\_NOTE\_START\_INSPECTOR (4)}
+	\item \textbf{MAESTRO\_NOTE\_STOP\_INSPECTOR (5)}
+	\item \textbf{MAESTRO\_NOTE\_FLUSH (6)}
+	\item \textbf{MAESTRO\_NOTE\_SET (7)}
+	\item \textbf{MAESTRO\_NOTE\_STATS (8)}
+	\item \textbf{MAESTRO\_NOTE\_HALT (9)}
+	\item \textbf{MAESTRO\_NOTE\_PING (10)}
+	\item \textbf{MAESTRO\_NOTE\_OK (11)}
+	\item \textbf{MAESTRO\_NOTE\_PROTOCOL\_ERROR (12)}
+	\item \textbf{MAESTRO\_NOTE\_INTERNAL\_ERROR (13)}
+	\item \textbf{MAESTRO\_NOTE\_ABNORMAL\_DISCONNECT (14)}
+	\item \textbf{MAESTRO\_NOTE\_NOTIFY\_FAIL (15)}
+	\item \textbf{MAESTRO\_NOTE\_NOTIFY\_SUCCESS (16)}
+\end{itemize}
+Detailed description of commands and its payload is available in Appendix \ref{AP:commands}.
+
 
 \section{Measures Process}
 \label{Measures Process}
@@ -452,10 +489,10 @@ As it was mentioned, data are collected by Inspector. Inspector monitoring the b
 	\item \textbf{Tenured committed}\,---\,Tenured committed memory.
 	\item \textbf{Tenured max}\,---\,Tenured max memory.
 	\item \textbf{Tenured used}\,---\,Tenured used memory.
-	\item \textbf{PM initial}\,---\,Permgerm or Metaspace initial memory (either Permgen or Metaspace depending the JVM version).
-	\item \textbf{PM committed}\,---\,Permgerm or Metaspace committed memory (either Permgen or Metaspace depending the JVM version).
-	\item \textbf{PM max}\,---\,Permgerm or Metaspace maximum memory (either Permgen or Metaspace depending the JVM version).
-	\item \textbf{PM used}\,---\,Permgerm or Metaspace used memory (either Permgen or Metaspace depending the JVM version).
+	\item \textbf{PM initial}\,---\,Permgen or Metaspace initial memory (either Permgen or Metaspace depending the JVM version).
+	\item \textbf{PM committed}\,---\,Permgen or Metaspace committed memory (either Permgen or Metaspace depending the JVM version).
+	\item \textbf{PM max}\,---\,Permgen or Metaspace maximum memory (either Permgen or Metaspace depending the JVM version).
+	\item \textbf{PM used}\,---\,Permgen or Metaspace used memory (either Permgen or Metaspace depending the JVM version).
 	\item \textbf{Queue size}\,---\,number of messages waiting for processing on the queue.
 	\item \textbf{Consumers}\,---\,number of consumers connected to the queue.
 	\item \textbf{Acknowledged}\,---\,number of acknowledged messages on the queue.
@@ -485,7 +522,7 @@ Both, sender and receiver generates rate (throughput) data file. It contains dat
 \section{Related Works}
 \label{Related Works}
 % popsat podobne "existujici" reseni (samozrejme, obcas neexistuje ;), ale verim, ze zde se neco najde). Nejlepsi je i se vuci tem "related tools" vymezit (jako napr. "The tool ... cannot be used because it does not support ...")
-\todo{After SEP probably}
+\todo{After SEP}
 SpecJMS
 
 \chapter{Analysis and Design}
@@ -534,8 +571,8 @@ Qpid-Dispatch is able to connects clients servers, AMQP services, and other rout
 	\begin{itemize}
 		\setlength\itemsep{0em}
 		\item \textbf{normal}\,---\,The connection is used for AMQP clients using normal message delivery. The router will initiate the connection but links are created by the peer that accepts the connection.
+		\item \emph{Inter-router} and \emph{route-container} modes are the same such as listener's modes.
 	\end{itemize}	
-	\emph{Inter-router} and \emph{route-container} modes are the same such as listener's modes.
 \end{description}
 
 \footnotetext{Addresses in this discussion refer to AMQP protocol addresses, not to TCP/IP addresses.}
@@ -594,7 +631,7 @@ However, broker configuration is not implemented yet, but design of automatic co
 Just like broker configuration, router offer various types of configurations. The basics were explained in Subsections \ref{Addresses and Connections} and \ref{Message Routing}, but for better understanding of all capabilities I~recommend Qpid-Dispatch documentation \cite{RH:Interconnect}. 
 
 \subsection{Format of Input and Output}
-Input structure should be user-friendly and easy to update even in case of large topologies. As input is choose one file called \texttt{config.yml} in \emph{YAML}\footnotemark{}  language, which is similar to JSON but it's better readable for humans. Generator needs information about all hosts in topology and which type of topology it should generate. For that purpose there is two attributes in configuration file; first is \emph{inventory path} which refer to location of \emph{Inventory}. Inventory is file, containing all hosts in topology in specific format. This format is available in \ref{AP:Inventory}. It is simple configuration file with enumeration of host names and their IP addresses. Second attribute is which type of topology it should generate. There user can specify one of the simple types of graph, such as line, circle, complete, etc., which do not need any other information except Inventory or he can specify path to graph metadata. Graph metadata are more described in Subsection \ref{Graph Metadata}.
+Input structure should be user-friendly and easy to update even in case of large topologies. As input is choose one file called \texttt{config.yml} in \emph{YAML}\footnotemark{}  language, which is similar to JSON but it's better readable for humans. Generator needs information about all hosts in topology and which type of topology it should generate. For that purpose there is two attributes in configuration file; first is \emph{inventory path} which refer to location of \emph{Inventory}. Inventory is file, containing all hosts in topology in specific format. This format is available in Appendix \ref{AP:Inventory}. It is simple configuration file with enumeration of host names and their IP addresses. Second attribute is which type of topology it should generate. There user can specify one of the simple types of graph, such as line, circle, complete, etc., which do not need any other information except Inventory or he can specify path to graph metadata. Graph metadata are more described in Subsection \ref{Graph Metadata}.
 
 On the other hand, output format should be easy for automatic parsing. The best format for machine parsing is JSON or YAML format, since both of them are loaded with same functions in ansible. Output of the generator will be passed to ansible script immediately after creation without any user intervention. However, user should have option to see generator output in YAML format, because in case of larger topologies JSON is badly readable for human eyes. Output will be one JSON file with variables for template. Each node from Inventory will have its own variables separated from variables of other nodes. Scheme of the input and output for Topology Generator you can see in the Figure \ref{fig:generator}.
 
@@ -609,7 +646,7 @@ On the other hand, output format should be easy for automatic parsing. The best 
 
 \subsection{Graph Metadata}
 \label{Graph Metadata}
-At first, we should specify technology which will be used for implementation of Topology Generator. \emph{NetworkX} is a Python package for creation and manipulation of complex networks. This package offer features for creating graphs, multigraphs, random graph generators, plot created graph, and etc. NetworkX also offers graph import and export in YAML structured file. This type of file is very useful as graph metadata, simple example of this file is shown at \ref{AP:Graph Metadata}.
+At first, we should specify technology which will be used for implementation of Topology Generator. \emph{NetworkX} is a Python package for creation and manipulation of complex networks. This package offer features for creating graphs, multigraphs, random graph generators, plot created graph, and etc. NetworkX also offers graph import and export in YAML structured file. This type of file is very useful as graph metadata, simple example of this file is shown in Appendix \ref{AP:Graph Metadata}.
 
 Here user can specify any setting for each node. For example, user can specify listener for router\,1, and connector for router\,2 as you can see on the example below.
 
@@ -633,9 +670,9 @@ nodes:
   	  role: inter-router  
 multigraph: false	  
 \end{verbatim}
-From this metadata NetworkX create two nodes with type, id, and listener or connector attributes. This attributes will be used for generating configuration files for each node. All possible attributes that user can specify for each node is available in \ref{AP:Qpid-Dispatch Configuration File Template}.
+From this metadata NetworkX create two nodes with type, id, and listener or connector attributes. This attributes will be used for generating configuration files for each node. All possible attributes that user can specify for each node is available in Appendix \ref{AP:Qpid-Dispatch Configuration File Template}.
 
-However, specifying all attributes of each node is not very user-friendly approach, especially in case of large topologies. User could only specify nodes, and links between them and generator will add all necessary attributes for establish connection between nodes. Example of this metadata file you can see in \ref{AP:Graph Metadata}.
+However, specifying all attributes of each node is not very user-friendly approach, especially in case of large topologies. User could only specify nodes, and links between them and generator will add all necessary attributes for establish connection between nodes. Example of this metadata file you can see in Appendix \ref{AP:Graph Metadata}.
 
 \subsection{Topology Deployment}
 Every node specified in Inventory has to receive proper configuration files for services running on it. This job will be handled by Ansible, since it can connect to all nodes from Inventory and copy configuration files to proper destination folders. Ansible script load data from Topology Generator and create configuration files based on loaded variables and common template for Qpid-Dispatch. Created file will be sent to proper node based on node name from Inventory, which has to be same like router name specified in generated variables. You can see scheme of configuration deployment in the Figure \ref{fig:deployment}.
@@ -651,22 +688,25 @@ Every node specified in Inventory has to receive proper configuration files for 
 \section{Qpid-Dispatch Performance Module}
 We saw architecture of Maesto in the Figure \ref{fig:msg_perf_tool}. This architecture cannot use all performance testing and network recovery possibilities of router. For better performance analysis and measurements is necessary to design and implement additional functionality for MPT.
 
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{6.5 cm}
+\subfloat[Network with router agent.\label{fig:agent_1}]{\includegraphics[width=1\linewidth]{obrazky-figures/agent_1.pdf}}
+\end{minipage}
+	\begin{minipage}{6.5 cm}
+\subfloat[Router shut-down demonstration.\label{fig:agent_2}]{\includegraphics[width=1\linewidth]{obrazky-figures/agent_2.pdf}}
+\end{minipage}
+
+	\caption[Simple network with active router agent.]{Simple network with router shut-down demonstration.}\label{fig:agent}
+\end{figure}
+
 In the Figure \ref{fig:msg_perf_tool_update} is updated version of Maestro architecture. Proper performance testing of router and network analysis with few routers needs some kind of agent, which can manipulate each node. In particular, MPT should be able to shut down one of the router node and Collected Data Format about network behavior during this situation. This actions will be handled by new back-end component called \emph{Agent}.
 
-\begin{figure}[]
-\centering
-\begin{minipage}{.4\textwidth}
+\begin{figure}[H]
   \centering
-  \includegraphics[width=.85\linewidth]{obrazky-figures/agent_1.pdf}
-  \captionof{figure}{Simple network with router agent.}
-  \label{fig:agent_1}
-\end{minipage}%
-\begin{minipage}{.4\textwidth}
-  \centering
-  \includegraphics[width=.85\linewidth]{obrazky-figures/agent_2.pdf}
-  \captionof{figure}{Simple network with router shut-down demonstration.}
-  \label{fig:agent_2}
-\end{minipage}
+  \includegraphics[width=15cm]{obrazky-figures/msg_perf_tool_for_router.pdf}
+  \caption{Architecture of updated Maestro for testing of Qpid-dispatch router.}
+  \label{fig:msg_perf_tool_update}
 \end{figure}
 
 In the Figure \ref{fig:agent_1} you can see simple scheme of topology and one agent monitoring router\,2. Communication passing through router\,2 and message is delivered to receiver without problems. Shut-down demonstration is in the Figure \ref{fig:agent_2} where you can see command from agent to router\,2. In that case, the network will choose redundant link through router\,3. This scenario can answer the question \emph{How this incident influence latency between sender and receiver?}
@@ -674,19 +714,36 @@ In the Figure \ref{fig:agent_1} you can see simple scheme of topology and one ag
 Another part is communication inside Maestro cluster with new component. Communication between cluster back-end and user client is happening through Maestro Broker and for proper message distribution new topic has to be added. As was mentioned in Section \ref{Collected Data Format}, Maestro Clients communicating with back-end via specialized command. Router Agent will accept new set of commands for router control. This set has to be added to existing Maestro Clients. All additional components or components for update are highlighted by red color in the Figure \ref{fig:msg_perf_tool_update}. Example of simple testing topology consists of two routers and two brokers is also available in that Figure.
 
 
-\begin{figure}[]
-  \centering
-  \includegraphics[width=15cm]{obrazky-figures/msg_perf_tool_for_router.pdf}
-  \caption{Architecture of updated Maestro for testing of Qpid-dispatch router.}
-  \label{fig:msg_perf_tool_update}
-\end{figure}
 
+\subsection{Communication with Agent}
+\label{Communication with Agent}
+For communication inside Maestro testing cluster is used The Maestro Protocol which was described in Subsection \ref{Communication Between Components}. MPT Clients has to know how to communicate with new component in the cluster and for this its necessary to add new communication commands. The following list shows new commands which should be added:
 
-\section{Performance and Testing Metrics of Qpid-Dispatch Performance Module}
-\todo{After interconnect perf. demo}
+\begin{itemize}
+	\setlength\itemsep{0em}
+	\item \textbf{MAESTRO\_NOTE\_START\_ROUTER (17)}\,---\,start specific router in the network.
+	\item \textbf{MAESTRO\_NOTE\_STOP\_ROUTER (18)}\,---\,stop specific router in the network.
+	\item \textbf{MAESTRO\_NOTE\_RESTART\_ROUTER (19)}\,---\,restart specific router in the network.
+	\item \textbf{MAESTRO\_NOTE\_ROUTE\_ERROR (20)}\,---\,signals error during routing.
+\end{itemize}
 
-\section{Collected Data Format and Evaluation}
-\todo{Same as MPT, ask Otavio}
+\subsection{Collected Data}
+\label{Collected Data}
+Collected data Format for new module will be almost same as it is in current version of MPT (described in Subsection \ref{Collected Data Format}). Since Qpid-Dispatch is written in C, there is no need to monitoring Java memory space. The following list shows updated data collected by Inspector:
+
+\begin{itemize}
+	\setlength\itemsep{0em}
+	\item \textbf{Timestamp}\,---\,the date and time for the data sample in the format YYYY-MM-DD hh:mm:ss using the W3C defined standard for datetime.
+	\item \textbf{Load}\,---\,size of system load.
+	\item \textbf{Open file descriptors}\,---\,number of opened filed descriptors.
+	\item \textbf{Free file descriptors}\,---\,number of free file descriptors.
+	\item \textbf{Free memory}\,---\,free physical memory.
+	\item \textbf{Free swap memory}\,---\,swap free memory.
+	\item \textbf{Swap committed}\,---\,swap committed memory.
+	\item \textbf{Consumers}\,---\,number of active connectors connected to the router.
+	\item \textbf{Message amount}\,---\,amount of routered messages.
+\end{itemize}
+Data collected by senders and receivers remains same as its in current version of MPT.
 
 \chapter{Implementation}
 \label{Implementation}
@@ -722,8 +779,12 @@ Using for testing Ansible roles (remove?)
 
 \chapter{Summary}
 \label{Summary}
-During term project is collected relative information about performance testing. This information are processed and recorded in this work in the Chaper \ref{Fundamentals of Software Performance Testing}. I also get introduction into functionality of Messaging Performance Tool which is going to be upgraded and used for performance testing of Qpid-Dispatch. In the Chaper \ref{Analysis and Design} I summarized design of necessary upgrades for MPT and design of Topology Generator which going to be used for semi-automatic topology configuration generation and together with automatic deployment on testing nodes. Topology is currently implemented, tested and published under version 0.1.10. Current version is able to generate any topology by manner as is described in the Chapter \ref{Analysis and Design}. Link to public source-code is available in \ref{Topology Generator Source Code}.
+In this report we described the fundamentals of performance testing, common performance metrics and bugs and selected related tools. Further, we introduced the architecture and functionality of Messaging Performance Tool (MPT), and proposed its extension necessary to performance testing of Qpid-Dispatch tool. Moreover, we designed and implemented the Topology Generator tool, which is going to be used for semi-automatic topology configuration generation, which will significantly simplify the testing phase. The source code of the topology generator can be found in Appendix \ref{AP:Topology Generator Source Code}.
 
-Next step of this thesis will lead to implement module for Qpid-Dispatch performance testing, integrated it into MPT and improved Topology Generator.After this, I will be ready for proper performance testing of Qpid-Dispatch with data analysis.
+In the follow-up work, the core of the thesis\,---\,a module for Qpid-Dispatch performance testing\,---\,will be implemented, integrated into MPT and the architecture and functionality of Topology Generator will be refined to allow precise performance testing of Qpid-Dispatch tool together with fine data analysis. The work will be concluded with experimental evaluation based on implemented modules and tools.
+
+%During term project is collected relative information about performance testing. This information are processed and recorded in this work in the Chaper \ref{Fundamentals of Software Performance Testing}. I~also get introduction into functionality of Messaging Performance Tool which is going to be upgraded and used for performance testing of Qpid-Dispatch. In the Chaper \ref{Analysis and Design} I~summarized design of necessary upgrades for MPT and design of Topology Generator which going to be used for semi-automatic topology configuration generation and together with automatic deployment on testing nodes. Topology is currently implemented, tested and published under version 0.1.10. Current version is able to generate any topology by manner as is described in the Chapter \ref{Analysis and Design}. Link to public source-code is available in \ref{Topology Generator Source Code}.
+
+%Next step of this thesis will lead to implement module for Qpid-Dispatch performance testing, integrated it into MPT and improved Topology Generator.After this, I~will be ready for proper performance testing of Qpid-Dispatch with data analysis.
 
 %=========================================================================
