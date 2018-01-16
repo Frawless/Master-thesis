@@ -9,7 +9,7 @@
 \label{Introduction}
 Good application performance is one of the main goals during the software development. But what makes software performance so important? Software reliability has to be guaranteed by the owner, but with undesirable performance there could be a lot of issues. Thus can badly influence software behavior. And this can cause a significant outflow of the consumers, and even brand destruction, financial damage, or loss of trust. These few reasons should be enough to do a proper performance testing before every software release, especially for large projects where industries guarantee certain level of software behavior and they would not be able to assure it with insufficient performance testing. Great emphasis on software performance is, in particular, in space programs, medical facilities, army systems, or energy distribution systems. In these fields it is necessary to ensure proper application behavior for a long time under high load and without any unexpected behavior such as high response time, frequent delays, or timeouts, because every failure is paid dearly. 
 
-Nowadays every developer should try to use well established frameworks which can make theirs work easier. Frameworks handle complex underlying issues such as security, performance, and code clarity. This way developers can invest more time in the actual functionality and meet the application requirements, since frameworks are usually optimized for one particular job. In the past every developer had to spent significant portion of development time tuning performance which led to spending more time and money for software development. But not everyone has enough knowledge of performance testing and this makes performance analysis and optimization even more difficult. This leads to a need for specialized performance tools which can provide more sophisticated information, however, actually useful tools are usually proprietary and/or too expensive.
+Nowadays every developer should try to use well established frameworks which can make theirs work easier. Frameworks handle complex underlying issues such as security, performance, and code clarity. This way developers can invest more time in the actual functionality and meet the application requirements, since frameworks are usually optimized for one particular job. In the past every developer had to spent significant portion of development time tuning performance which led to spending more time and money for software development. But not everyone has enough knowledge of performance testing and this makes performance analysis and optimization even more difficult. This leads to a~need for specialized performance tools which can provide more sophisticated information, however, actually useful tools are usually proprietary and/or too expensive.
 
 A~very important part of the performance analysis is the right choice of \emph{key performance indicators} (KPIs) \cite{Molyneaux:TAoAPT} and effective interpretation of the results. The right choice of KPIs allows faster detection of performance problems and help developers with fixes and meeting the \emph{performance standards} \cite{Molyneaux:TAoAPT} set up by application owner or customer in time before the release. 
 
@@ -54,12 +54,12 @@ The first step of performance testing process is the selection of \emph{performa
 
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item How many end users will the application need to handle at release, after 6 months or in 1 year ?
+	\item How many end users will the application need to handle at release, after 6~months or in 1 year ?
 	\item Where will these users be physically located, and how will they connect to the application?
-	\item How many end users will be concurrently connected in average at release, after 6 months and 1 year?
+	\item How many end users will be concurrently connected in average at release, after 6~months and 1 year?
 \end{itemize}
 
-Based on answer to these studies, the engineer should be able to select important key performance indicators for performance test cases. Some of these indicators may be \emph{response time}, \emph{stability}, \emph{scalability}, or \emph{speed}. However, there is huge amount of possible indicators so it is necessary to properly analyze the whole application and also take into consideration another needs like an error rate, system resources, etc.  Result of this phase should be a binding document with all performance requirements to be tested and, in case of detected performance degradation, such defect must be fixed with reference to this document.
+Based on answer to these studies, the engineer should be able to select important key performance indicators for performance test cases. Some of these indicators may be \emph{response time}, \emph{stability}, \emph{scalability}, or \emph{speed}. However, there is huge amount of possible indicators so it is necessary to properly analyze the whole application and also take into consideration another needs like an error rate, system resources, etc.  Result of this phase should be a~binding document with all performance requirements to be tested and, in case of detected performance degradation, such defect must be fixed with reference to this document.
 
 The next step is to define the \emph{performance testing strategy}, corresponding to planning and design. It is extremely important to allocate enough time for SUT testing effectively, because, as it was mentioned in Chapter \ref{Introduction}, performance testing is not an easy task and detecting all of the possible issues of tested components is very time consuming process. Every plan should take into account the following considerations:
 
@@ -141,7 +141,7 @@ Finding maximal load is a testing method which studies how the system behaves du
 \begin{figure}[H]
   \centering
   \includegraphics[width=15cm]{obrazky-figures/load_testing.pdf}
-  \caption{Response time of the system during the load testing depended on by load size.}
+  \caption{Response time of the system during the load testing depended on load size.}
   \label{fig:load_test}
 \end{figure}
 
@@ -187,7 +187,7 @@ In the Figure \ref{fig:stress_test} is recorded stress testing with raising load
 \begin{figure}[H]
   \centering
   \includegraphics[width=15cm]{obrazky-figures/stress_testing.pdf}
-  \caption{Stress testing diagram capturing dependency of response time on mount of requests.}
+  \caption{Stress testing diagram capturing dependency of response time on amount of requests.}
   \label{fig:stress_test}
 \end{figure}
 
@@ -219,7 +219,7 @@ This sort of test needs to use appropriate monitoring system to achieve high eff
   \label{fig:soak_test}
 \end{figure}
 
-In the Figure \ref{fig:soak_test} you can see raising memory usage after period of time. The SUT can handle requests but as time goes by memory usage is to high that the SUT will crash. This may be caused by memory leak or an inappropriate algorithm use.
+In the Figure \ref{fig:soak_test} you can see raising memory usage after period of time. The SUT can handle requests but as time goes by memory usage is too high that the SUT will crash. This may be caused by memory leak or an inappropriate algorithm use.
 
 \subsection*{Smoke Testing}
 Smoke testing approach is inspired by similar hardware technique, when engineers checks for presource of the smoke from the device after turning the power on. Basically, its similar for software, since main goal of smoke test is to test basic functionality of the system and guarantee that the system is ready for build. However, smoke tests are testing the functionality on a surface level, so it may not be enough for deep testing of basic system functions. When smoke tests fail, the system is tagged as unstable, because it cannot ensure its basic functionality and it is not tested anymore until the smoke test pass. Smoke test are designed to uncover obvious errors which saves time, money and effort of the engineers. These tests should be used with every new build, since new features could harm previous system functionality.
@@ -235,9 +235,10 @@ Typical system issues covered by smoke testing testing:
 	\item Main functionality can result into system crash.
 \end{itemize} 
 
+%\footnotetext[\label{note1}]{Approach for test suits, where are used other methods like Load testing, Stress testing, etc.}
 
 \subsection*{Regression Testing}
-Whenever engineers develop new feature and want to update the previous build it has to pass the \emph{regression tests}\footnotemark{} \cite{STF:REGRESSION}. Regression tests are designed to test functionality of the latest build updated with new feature. The main objective is to determine, if new feature affects already functional parts of the system. This type of tests is very important, because engineers do not always realize, which parts of the system will be indirectly affected. During regression testing, new test cases are not created, but previous test cases are automatic re-executed and analyzed. 
+Whenever engineers develop new feature and want to update the previous build it has to pass the \emph{regression tests}\footnote{Approach for test suits, where are used other methods like Load testing, Stress testing, etc.}\addtocounter{footnote}{-1}\addtocounter{Hfootnote}{-1} \cite{STF:REGRESSION}. Regression tests are designed to test functionality of the latest build updated with new feature. The main objective is to determine, if new feature affects already functional parts of the system. This type of tests is very important, because engineers do not always realize, which parts of the system will be indirectly affected. During regression testing, new test cases are not created, but previous test cases are automatic re-executed and analyzed. 
 Typical scenarios for regression testing:
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -249,17 +250,17 @@ Common issues covered by regression testing:
 	\item New feature could adversely affect already working components of the system.
 \end{itemize}
 
-\footnotetext{Approach for test suits, where are used other methods like Load testing, Stress testing, etc.}
+%\footnotetext{Approach for test suits, where are used other methods like Load testing, Stress testing, etc.}
 
 \subsection*{Benchmark Testing}
-\emph{Benchmark testing}\footnotemark{} \cite{Aho:Benchmarking} is approach, which collects performance data during the system run on different hardware machines. Collected Data Format have significant value when we want smooth run of the system on an older hardware, hence we can discover performance issues under normal load. However, the system does not run smoothly on prepared hardware, only options is to run benchmark tests on different machines with different hardware and under different load.
+\emph{Benchmark testing}\footnotemark{} is approach, which collects performance data during the system run on different hardware machines \cite{Aho:Benchmarking}. Collected Data Format have significant value when we want smooth run of the system on an older hardware, hence we can discover performance issues under normal load. However, the system does not run smoothly on prepared hardware, only options is to run benchmark tests on different machines with different hardware and under different load.
 
 \begin{itemize}
 	\item Can identify minimal requirements for HW, metrics, etc.
 	\item Can validate supported HW configuration.
 \end{itemize}
 
-\footnotetext{Approach for test suits, where are used other methods like Load testing, Stress testing, etc.}
+
 
 \section{Performance Metrics}
 \label{Performance Metrics}
@@ -327,8 +328,8 @@ Applications running at servers with long run-time competes over a limited amoun
 
 
 \subsection{Error Rate}
-Error Rate is a metric, which commonly occurs in the network systems, especially under high load. During the communication between client and server there could be error caused by another network device (router, switch, etc.) or signal disruption of the data during the transfer. The Error Rate is the mathematical calculation that produces a percentage of problem requests compared to all requests. In the ideal system, there should be zero network error present, however, in reality is in-feasible. This usually leads to a performance degradation and low throughput, because damaged data need to be resent.
-Error rate is a significant metric because it tells engineers how many requests failed at a particular point in time of performance testing. This metric is more evident when you can see the percentage of problem strongly increasing, hence you can detect problem easily.
+Error Rate is a~metric, which commonly occurs in the network systems, especially under high load. During the communication between client and server there could be error caused by another network device (router, switch, etc.) or signal disruption of the data during the transfer. The Error Rate is the mathematical calculation that produces a percentage of problem requests compared to all requests. In the ideal system, there should be zero network error present, however, in reality is in-feasible. This usually leads to a performance degradation and low throughput, because damaged data need to be resent.
+Error rate is a~significant metric because it tells engineers how many requests failed at a particular point in time of performance testing. This metric is more evident when you can see the percentage of problem strongly increasing, hence you can detect problem easily.
 
 
 \todo{Druha iterace}
@@ -363,7 +364,7 @@ A~Message Broker is an example of MOM. Its purpose is receive, store and distrib
 \newpage
 
 \section{Test Case Scenario}
-Configuration of each test case is specified by several options defined in Groovy \footnote{Object-oriented programming language for Java platform \url{http://groovy-lang.org/}} script. This script specify test behavior with following items:
+Configuration of each test case is specified by several options defined in Groovy\footnote{Object-oriented programming language for Java platform \url{http://groovy-lang.org/}} script. This script specify test behavior with following items:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -416,7 +417,7 @@ Detailed description of commands and its payload is available in Appendix \ref{A
 
 \section{Measures Process}
 \label{Measures Process}
-Measures process starts after dynamic test generation with option passed from the test file. Sender or senders, depends on test file, will start sending messages to the SUT. Inspector starts monitoring the behavior of the SUT and write it to disk. For monitoring, Inspector uses the Broker management interface. That is a REST interface that exposes (via HTTP protocol) internal JVM \footnote{JVM - Java Virtual Machine} and Broker detailed information. That information would be normally available via JMX \footnote{JMX - Java Management Extensions}. Data collection by Inspector is simple and pretty straightforward:
+Measures process starts after dynamic test generation with option passed from the test file. Sender or senders, depends on test file, will start sending messages to the SUT. Inspector starts monitoring the behavior of the SUT and write it to disk. For monitoring, Inspector uses the Broker management interface. That is a REST interface that exposes (via HTTP protocol) internal JVM\footnote{JVM - Java Virtual Machine} and Broker detailed information. That information would be normally available via JMX\footnote{JMX - Java Management Extensions}. Data collection by Inspector is simple and pretty straightforward:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -530,7 +531,7 @@ SpecJMS
 MPT is generally designed for performance testing of Broker. However, with the service growth, the need for performance testing of Qpid-Dispatch comes. This Chapter is focused on two things: firstly, analyze Qpid-Dispatch service, describe its capabilities and methodology. Secondly describe design of Topology Generator and Qpid-Dispatch Performance Module for MPT.
 
 \section{Qpid-Dispatch Router}
-Qpid-Dispatch is a lightweight AMQP message router for building scalable available and performant messaging networks. With respect to ISO/OSI \footnotemark{} model, this router is an application layer program running as a normal user program or as a daemon. Key features of Qpid-Dispatch are:
+Qpid-Dispatch is a lightweight AMQP message router for building scalable available and performant messaging networks. With respect to ISO/OSI\footnotemark{} model, this router is an application layer program running as a normal user program or as a daemon. Key features of Qpid-Dispatch are:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -544,7 +545,7 @@ The following theory about Qpid-Dispatch router is based on knowledge available~
 \footnotetext{ISO/OSI - \url{http://www.studytonight.com/computer-networks/complete-osi-model}}
 
 \subsection{Theory of Operation}
-The router accepts AMQP connections from senders and receivers and create AMQP connections to Message Brokers or similar AMQP-based services. Through this connection is sender able to reach message receiver, which can be another client in the network or message broker. The client can exchange messages directly with another client without involving a broker at all. The router classifies incoming messages and routers them between senders and receivers. The router is designed to be deployed in topologies of multiple routers, preferably with redundant paths to provide continued connectivity in the case of any router in the network fails. For routing Qpid-Dispatch uses link-state routing protocols \footnotemark{} and algorithms similar to OSPF or IS-IS to calculate best path (path with the lowest cost) from sender to receiver through the whole network and to recover from failures. 
+The router accepts AMQP connections from senders and receivers and create AMQP connections to Message Brokers or similar AMQP-based services. Through this connection is sender able to reach message receiver, which can be another client in the network or message broker. The client can exchange messages directly with another client without involving a broker at all. The router classifies incoming messages and routers them between senders and receivers. The router is designed to be deployed in topologies of multiple routers, preferably with redundant paths to provide continued connectivity in the case of any router in the network fails. For routing Qpid-Dispatch uses link-state routing protocols\footnotemark{} and algorithms similar to OSPF or IS-IS to calculate best path (path with the lowest cost) from sender to receiver through the whole network and to recover from failures. 
 
 \footnotetext{Link-state protocols - \url{https://www.certificationkits.com/cisco-certification/ccna-articles/cisco-ccna-intro-to-routing-basics/cisco-ccna-link-state-routing-protocols/}}
 
