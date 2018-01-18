@@ -8,5 +8,7 @@
 *.lof
 *.toc
 *.gz
+*.nav
+*.snm
 Literatura/*
 comments.txt
