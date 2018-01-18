@@ -17,7 +17,7 @@ In general an application performance is important. However, smooth network appl
 
 For performance testing of particular network messaging system developed by \emph{Red Hat Inc.} there is an existing solution\,---Messaging Performance Tool (MPT) \cite{ORPISKE:MSGPT}. MPT is specialized for the performance testing of \emph{Message Broker} (Broker) \cite{RH:Broker}\,---\,network application level software cooperating with \emph{Qpid-dispatch service} \cite{RH:Interconnect} in the network as the message distributor. Unfortunately, the current version of MPT does not support performance testing of enough component like the Router component, Qpid-dispatch. In this work we will focus on this particular short coming and develop a worthy solution allowing proper performance testing of the Qpid-dispatch service.
 
-This thesis is structured as follows. First, we define fundamentals of performance testing in Chapter \ref{Fundamentals of Software Performance Testing}. The rest of the thesis focuses on performance testing and analysis of Qpid-dispatch, an application level router designed by Red Hat Inc. Qpid-dispatch performance testing is based on MPT described in Chapter \ref{Messaging Performance Tool}. Description includes \emph{measurement process} and \emph{measured data description and evaluation}.The main goal of the thesis is to analyze MPT and design module for the Qpid-dispatch performance testing as described in Chapter \ref{Analysis and Design} together with used protocols and \emph{Automatic Topology Generator} for semi-automated network generation and deployment. Used technologies, tools and  implementation processes of each component are described in Chapter \ref{Implementation}. The most important part of the thesis is Chapter \ref{Experimental Evaluation}, containing the data gathering  from routers located in different types of topology, data evaluation and representation which leads to conclusion about performance of Qpid-dispatch. Finally, Chapter \ref{Summary} summarizes the thesis and proposes ideas for future use of developed tool.
+%This thesis is structured as follows. First, we define fundamentals of performance testing in Chapter \ref{Fundamentals of Software Performance Testing}. The rest of the thesis focuses on performance testing and analysis of Qpid-dispatch, an application level router designed by Red Hat Inc. Qpid-dispatch performance testing is based on MPT described in Chapter \ref{Messaging Performance Tool}. Description includes \emph{measurement process} and \emph{measured data description and evaluation}.The main goal of the thesis is to analyze MPT and design module for the Qpid-dispatch performance testing as described in Chapter \ref{Analysis and Design} together with used protocols and \emph{Automatic Topology Generator} for semi-automated network generation and deployment. Used technologies, tools and  implementation processes of each component are described in Chapter \ref{Implementation}. The most important part of the thesis is Chapter \ref{Experimental Evaluation}, containing the data gathering  from routers located in different types of topology, data evaluation and representation which leads to conclusion about performance of Qpid-dispatch. Finally, Chapter \ref{Summary} summarizes the thesis and proposes ideas for future use of developed tool.
 
 % https://www.seguetech.com/what-is-software-performance-testing/
 
@@ -109,8 +109,6 @@ Response time is how long it takes system to accept, evaluate, and respond to th
 
 However response time limits for non-human interactive system are more strict. They could acquire values in milliseconds or less.
 
-\todo{Prvni iterace}
-
 \subsection*{Traffic Spikes}
 As \emph{traffic spike} \cite{Kurkova:Thesis:2017, AMC:SPIKES} we can understand the sudden surge in demand from users. Typically doubling or multiplying of traffic level in short period of time. In real network, spikes are result of high workload, e.g. caused by higher amount of users trying to concurrently use the service over the network. For example we can experience sudden traffic spike in response time after publishing new popular viral context on video servers, start of sales events, reservation of limited amount of tickets or subject registration at university. Scheduled automatic backup or system upgrade for whole company during early morning hours can cause traffic spikes.
 
@@ -129,8 +127,8 @@ Traffic spikes can lead to inappropriate system behavior such as \emph{long resp
 
 For performance testing there are many types of suitable test methods. Which test you should use is determined by the nature of the system, testing requirements or how much time we have left for the performance testing. The following terms are generally well known and used in practice and each of them characterizes category or suite of the tests:
 \begin{itemize}
-	\item \textbf{Testing methods}\,---\,load testing, stress testing, endurance testing, \todo{scalability, volume, recovery}
-	\item \textbf{Testing approaches}\,---\,smoke testing, regression testing, benchmark testing
+	\item \textbf{Testing methods}\,---\,load testing, stress testing, endurance testing.
+	\item \textbf{Testing approaches}\,---\,smoke testing, regression testing, benchmark testing.
 \end{itemize}
 
 Their description is based on knowledge available in \cite{TuPo:TESTS, BUCH:4TYPES, Molyneaux:TAoAPT, ISTQB}.
@@ -332,12 +330,10 @@ Error Rate is a~metric, which commonly occurs in the network systems, especially
 Error rate is a~significant metric because it tells engineers how many requests failed at a particular point in time of performance testing. This metric is more evident when you can see the percentage of problem strongly increasing, hence you can detect problem easily.
 
 
-\todo{Druha iterace}
-
 \chapter{Messaging Performance Tool}
 \label{Messaging Performance Tool}
 % https://github.com/orpiske/msg-perf-tool
-Performance of \emph{Message-Oriented Middleware} (MOM) \cite{CURRY:MOM} is one of the most critical elements of quality assurence for enterprise integration system. There are multiple messaging components developed in Red Hat such as messaging clients, Message Broker, Message Router (Qpid-dispatch service) and stream-like message distributions tools. Since now, client has meaning of messaging client. \todo{Kafka - free to disclose? eric} 
+Performance of \emph{Message-Oriented Middleware} (MOM) \cite{CURRY:MOM} is one of the most critical elements of quality assurence for enterprise integration system. There are multiple messaging components developed in Red Hat such as messaging clients, Message Broker, Message Router (Qpid-dispatch service) and stream-like message distributions tools. Since now, client has meaning of messaging client.
 
 A~Message Broker is an example of MOM. Its purpose is receive, store and distribute messages, which are sent and received by clients. The performance capabilities of a Message Broker are important for its users, because being able to handle a large amount of transactions in a timely manner is an important characteristic of MOM. Users choose MOM for message distribution so they do not have to develop their own messaging distribution systems Another benefit of specialized MOM than own implementation is robustness and ensured performance. For example in automated systems, where components communicates with each other by command exchange. Amount of exchanged command is dependent on system size. We want to get systems results as soon as possible and for that is important to ensure smooth and quick message exchange.
 
@@ -519,12 +515,6 @@ Both, sender and receiver generates rate (throughput) data file. It contains dat
 \end{itemize}
 
 \footnotetext{HDR - \url{http://hdrhistogram.github.io/HdrHistogram/JavaDoc/org/HdrHistogram/package-summary.html}}
-
-\section{Related Works}
-\label{Related Works}
-% popsat podobne "existujici" reseni (samozrejme, obcas neexistuje ;), ale verim, ze zde se neco najde). Nejlepsi je i se vuci tem "related tools" vymezit (jako napr. "The tool ... cannot be used because it does not support ...")
-\todo{After SEP}
-SpecJMS
 
 \chapter{Analysis and Design}
 \label{Analysis and Design}
@@ -746,37 +736,6 @@ Collected data Format for new module will be almost same as it is in current ver
 \end{itemize}
 Data collected by senders and receivers remains same as its in current version of MPT.
 
-\chapter{Implementation}
-\label{Implementation}
-
-\section{Used Technologies}
-
-\subsection{Ansible}
-
-\subsection{Docker}
-Using for testing Ansible roles (remove?)
-
-\section{Topology Generator}
-
-\subsection{Template Generator}
-
-\subsection{Generation of Variables}
-
-\subsection{Configuration Files Generation and Deployment}
-
-\section{Qpid-Dispatch Performance Module}
-
-\subsection{TODO - more subsections about implementation}
-
-\chapter{Experimental Evaluation}
-\label{Experimental Evaluation}
-
-\section{Performance Testing on Various Generated Topology}
-
-\section{Testing results}
-
-\chapter{Future work and ideas}
-\label{Future work and ideas}
 
 \chapter{Summary}
 \label{Summary}
