@@ -4,7 +4,7 @@
 # E-mail: dytrych AT fit vutbr cz
 #===========================================
 # asi budete chtit prejmenovat / you will probably rename:
-CO=xstejs24-SEP-presentation
+CO=xstejs24-DP-presentation
 
 all: $(CO).pdf
 
