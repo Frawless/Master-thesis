@@ -7,13 +7,13 @@
 
 \chapter{Introduction}
 \label{Introduction}
-Good application performance is one of the main goals during the software development. But what makes software performance so important? Software reliability has to be guaranteed by the owner, but with undesirable performance there could be a lot of issues. Thus can badly influence software behavior. And this can cause a significant outflow of the consumers, and even brand destruction, financial damage, or loss of trust. These few reasons should be enough to do a proper performance testing before every software release, especially for large projects where industries guarantee certain level of software behavior and they would not be able to assure it with insufficient performance testing. Great emphasis on software performance is, in particular, in space programs, medical facilities, army systems, or energy distribution systems. In these fields it is necessary to ensure proper application behavior for a long time under high load and without any unexpected behavior such as high response time, frequent delays, or timeouts, because every failure is paid dearly. 
+Good application performance is one of the main goals during the software development. But what makes software performance so important? Software reliability has to be guaranteed by the owner, but with undesirable performance there could be a lot of issues. Thus can badly influence software behavior. And this can cause a significant outflow of the consumers, and even brand destruction, financial damage, or loss of trust. These few reasons should be enough to do a proper performance testing before every software release, especially for large projects where industries guarantee certain level of software behavior and they would not be able to assure it with insufficient performance testing. Great emphasis on software performance is, in particular, in space programs, medical facilities, army systems, or energy distribution systems. In these fields it is necessary to ensure proper application behavior for a long time under high load and without any unexpected behavior such as high response time, frequent delays, or timeouts, because every failure is paid dearly.
 
 Nowadays every developer should try to use well established frameworks which can make theirs work easier. Frameworks handle complex underlying issues such as security, performance, and code clarity. This way developers can invest more time in the actual functionality and meet the application requirements, since frameworks are usually optimized for one particular job. In the past every developer had to spent significant portion of development time tuning performance which led to spending more time and money for software development. But not everyone has enough knowledge of performance testing and this makes performance analysis and optimization even more difficult. This leads to a~need for specialized performance tools which can provide more sophisticated information, however, actually useful tools are usually proprietary and/or too expensive.
 
-A~very important part of the performance analysis is the right choice of \emph{key performance indicators} (KPIs) \cite{Molyneaux:TAoAPT} and effective interpretation of the results. The right choice of KPIs allows faster detection of performance problems and help developers with fixes and meeting the \emph{performance standards} \cite{Molyneaux:TAoAPT} set up by application owner or customer in time before the release. 
+A~very important part of the performance analysis is the right choice of \emph{key performance indicators} (KPIs) \cite{Molyneaux:TAoAPT} and effective interpretation of the results. The right choice of KPIs allows faster detection of performance problems and help developers with fixes and meeting the \emph{performance standards} \cite{Molyneaux:TAoAPT} set up by application owner or customer in time before the release.
 
-In general an application performance is important. However, smooth network application or hardware performance became much more demanded nowadays, since most of the communication is via the Internet.  Obviously when you make a payment in your internet banking you definitely want to have a stable connection to your bank's website without any delay. Network stability is significantly influenced by network components like routers and switches and hence their performance should be under utmost case. We refer to network performance testing as measurement of network service quality which is directly influenced by \emph{bandwidth, throughput, latency}, etc. 
+In general an application performance is important. However, smooth network application or hardware performance became much more demanded nowadays, since most of the communication is via the Internet.  Obviously when you make a payment in your internet banking you definitely want to have a stable connection to your bank's website without any delay. Network stability is significantly influenced by network components like routers and switches and hence their performance should be under utmost case. We refer to network performance testing as measurement of network service quality which is directly influenced by \emph{bandwidth, throughput, latency}, etc.
 
 For performance testing of particular network messaging system developed by \emph{Red Hat Inc.} there is an existing solution\,---Messaging Performance Tool (MPT) \cite{ORPISKE:MSGPT}. MPT is specialized for the performance testing of \emph{Message Broker} (Broker) \cite{RH:Broker}\,---\,network application level software cooperating with \emph{Qpid-dispatch service} \cite{RH:Interconnect} in the network as the message distributor. Unfortunately, the current version of MPT does not support performance testing of enough component like the Router component, Qpid-dispatch. In this work we will focus on this particular short coming and develop a worthy solution allowing proper performance testing of the Qpid-dispatch service.
 
@@ -40,7 +40,7 @@ The main goal of the performance testing is to ensure the following application 
 
 \footnotetext{During software development there is a document with Software Requirements Specification which specifies software metrics, including performance.}
 
-Similarly to software development process, performance testing process consist of usual engineering steps ranging from requirements definition to data evaluation. These steps also includes design, implementation, and execution of performance tests with data collection. The graphical representation of the performance testing process is depicted in the Figure~\ref{fig:performace_testing_process}. 
+Similarly to software development process, performance testing process consist of usual engineering steps ranging from requirements definition to data evaluation. These steps also includes design, implementation, and execution of performance tests with data collection. The graphical representation of the performance testing process is depicted in the Figure~\ref{fig:performace_testing_process}.
 
 \begin{figure}[H]
   \includegraphics[width=16cm]{obrazky-figures/pyramid.pdf}
@@ -74,7 +74,7 @@ The next step is to define the \emph{performance testing strategy}, correspondin
 
 While this process seems trivial, the opposite is true, in especially in case of network applications. Most of performance issues manifest at big workloads or high number of users, e.g. when million users are sending requests to the network device at the same time it could lead to an unacceptable device crash. Workload injectors are designated to simulate real user activity, and allows automatic analysis of performance behavior for tested application or device. Depending on the used technology, there can be a limit on the number of virtual users that can be generated by a single injector. These automated workload injectors are necessary for effective performance testing.
 
-After describing the plan we implement and execute proposed test cases. Environment and workload injectors are ready for execution, so last step before the testing itself is the implementation of tests. Thanks to the careful planing, engineers should have enough time to implement test cases with reference to proposed design. 
+After describing the plan we implement and execute proposed test cases. Environment and workload injectors are ready for execution, so last step before the testing itself is the implementation of tests. Thanks to the careful planing, engineers should have enough time to implement test cases with reference to proposed design.
 
 Final step of performance testing process is results evaluation. Output of this step is usually technical report with all selected performance key indicators, used workload and Collected Data Format for each test case. Then follows the data evaluation with thorough analysis of degradation localization. Additionally, the report usually contains syntactical graphs which display performance metrics along the duration of test execution.
 
@@ -98,7 +98,7 @@ Unclean code usually leads to inefficient algorithms, application deadlocks, or 
 
 \subsection*{Response Time}
 \label{Response Time 1}
-Response time is how long it takes system to accept, evaluate, and respond to the user for his request e.g. HTTP request for particular website. Different actions and requests can have significantly different response time and with that provide different load on the system. For example retrieving document from web-server by its ID is considerably faster than searching for the same document by keywords. Response time is mostly measured during the \emph{load test} \cite{Manzor:APTB} of the application. Well designed test should consider different types of load on the system, various kind of requests, and different number of connected end-users at the same time. For user based systems we usually consider 3 threshold for the response time values: 
+Response time is how long it takes system to accept, evaluate, and respond to the user for his request e.g. HTTP request for particular website. Different actions and requests can have significantly different response time and with that provide different load on the system. For example retrieving document from web-server by its ID is considerably faster than searching for the same document by keywords. Response time is mostly measured during the \emph{load test} \cite{Manzor:APTB} of the application. Well designed test should consider different types of load on the system, various kind of requests, and different number of connected end-users at the same time. For user based systems we usually consider 3 threshold for the response time values:
 
 \begin{description}
 	\setlength\itemsep{0em}
@@ -163,14 +163,14 @@ Typical system issues covered by load testing:
 
 \subsection*{Stress Testing}
 \label{Stress Testing}
-Stress testing is the specific type of load testing, where we do not measure normal workload, but focus on unexpected workloads or traffic spikes. The main purpose is to study how the system behaves in extreme conditions such as enormous number of concurrent requests, using a server with much less memory or a weaker CPU, and analyze the system performance threshold. Its very useful to know performance threshold in order to know the difference between performance under normal workload and performance threshold. The following enumeration lists common stress test scenarios: 
+Stress testing is the specific type of load testing, where we do not measure normal workload, but focus on unexpected workloads or traffic spikes. The main purpose is to study how the system behaves in extreme conditions such as enormous number of concurrent requests, using a server with much less memory or a weaker CPU, and analyze the system performance threshold. Its very useful to know performance threshold in order to know the difference between performance under normal workload and performance threshold. The following enumeration lists common stress test scenarios:
 \begin{itemize}
 	\setlength\itemsep{0em}
 	\item Monitor the system behavior with over maximum of users logged in at the same time.
 	\item All user performing critical operations at the same time.
 	\item All users accessing the same file at the same time.
 	\item Hardware issues such as server in cluster down.
-\end{itemize} 
+\end{itemize}
 Typical issues, which are covered by stress testing:
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -233,12 +233,12 @@ Typical system issues covered by smoke testing testing:
 	\setlength\itemsep{0em}
 	\item System without main functionality is useless, because test coverage of functionality is low.
 	\item Main functionality can result into system crash.
-\end{itemize} 
+\end{itemize}
 
 %\footnotetext[\label{note1}]{Approach for test suits, where are used other methods like Load testing, Stress testing, etc.}
 
 \subsection*{Regression Testing}
-Whenever engineers develop new feature and want to update the previous build it has to pass the \emph{regression tests}\footnote{Approach for test suits, where are used other methods like Load testing, Stress testing, etc.}\addtocounter{footnote}{-1}\addtocounter{Hfootnote}{-1} \cite{STF:REGRESSION}. Regression tests are designed to test functionality of the latest build updated with new feature. The main objective is to determine, if new feature affects already functional parts of the system. This type of tests is very important, because engineers do not always realize, which parts of the system will be indirectly affected. During regression testing, new test cases are not created, but previous test cases are automatic re-executed and analyzed. 
+Whenever engineers develop new feature and want to update the previous build it has to pass the \emph{regression tests}\footnote{Approach for test suits, where are used other methods like Load testing, Stress testing, etc.}\addtocounter{footnote}{-1}\addtocounter{Hfootnote}{-1} \cite{STF:REGRESSION}. Regression tests are designed to test functionality of the latest build updated with new feature. The main objective is to determine, if new feature affects already functional parts of the system. This type of tests is very important, because engineers do not always realize, which parts of the system will be indirectly affected. During regression testing, new test cases are not created, but previous test cases are automatic re-executed and analyzed.
 Typical scenarios for regression testing:
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -266,7 +266,7 @@ Common issues covered by regression testing:
 \label{Performance Metrics}
 % https://loadstorm.com/load-testing-metrics/ 2017/10/18
 
-During the performance testing we can monitor a lot of metrics, which can have different importance based on the system's purpose. The following lists the most common metrics that are monitored during the performance testing of all applications, no matter of developing language. 
+During the performance testing we can monitor a lot of metrics, which can have different importance based on the system's purpose. The following lists the most common metrics that are monitored during the performance testing of all applications, no matter of developing language.
 
 In the testing systems, performance metrics are collected during long process of collecting, analyzing and reporting information regarding performance of whole system or individual component. This process can be different for each metric, since each metric needs different type of the system analysis.
 
@@ -278,10 +278,10 @@ Throughput is a metric, which refers to the number of requests per second that t
 Response time as issue was already mentioned in Subsection \ref{Response Time 1}; response time as metric is consists of two parts which are \emph{latency} and \emph{service time}.
 
 \subsubsection*{Service Time}
-Service time is the time it takes system to evaluate and send response to user request. In particular, when user sends request for a web page to a server, it takes the server time to evaluate the request and send proper response back to the user, this is the service time. Measurement can be performed easily using stopwatch which starts at receive of request and stops after the response is send. Service time can be affected by any item which leads to a performance degradation as described in Subsection \ref{Performance Degradation}. 
+Service time is the time it takes system to evaluate and send response to user request. In particular, when user sends request for a web page to a server, it takes the server time to evaluate the request and send proper response back to the user, this is the service time. Measurement can be performed easily using stopwatch which starts at receive of request and stops after the response is send. Service time can be affected by any item which leads to a performance degradation as described in Subsection \ref{Performance Degradation}.
 
 \subsubsection*{Latency}
-Second part of the response time is latency \cite{Broadwell:RPT, BHATT:PERF}, which represent a delay between sending the request on the client side and receiving it for evaluation on the server side. Hence latency is the common problem in the network systems such as data center, web server, etc., because request/response needs to travel over the physical medium between the client and the server. Client and server could be located on different continents, thus the message have to travel long distance and latency is increasing.  
+The second part of the response time is latency \cite{Broadwell:RPT, BHATT:PERF}, which represent a delay between sending the request on the client side and receiving it for evaluation on the server side. Hence latency is the common problem in the network systems such as data center, web server, etc., because request/response needs to travel over the physical medium between the client and the server. Client and server could be located on different continents, thus the message have to travel long distance and latency is increasing.
 
 \begin{figure}[H]
   \centering
@@ -304,7 +304,7 @@ There are two common ways of measuring the response time \cite{Kopp:RPT}: Averag
 \end{figure}
 In the Figure \ref{fig:average_percentil_1} the average represent inaccurate response time, which is higher than real one.
 
-The better solution how to determine the actual response time is Percentile. The percentile is statistic method, which cut measured ordered values into hundredths and then characterize the value below which a given percentage of measurements in a group of particular measurements falls. In the Figure \ref{fig:average_percentil_1} you can see the \emph{median} value, which reflects more realistic value of the system response time. Median value is same such as the 50th percentile. In this case, there is no problem, because user will expect slower response time than it has. 
+The better solution how to determine the actual response time is Percentile. The percentile is statistic method, which cut measured ordered values into hundredths and then characterize the value below which a given percentage of measurements in a group of particular measurements falls. In the Figure \ref{fig:average_percentil_1} you can see the \emph{median} value, which reflects more realistic value of the system response time. Median value is same such as the 50th percentile. In this case, there is no problem, because user will expect slower response time than it has.
 
 \begin{figure}[H]
   \centering
@@ -323,7 +323,7 @@ Applications running at servers with long run-time competes over a limited amoun
 	\item \textbf{CPU usage}\,---\,inappropriate usage of CPU could lead to performance degradation, because low priority processes may occupy CPU ahead of the higher priority processes. CPU usage is structuring into system usage and user usage. High system usage can cause problems or bottlenecks.
 	\item \textbf{Memory usage}\,---\,full consumption of memory could cause performance degradation.
 	\item \textbf{Disk space}\,---\,for example when using storage disk as a database, there should be preventive measures to backup the data and free up disk space.
-	\item \textbf{Operating System limits}\,---\,system's memory, and CPU capabilities. 
+	\item \textbf{Operating System limits}\,---\,system's memory, and CPU capabilities.
 \end{description}
 
 
@@ -337,20 +337,20 @@ Error rate is a~significant metric because it tells engineers how many requests 
 \chapter{Messaging Performance Tool}
 \label{Messaging Performance Tool}
 % https://github.com/orpiske/msg-perf-tool
-Performance of \emph{Message-Oriented Middleware} (MOM) \cite{CURRY:MOM} is one of the most critical elements of quality assurence for enterprise integration system. There are multiple messaging components developed in Red Hat such as messaging clients, Message Broker, Message Router (Qpid-dispatch service) and stream-like message distributions tools. Since now, client has meaning of messaging client. \todo{Kafka - free to disclose? eric} 
+Performance of \emph{Message-Oriented Middleware} (MOM) \cite{CURRY:MOM} is one of the most critical elements of quality assurence for enterprise integration system. There are multiple messaging components developed in Red Hat such as messaging clients, Message Broker, Message Router (Qpid-dispatch service) and stream-like message distributions tools. Note that from now on I will shorten the messaging client to just client.
 
-A~Message Broker is an example of MOM. Its purpose is receive, store and distribute messages, which are sent and received by clients. The performance capabilities of a Message Broker are important for its users, because being able to handle a large amount of transactions in a timely manner is an important characteristic of MOM. Users choose MOM for message distribution so they do not have to develop their own messaging distribution systems Another benefit of specialized MOM than own implementation is robustness and ensured performance. For example in automated systems, where components communicates with each other by command exchange. Amount of exchanged command is dependent on system size. We want to get systems results as soon as possible and for that is important to ensure smooth and quick message exchange.
+A~Message Broker is an example of MOM. Its purpose is to receive, store and distribute messages, which are sent and received by clients. The performance capabilities of a Message Broker are important for its users, because being able to handle a large amount of transactions in a timely manner is an important characteristic of MOM. Users choose MOM for message distribution so they do not have to develop their own messaging distribution systems. Another benefit of using specialized MOM is robustness and guaranteed performance. For example in automated systems, where components communicates with each other by command exchange. Amount of exchanged commands is dependent on system size. We want to get systems results as soon as possible and for that is important to ensure smooth and quick message exchange.
 
-\emph{The Maestro} \cite{ORPISKE:MSGPT} is a testing system designed especially for testing the performance of MOM. On the Figure \ref{fig:msg_perf_tool} you can see architecture of Maestro. The whole Maestro is deployed as a cluster system on several machines. A~typical Maestro deployment consist of one node for Maestro Broker, one or more for Senders, one or more for Receivers and the SUT. The Maestro system consists of several components:
+\emph{The Maestro} \cite{ORPISKE:MSGPT} is a testing system designed for testing the performance of MOM. On the Figure \ref{fig:msg_perf_tool} you can see the architecture of Maestro. The Maestro is deployed as a cluster system on several machines. A~typical deployment consist of one node for Maestro Broker, one or more for Senders, one or more for Receivers and the SUT. The architecture of Maestro system consists of several components:
 
 \begin{description}
 	\setlength\itemsep{0em}
-	\item \textbf{Maestro Broker}\,---\,any \emph{Message Queuing Telemetry Transport - MQTT\footnote{MQTT - \url{http://mqtt.org/}}}-capable broker with several topics. This component takes care about distribution of control messages between other cluster components such as Maestro Clients and MPT Back-end. 
+	\item \textbf{Maestro Broker}\,---\,any \emph{Message Queuing Telemetry Transport\footnote{MQTT - \url{http://mqtt.org/}} (MQTT)} capable broker with several topics. This component takes care of distribution of control messages between other cluster components such as Maestro Clients and MPT Back-end.
 	\item \textbf{Meastro Clients}\,---\,this component contains the client API as well as the test scripts for each test case. A~sub-component called Reporter takes care of data reporting to the user, which means data visualization on the web.
-	\item \textbf{MPT Back-end}\,---\,consists of sender part, receiver part and inspector part. Sender, and receiver ensure messaging sending to the SUT and receiving from it. Inspector monitoring workload over the SUT and reporting collected performance metrics to the testing cluster. Maestro currently has two back-ends:
+	\item \textbf{MPT Back-end}\,---\,consists of sender, receiver and inspector parts. Sender, and receiver ensure message sending to the SUT and receiving from SUT. Inspector monitors workload over the SUT and reporting collected performance metrics to the testing cluster. Maestro currently has two back-ends:
 	\begin{itemize}
-		\item \textbf{Java}\,---\,using for JMS-based\footnote{JMS - Java Message Service} testing, including \emph{Advanced Message Queuing Protocol - AMQP} \cite{OASIS:AMQP}, OpenWire and Core protocols.
-		\item \textbf{C}\,---\,using for AMQP and \emph{Streaming Text Oriented Messaging Protocol - STOMP}\footnote{STOMP - \url{https://stomp.github.io/}} protocol testing.
+		\item \textbf{Java}\,---\,used for JMS-based\footnote{JMS - Java Message Service} testing, including \emph{Advanced Message Queuing Protocol (AMQP)} \cite{OASIS:AMQP}, OpenWire and Core protocols.
+		\item \textbf{C}\,---\,used for AMQP and \emph{Streaming Text Oriented Messaging Protocol\footnote{STOMP - \url{https://stomp.github.io/}} (STOMP)} protocol testing.
 	\end{itemize}
 \end{description}
 
@@ -364,25 +364,25 @@ A~Message Broker is an example of MOM. Its purpose is receive, store and distrib
 \newpage
 
 \section{Test Case Scenario}
-Configuration of each test case is specified by several options defined in Groovy\footnote{Object-oriented programming language for Java platform \url{http://groovy-lang.org/}} script. This script specify test behavior with following items:
+Configuration of each test case is specified by several options defined in Groovy\footnote{Object-oriented programming language for Java platform \url{http://groovy-lang.org/}} script. The script specifies test behavior with the following elements:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
 	\item \textbf{message size}\,---\,message size in bytes,
 	\item \textbf{number of connected clients}\,---\,count of senders and receivers connected to the SUT,
-	\item \textbf{test duration (time or load)}\,---\,end condition of each test, could be specified by time or message count,
-	\item \textbf{message rate}\,---\,the desired rate that the system should try to maintain (0 for unbounded).
+	\item \textbf{test duration (time or load)}\,---\,end condition of each test, can be specified by time, limit or message count,
+	\item \textbf{message rate}\,---\,the desired rate that the system should try to maintain (0 for unbounded rate).
 \end{itemize}
 
-The test script is also responsible for starting and stopping the test. We can also specify the test profile. Depending on the test profile, the script may also be responsible for increasing or decreasing the workload on the S.U.T during the test scenario. The load can be modified by increasing the target rate or the number of parallel connections. Multiple combinations of this options can create a lot of test cases with different load for the SUT. Every test will produce his own logs which are processed by the reporting sub-component on the client side and used for monitoring the metrics. Maestro Reporter produce data visualization, such as charts, from stored logs.
+The test script is also responsible for starting and stopping the test. We can also specify the test profile. Depending on the test profile, the script may also be responsible for increasing or decreasing the workload on the SUT during the test scenario. The load can be modified by increasing the target rate or the number of parallel connections. Multiple combinations of this options can create a lot of test cases with different loads for the SUT. Every test will produce its own logs which are processed by the reporting sub-component on the client side and used for monitoring the metrics. Maestro Reporter produce data visualizations, such as charts, from stored logs.
 
 \section{Communication Between Components}
 \label{Communication Between Components}
-The Maestro Protocol is a binary protocol implemented on tom of MessagePack\footnotemark{}. For message exchange between node it currently uses MQTT protocol (version 3.1.1) and for server the testing data on data server uses HTTP protocol (version 1.1). The messages exchanged between the peers of testing cluster are called notes in the following description.
+The Maestro Protocol is a binary protocol implemented on top of MessagePack\footnotemark{}. For message exchange between nodes it currently uses MQTT protocol (version 3.1.1) and for sending the testing data to data server uses HTTP protocol (version 1.1). The messages exchanged between the peers of testing cluster are called notes in the following description.
 
 \footnotetext{Messagepack - \url{https://msgpack.org/}}
 
-The notes has specific format, it contains three parts. First is \emph{Type} which is short integer that identifies the purpose of the note:
+Each note has a specific format containing three parts. First is \emph{Type} which is short integer that identifies the purpose of the note, which is one of the following values:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -390,48 +390,26 @@ The notes has specific format, it contains three parts. First is \emph{Type} whi
 	\item \textbf{Response (1)}\,---\,a note sent by a testing peer as a response for a request.
 	\item \textbf{Notification (2)}\,---\,a note sent by a testing peer as a reaction to an event.
 \end{itemize}
-Second part is \emph{Command} which identifies the action to be executed or, in some cases. that was executed. Currently, there are 17 command represented by a long integer. Third part is \emph{Payload} which refers to data carried by the note as part of its command. The commands available are:
+The second part is \emph{Command} which identifies the action to be executed or, in some cases that was executed. Currently, there are 17 command represented by a long integer. The last part is \emph{Payload} which refers to data carried by the note as part of its command. Detailed description of commands and its payload is available in Appendix \ref{AP:commands}.
 
-\begin{itemize}
+
+\section{Measuring Process}
+\label{Measuring Process}
+Measures process starts after dynamic test generation with options passed from the test file. Senders will start sending messages to the SUT. Inspector starts monitoring the behavior of the SUT and writes it to the disk. For monitoring, Inspector uses the Broker management interface. That is a REST interface that exposes (via HTTP protocol) internal JVM\footnote{JVM - Java Virtual Machine} and Broker detailed information. Data collection by Inspector is simple and pretty straightforward:
+
+\begin{enumerate}
 	\setlength\itemsep{0em}
-	\item \textbf{MAESTRO\_NOTE\_START\_RECEIVER (0)}
-	\item \textbf{MAESTRO\_NOTE\_STOP\_RECEIVER (1)}
-	\item \textbf{MAESTRO\_NOTE\_START\_SENDER (2)}
-	\item \textbf{MAESTRO\_NOTE\_STOP\_SENDER (3)}
-	\item \textbf{MAESTRO\_NOTE\_START\_INSPECTOR (4)}
-	\item \textbf{MAESTRO\_NOTE\_STOP\_INSPECTOR (5)}
-	\item \textbf{MAESTRO\_NOTE\_FLUSH (6)}
-	\item \textbf{MAESTRO\_NOTE\_SET (7)}
-	\item \textbf{MAESTRO\_NOTE\_STATS (8)}
-	\item \textbf{MAESTRO\_NOTE\_HALT (9)}
-	\item \textbf{MAESTRO\_NOTE\_PING (10)}
-	\item \textbf{MAESTRO\_NOTE\_OK (11)}
-	\item \textbf{MAESTRO\_NOTE\_PROTOCOL\_ERROR (12)}
-	\item \textbf{MAESTRO\_NOTE\_INTERNAL\_ERROR (13)}
-	\item \textbf{MAESTRO\_NOTE\_ABNORMAL\_DISCONNECT (14)}
-	\item \textbf{MAESTRO\_NOTE\_NOTIFY\_FAIL (15)}
-	\item \textbf{MAESTRO\_NOTE\_NOTIFY\_SUCCESS (16)}
-\end{itemize}
-Detailed description of commands and its payload is available in Appendix \ref{AP:commands}.
-
-
-\section{Measures Process}
-\label{Measures Process}
-Measures process starts after dynamic test generation with option passed from the test file. Sender or senders, depends on test file, will start sending messages to the SUT. Inspector starts monitoring the behavior of the SUT and write it to disk. For monitoring, Inspector uses the Broker management interface. That is a REST interface that exposes (via HTTP protocol) internal JVM\footnote{JVM - Java Virtual Machine} and Broker detailed information. That information would be normally available via JMX\footnote{JMX - Java Management Extensions}. Data collection by Inspector is simple and pretty straightforward:
-
-\begin{itemize}
-	\setlength\itemsep{0em}
-	\item Inspector sent an HTTP request with the \emph{JavaScript Object Notation - JSON}\footnotemark{} content to the Broker REST interface.
+	\item Inspector sends a HTTP request with the \emph{JavaScript Object Notation\footnotemark{} (JSON)} content to the Broker REST interface.
 	\item Broker evaluate the request and sent response to the Inspector.
-	\item Inspector collect the response.
-\end{itemize}
-Errors occurred during the information collection may cause the test case fail.
+	\item Inspector collects the response.
+\end{enumerate}
+Errors occurred during the information collection may cause the test case to fail.
 
 \footnotetext{JSON - \url{https://www.json.org/}}
 
-However, there are two problem factors; the first is that inspector shouldn't influence performance of the SUT. Current method for information collecting working like the management interface call method with request for information and get response. During this call, the method usually involve locks to guarantee thread safety and exclusive access. However, calling this methods too often could cause Broker performance degradation. In order to reduce this risk, the inspector enforces a collection interval of 10 seconds and use only certain operations. That reduce the hits on management interface on 2 or 3 hits every 10 seconds.
+However, there are two problem factors; the first is that inspector should not influence the performance of the SUT. Current method for the information collection works like the management interface call method with request for information and get response. During this call, the method usually involves locks to guarantee the thread safety and exclusive access. However, calling this method too often can cause Broker performance degradation. In order to reduce this risk, the inspector enforces a collection interval of 10 seconds and uses only certain operations. This strategy reduces the hits on management interface to 2 or 3 hits every 10 seconds.
 
-The second is large size of the stored logs. This is mitigated by usage of the compression methods for reduction logs size. However, compressed logs can fill whole hard drive during long test-run, so old logs has to been erase at some point of time. The collected logs can be safely erased when the test is completed. The Maestro generates about 1\,Gb of uncompressed data per hour of testing.
+The second, often problem factor, is the large size of the stored logs. This is mitigated by the usage of the compression methods. However, compressed logs can still fill the whole hard drive during the long test-run, so old logs has to be erased at some point of time. The collected logs can be safely erased when the test is completed. Currently the Maestro generates about 1\,Gb of uncompressed data per hour of testing.
 
 %Inspector also monitor node with broker (CPU, memory size)?
 
@@ -440,19 +418,19 @@ The second is large size of the stored logs. This is mitigated by usage of the c
 
 \section*{Testing Metrics}
 \label{Testing Metrics}
-Which metrics are collected depending on the component. In the Table \ref{tab:maestro_metrics} we can see summary of the metrics, which are collected for each component.
+Which metrics are collected depends on the cluster component. In the Table \ref{tab:maestro_metrics} we can see the summary of the metrics, which are collected for each component.
 
 \begin{table}[H]
 \centering
 \begin{tabular}{|p{2.5cm}|p{3.5cm}|p{7cm}|}
 \hline
-\rowcolor[HTML]{C5E3DF} 
+\rowcolor[HTML]{C5E3DF}
 \multicolumn{1}{|c|}{\textbf{Component}} & \multicolumn{1}{c|}{\textbf{Metrics}} & \multicolumn{1}{c|}{\textbf{Description}}                       \\ \hline
 \textbf{Sender}                          & Throughput                            & Throughput of the sender                                        \\ \hline
 \textbf{Receiver}                        & Throughput                            & Throughput of the receiver                                      \\ \hline
-\textbf{}                                & Latency                               & Time between send and receive message                           \\ \hline
-\textbf{Broker}			                & JVM heap memory                       & maximum, minimum, and current Eden, Survivor, and Tenured space \\ \hline
-                                         & JVM non-heap                          & PermGen or Metaspace                                            \\ \hline
+\textbf{}                                & Latency                               & Time between send and receive messages                           \\ \hline
+\textbf{Broker}			                & JVM heap memory                       & Maximum, minimum, and current Eden, Survivor, and Tenured space \\ \hline
+                                         & JVM non-heap                          & PermGen or Metaspace\footnotemark{}                                            \\ \hline
                                          & Broker internals                      & Queue size and expiration count                                 \\ \hline
                                          & OS basic memory                       & Physical and swap memory usage                                  \\ \hline
                                          & OS resources                          & Count of file descriptors                                       \\ \hline
@@ -461,18 +439,20 @@ Which metrics are collected depending on the component. In the Table \ref{tab:ma
 \label{tab:maestro_metrics}
 \end{table}
 
-Throughput of the sender or receiver refers to message count send/received during performance test run. This metric is collected by each sender and receiver. Latency is collected by receiver. It refers to time between message send and receive. This time can by influenced by Quality of Service or other parameters. Since Messaging Broker is written in Java JVM memory information is relevant. High JVM memory usage can point to memory leak or bad algorithm implementation.  Broker queue has size threshold and message expiration time. When no one pick-up message from queue after some period of time there is no need to keep old messages and its unnecessary to fill to much of memory.
+\footnotetext{Eden, Survivor and Tenured space are internal Java memory spaces.}
 
-Last metric is OS resource spending during performance testing. It's not relevant for broker performance but its helpful to know data like CPU usage, memory usage, etc., in case of broker crash debugging.
+Throughput of the sender or receiver refers to the message count sent/received during the performance test run. This metric is collected by each sender and receiver. Latency is collected only by receiver. It refers to the time between send and receive of the message. This time can by influenced by the  Quality of Service or other parameters. Since Messaging Broker is written in Java JVM memory metric is relevant. High JVM memory usage can point to the memory leak or bad algorithm implementation. Broker queue has size threshold and message expiration time. When no one picks-up the message from the queue after some period of time there is no need to keep old messages and its unnecessary to fill too much of the memory.
+
+Last metric is the OS resource spending during the performance testing. It is not relevant for broker performance, but it is helpful to know data e.g. CPU usage, memory usage, etc., in case of Broker crash debugging.
 
 \section{Collected Data Format}
 \label{Collected Data Format}
-As it was mentioned, data are collected by Inspector. Inspector monitoring the broker and collecting information about the workload. Output of this measurement should be one file for each active inspector. That file is sent directly to the HTTP data server. The broker inspector file is composed of the following columns:
+Data are collected by Inspector. Inspector monitors the broker and collects information about the workload. Output of this measurement should be one file for each active inspector. The broker inspector file is composed of the following columns:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
 	\item \textbf{Timestamp}\,---\,the date and time for the data sample in the format YYYY-MM-DD hh:mm:ss using the W3C defined standard for datetime.
-	\item \textbf{Load}\,---\,size of system load.
+	\item \textbf{Load}\,---\,size of the system load.
 	\item \textbf{Open file descriptors}\,---\,number of opened filed descriptors.
 	\item \textbf{Free file descriptors}\,---\,number of free file descriptors.
 	\item \textbf{Free memory}\,---\,free physical memory.
@@ -494,10 +474,10 @@ As it was mentioned, data are collected by Inspector. Inspector monitoring the b
 	\item \textbf{PM committed}\,---\,Permgen or Metaspace committed memory (either Permgen or Metaspace depending the JVM version).
 	\item \textbf{PM max}\,---\,Permgen or Metaspace maximum memory (either Permgen or Metaspace depending the JVM version).
 	\item \textbf{PM used}\,---\,Permgen or Metaspace used memory (either Permgen or Metaspace depending the JVM version).
-	\item \textbf{Queue size}\,---\,number of messages waiting for processing on the queue.
+	\item \textbf{Queue size}\,---\,number of messages waiting for processing in the queue.
 	\item \textbf{Consumers}\,---\,number of consumers connected to the queue.
-	\item \textbf{Acknowledged}\,---\,number of acknowledged messages on the queue.
-	\item \textbf{Expired}\,---\,number of expired messages on the queue.
+	\item \textbf{Acknowledged}\,---\,number of acknowledged messages in the queue.
+	\item \textbf{Expired}\,---\,number of expired messages in the queue.
 \end{itemize}
 
 Maestro sender and receiver generate another relative performance testing data. Receiver generates latency file with the following data:
@@ -507,10 +487,10 @@ Maestro sender and receiver generate another relative performance testing data. 
 	\item \textbf{Start Time-stamp}\,---\,start time of the receiving.
 	\item \textbf{End Time-stamp}\,---\,end time of the receiving.
 	\item \textbf{Interval Maximum}\,---\,collected maximum latency.
-	\item \textbf{Interval Compressed Histogram}\,---\,compressed histogram of measurement's latency in HDR\footnotemark{} format.			
+	\item \textbf{Interval Compressed Histogram}\,---\,compressed histogram of measurement's latency in HDR\footnotemark{} format.
 \end{itemize}
 
-Both, sender and receiver generates rate (throughput) data file. It contains data about send or received about of data by each peer. Data are stored in a compressed comma-separated values (CSV) file with the following columns:
+Both, sender and receiver generate rate (throughput) data file. It contains data about send or received data by each peer. Data are stored in a compressed comma-separated values (CSV) file with the following columns:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -545,13 +525,13 @@ The following theory about Qpid-Dispatch router is based on knowledge available~
 \footnotetext{ISO/OSI - \url{http://www.studytonight.com/computer-networks/complete-osi-model}}
 
 \subsection{Theory of Operation}
-The router accepts AMQP connections from senders and receivers and create AMQP connections to Message Brokers or similar AMQP-based services. Through this connection is sender able to reach message receiver, which can be another client in the network or message broker. The client can exchange messages directly with another client without involving a broker at all. The router classifies incoming messages and routers them between senders and receivers. The router is designed to be deployed in topologies of multiple routers, preferably with redundant paths to provide continued connectivity in the case of any router in the network fails. For routing Qpid-Dispatch uses link-state routing protocols\footnotemark{} and algorithms similar to OSPF or IS-IS to calculate best path (path with the lowest cost) from sender to receiver through the whole network and to recover from failures. 
+The router accepts AMQP connections from senders and receivers and create AMQP connections to Message Brokers or similar AMQP-based services. Through this connection is sender able to reach message receiver, which can be another client in the network or message broker. The client can exchange messages directly with another client without involving a broker at all. The router classifies incoming messages and routers them between senders and receivers. The router is designed to be deployed in topologies of multiple routers, preferably with redundant paths to provide continued connectivity in the case of any router in the network fails. For routing Qpid-Dispatch uses link-state routing protocols\footnotemark{} and algorithms similar to OSPF or IS-IS to calculate best path (path with the lowest cost) from sender to receiver through the whole network and to recover from failures.
 
 \footnotetext{Link-state protocols - \url{https://www.certificationkits.com/cisco-certification/ccna-articles/cisco-ccna-intro-to-routing-basics/cisco-ccna-link-state-routing-protocols/}}
 
 \subsection{Addresses and Connections}
 \label{Addresses and Connections}
-Qpid-Dispatch is able to connects clients servers, AMQP services, and other router implementations through network connections. The router provides multiple components and settings for specifying service on the other side of connection link. 
+Qpid-Dispatch is able to connects clients servers, AMQP services, and other router implementations through network connections. The router provides multiple components and settings for specifying service on the other side of connection link.
 
 \begin{description}
 	\setlength\itemsep{0em}
@@ -560,7 +540,7 @@ Qpid-Dispatch is able to connects clients servers, AMQP services, and other rout
 		\setlength\itemsep{0em}
 		\item \textbf{mobile}\,---\,The address is a rendezvous between senders and receivers. The router is message distributor.
 		\item \textbf{link route}	\,---\,The addresses defines a private messaging path between sender and receiver. The router only passes messages between end points.
-	\end{itemize}	
+	\end{itemize}
 	\item \textbf{Listener}\,---\,accept client connections. Listeners has several types that are defined by their role:
 	\begin{itemize}
 		\setlength\itemsep{0em}
@@ -573,7 +553,7 @@ Qpid-Dispatch is able to connects clients servers, AMQP services, and other rout
 		\setlength\itemsep{0em}
 		\item \textbf{normal}\,---\,The connection is used for AMQP clients using normal message delivery. The router will initiate the connection but links are created by the peer that accepts the connection.
 		\item \emph{Inter-router} and \emph{route-container} modes are the same such as listener's modes.
-	\end{itemize}	
+	\end{itemize}
 \end{description}
 
 \footnotetext{Addresses in this discussion refer to AMQP protocol addresses, not to TCP/IP addresses.}
@@ -619,7 +599,7 @@ Broker configuration file offers various setting and protocols such as specializ
 
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item \textbf{User access}\,---\,allows guest access or authentication access for users. 
+	\item \textbf{User access}\,---\,allows guest access or authentication access for users.
 	\item \textbf{Multiple Protocol Support}\,---\,broker supports AMQP, MQTT, STOMP, OpenWire and Core protocols.
 	\item \textbf{Connections}\,---\,can establish connection to another AMQP-based service such as another broker or router.
 	\item \textbf{Queues}\,---\,user can specify new queues in configuration file or allow auto-create option.
@@ -629,7 +609,7 @@ Broker configuration file offers various setting and protocols such as specializ
 However, broker configuration is not implemented yet, but design of automatic configuration generation will be shared with router configuration generation.
 
 \subsubsection*{Router}
-Just like broker configuration, router offer various types of configurations. The basics were explained in Subsections \ref{Addresses and Connections} and \ref{Message Routing}, but for better understanding of all capabilities I~recommend Qpid-Dispatch documentation \cite{RH:Interconnect}. 
+Just like broker configuration, router offer various types of configurations. The basics were explained in Subsections \ref{Addresses and Connections} and \ref{Message Routing}, but for better understanding of all capabilities I~recommend Qpid-Dispatch documentation \cite{RH:Interconnect}.
 
 \subsection{Format of Input and Output}
 Input structure should be user-friendly and easy to update even in case of large topologies. As input is choose one file called \texttt{config.yml} in \emph{YAML}\footnotemark{}  language, which is similar to JSON but it's better readable for humans. Generator needs information about all hosts in topology and which type of topology it should generate. For that purpose there is two attributes in configuration file; first is \emph{inventory path} which refer to location of \emph{Inventory}. Inventory is file, containing all hosts in topology in specific format. This format is available in Appendix \ref{AP:Inventory}. It is simple configuration file with enumeration of host names and their IP addresses. Second attribute is which type of topology it should generate. There user can specify one of the simple types of graph, such as line, circle, complete, etc., which do not need any other information except Inventory or he can specify path to graph metadata. Graph metadata are more described in Subsection \ref{Graph Metadata}.
@@ -656,20 +636,20 @@ Here user can specify any setting for each node. For example, user can specify l
 directed: false
 graph: {}
 nodes:
-- type: router					
+- type: router
   id: router1
   listener:
   	- host: 0.0.0.0
-  	  port: 1080 	
+  	  port: 1080
   	  role: inter-router
-- type: router					
+- type: router
   id: router2
   connector:
   	- name: router1
   	  host: router1
-  	  port: 5675 	
-  	  role: inter-router  
-multigraph: false	  
+  	  port: 5675
+  	  role: inter-router
+multigraph: false
 \end{verbatim}
 From this metadata NetworkX create two nodes with type, id, and listener or connector attributes. This attributes will be used for generating configuration files for each node. All possible attributes that user can specify for each node is available in Appendix \ref{AP:Qpid-Dispatch Configuration File Template}.
 
