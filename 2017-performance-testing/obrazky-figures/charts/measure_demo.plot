@@ -27,11 +27,11 @@ set parametric
 
 set trange [0:127800]
 
-set label "Start"  at 4500,1000 font "24" front
-set label "Warmup"  at 20000,1000 font "24" front
-set label "Test"  at 60000,1000 font "24" front
-set label "Cooldown"  at 96000,1000 font "24" front
-set label "Stop"  at 117500,1000 font "24" front
+set label "{/:Bold Start}"  at 4500,1000 font "24" front
+set label "{/:Bold Warmup}"  at 20000,1000 font "24" front
+set label "{/:Bold Test}"  at 60000,1000 font "24" front
+set label "{/:Bold Cooldown}"  at 96000,1000 font "24" front
+set label "{/:Bold Stop}"  at 117500,1000 font "24" front
 
 plot "measure_demo.dat" using 1:2 ls 1 notitle with filledcurves x1,\
       14400, t with lines title '' lc rgb '#FF0000' dashtype 6 lw 3,\

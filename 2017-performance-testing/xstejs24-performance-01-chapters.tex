@@ -4,6 +4,7 @@
 % Zajimavy blog
 % http://brendangregg.com/
 
+%!TeX spellcheck = en-US
 
 \chapter{Introduction}
 \label{Introduction}
@@ -235,6 +236,8 @@ Typical system issues covered by smoke testing testing:
 	\item Main functionality can result into system crash.
 \end{itemize}
 
+Smoke testing is not typical performance testing approach, but it can be used for initial load test for check if system can be started.
+
 %\footnotetext[\label{note1}]{Approach for test suits, where are used other methods like Load testing, Stress testing, etc.}
 
 \subsection*{Regression Testing}
@@ -270,9 +273,20 @@ During the performance testing we can monitor a lot of metrics, which can have d
 
 In the testing systems, performance metrics are collected during long process of collecting, analyzing and reporting information regarding performance of whole system or individual component. This process can be different for each metric, since each metric needs different type of the system analysis.
 
+\subsection*{How to Measure}
+Performance measurement process can be divided into several steps. Metrics are usually measured after a warm-up period of time after the commencement of traffic, because it takes a while for workload to stabilize. Stabilized workload is necessary for measurements because unstable workload can negatively affect the measurement results. In the Figure \ref{fig:measurements} you can see workload phases with marked part for the performance testing.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm]{obrazky-figures/measure_demo.pdf}
+  \caption{Load phases of performance measurement process.}
+  \label{fig:measurements}
+\end{figure}
+
+Workload during testing does not have to be on the same value during whole testing. In particular, load testing finds the highest load during which the system can work properly. This limit is find by raising the load and monitor the system as it is shown in the Figure \ref{fig:load_test}.
 
 \subsection{Throughput}
-Throughput is a metric, which refers to the number of requests per second that the system can handle. \emph{Network throughput} is the rate of successful message deliveries over a communication channel. Throughput is usually measured after a warm-up period of time after the commencement of traffic, because it takes a while for workload to stabilize. We need stabilized workload for proper throughput measurement, because initial values could negatively affect the measurement. Throughput is measured by load testing; suitable strategy for measuring throughput is to continuously raise the load until response takes longer that acceptable threshold.
+Throughput is a metric, which refers to the number of requests per second that the system can handle. \emph{Network throughput} is the rate of successful message deliveries over a communication channel. Throughput is measured by load testing; suitable strategy for measuring throughput is to continuously raise the load until response takes longer that acceptable threshold. \todo{neco dopsat}
 
 \subsection{Response Time and Latency}
 Response time as issue was already mentioned in Subsection \ref{Response Time 1}; response time as metric is consists of two parts which are \emph{latency} and \emph{service time}.
@@ -283,14 +297,18 @@ Service time is the time it takes system to evaluate and send response to user r
 \subsubsection*{Latency}
 The second part of the response time is latency \cite{Broadwell:RPT, BHATT:PERF}, which represent a delay between sending the request on the client side and receiving it for evaluation on the server side. Hence latency is the common problem in the network systems such as data center, web server, etc., because request/response needs to travel over the physical medium between the client and the server. Client and server could be located on different continents, thus the message have to travel long distance and latency is increasing.
 
+\subsubsection{Round Trip Time}
+Round-trip time (RTT) is time that it takes for a signal to be sent with time it takes for an acknowledgement of that signal to be received. In network, the RTT is one of the several factors that affects the signal latency. Basically, RTT is depends on the distance between sender and receiver, because that distance the signals must be travel by.
+
+
 \begin{figure}[H]
   \centering
   \includegraphics[width=15cm]{obrazky-figures/latency.pdf}
-  \caption{Latency diagram with system's response time based on the date.}
-  \label{fig:latency}
+  \caption{Diagram capturing diference between latency and response time.}
+  \label{fig:latency_vs_service_time}
 \end{figure}
 
-In the Figure \ref{fig:latency} you can see network latency monitoring during period of time with traffic spikes. These spikes can represent adding new system to the network or system backup.
+In the Figure \ref{fig:latency_vs_service_time} you can see response time and both it parts: latency and service time. Service time is usually smaller than latency since latency depends on distance. When you add service time value and latency value you will get response time at certain time.
 
 \subsubsection*{Average and Percentile Response Time}
 There are two common ways of measuring the response time \cite{Kopp:RPT}: Average (mean) response time is calculated as the sum of all measured times divided by the count of users requests. While this seems trivial, in many times, the average response time does not actually reflect the real response time of the system. How is that possible? In reality, most application have few heavy outliers such as very slow transactions. In the Figure \ref{fig:average_percentil_1} you can see few slow transactions which drag the average of the response time to the right. This naturally leads to an inaccurate specification of response time.
@@ -503,8 +521,10 @@ Both, sender and receiver generate rate (throughput) data file. It contains data
 \section{Related Works}
 \label{Related Works}
 % popsat podobne "existujici" reseni (samozrejme, obcas neexistuje ;), ale verim, ze zde se neco najde). Nejlepsi je i se vuci tem "related tools" vymezit (jako napr. "The tool ... cannot be used because it does not support ...")
-\todo{After SEP}
-SpecJMS
+
+One of the related tools for performance testing is \emph{SpecJMS} \cite{SPECJMS}. It is the industry-standard benchamrk for evaluating the performance of eterprise message-oriented middlevare servers based on JMS.
+
+\todo{optat se otavia proc je to naprd}
 
 \chapter{Analysis and Design}
 \label{Analysis and Design}

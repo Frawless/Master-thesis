@@ -6,9 +6,9 @@
 # asi budete chtit prejmenovat / you will probably rename:
 CO=xstejs24-performance
 
-all: plot $(CO).pdf
+all: plot $(CO).pdf sub-clean
 
-pdf: plot $(CO).pdf
+pdf: plot $(CO).pdf sub-clean
 
 $(CO).ps: $(CO).dvi
 	dvips $(CO)
@@ -31,6 +31,10 @@ $(CO).dvi: $(CO).tex $(CO).bib
 clean:
 	rm -f *.dvi *.log $(CO).blg $(CO).bbl $(CO).toc *.aux $(CO).out $(CO).lof $(CO).ptc
 	rm -f $(CO).pdf
+	rm -f *~
+
+sub-clean:
+	rm -f *.dvi *.log $(CO).blg $(CO).bbl $(CO).toc *.aux $(CO).out $(CO).lof $(CO).ptc
 	rm -f *~
 
 pack:
@@ -57,6 +61,8 @@ normostrany:
 plot:
 	./plot.sh
 
-evince: all
+show: all
 	evince $(CO).pdf
 	make normostrany
+
+evince: show sub-clean

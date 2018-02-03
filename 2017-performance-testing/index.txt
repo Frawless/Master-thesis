@@ -2,7 +2,7 @@ Messaging Performance Tool (MPT)
 Key Performance indicators
 Performance standards
 Automatic Topology Generator
-Qpid-Dispatch 
+Qpid-Dispatch
 Broker
 performance requirements
 Throughput
@@ -36,4 +36,4 @@ ISO/OSI
 OSP
 IS-IS
 Inventory
-
+RTT - round trip time
