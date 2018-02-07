@@ -23,10 +23,30 @@
 %\setbeamertemplate{headline}{}
 }
 
-\title{Master's Thesis}
-\subtitle{Performance Testing and Analysis of Qpid-Dispatch Router}
-\author[]{Bc. Jakub Stejskal}
-\institute[FIT]{Faculty of Information Technology}
+\makeatother
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.6\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle\hspace*{3em}
+  \end{beamercolorbox}}%
+  \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,center]{date in head/foot}%
+    \insertframenumber{} / \inserttotalframenumber\hspace*{1ex}
+  \end{beamercolorbox}%  
+  \vskip0pt%
+}
+\makeatletter
+\setbeamertemplate{navigation symbols}{}
+
+
+\title{Performance Testing and Analysis of Qpid-Dispatch Router}
+\subtitle{Term Project}
+\author[Bc. Jakub Stejskal]{Bc. Jakub Stejskal}
+\institute[]{Faculty of Information Technology}
 \date[]{\today}
 
 \begin{document}
@@ -37,23 +57,46 @@
 		%/////////////////////////////////////////////////
 		\section{Motivation}
 		\begin{frame}{Motivation}
+			\begin{itemize}
+			\setlength\itemsep{0.5em}
+				\item Why should we care about performance?
+				\vspace{0.5em}						
 				\begin{itemize}
-						\item Good Performance $\rightarrow$ Good Quality
-						\item Application improvements
-						\item Bug revealing
-						\item Customers satisfaction
-				\end{itemize}
+						\setlength\itemsep{0.5em}
+						\item Good Performance $\rightarrow$ Good Quality.
+						\item Solid performance leads to a good customer satisfaction.
+				\end{itemize}	
+				\vspace{0.5em}	
+				\item Why should performance testing be automated?	
+				\vspace{0.5em}		
+				\begin{itemize}
+						\setlength\itemsep{0.5em}
+						\item Can reveal potential performance bugs.
+						\item Can lead to overall application performance by locating performance hotspots.
+				\end{itemize}				
+			\end{itemize}
+			\begin{figure}[ht]
+				\begin{center}
+					\scalebox{0.23}{\includegraphics{figures/CSAT.png}\footnote{\tiny{}CSAT Figure - \url{https://www.linkedin.com/pulse/faster-response-times-linked-high-csat-peter-thalman}}}
+				\end{center}
+			\end{figure}
 		\end{frame}
 		%/////////////////////////////////////////////////
 		\section{Qpid-Dispatch}
 		\begin{frame}{Qpid-Dispatch}
 				\begin{itemize}
-						\item Application layer router 
-						\item Message routing
-						\item Communication with Messaging Broker and Messaging Clients		
-						\item Each router has configuration file 
-						\item Redundancy configuration
-				\end{itemize}						
+						\setlength\itemsep{0.5em}
+						\item Application layer router. 
+						\item Manages message routing in the network.
+						\item Communicates with Messaging Broker and Messaging Clients.		
+						\item Each router has configuration file with specified links to other components.
+						\item Networks with routers can be configured with redundant links in case of node crash.
+				\end{itemize}	
+			\begin{figure}[ht]
+				\begin{center}
+					\scalebox{0.3}{\includegraphics{figures/routing.png}\footnote{\tiny{}Routing Figure - \url{http://coretanbocahit.blogspot.cz/2016/10/lab-39-eigrp-filtering-ip-genap.html}}}
+				\end{center}
+			\end{figure}									
 		\end{frame}
 		%/////////////////////////////////////////////////
 		\section{Messaging Performance Tool}
@@ -62,10 +105,12 @@
            		\begin{tabular}{l}
              		\parbox{0.37\linewidth}{%  change the parbox width as appropiate
 						\begin{itemize}
-							\item Cluster system
-							\item Load $\rightarrow$ Sender + Receiver
-							\item Communication between back-end and Maestro Clients through Maestro Broker
-							\item Measured data to data server
+							\setlength\itemsep{0.5em}
+							\item Cluster performance testing system.
+							\item Load handlers are Sender and Receiver.
+							\item Inspector is monitoring component.
+							\item Communication between back-end and Maestro Clients through Maestro Broker.
+							\item Measured data are send to data server from Inspector.
 						\end{itemize}
    					}
          		\end{tabular} 
@@ -75,15 +120,28 @@
 			\end{tabular}					
 		\end{frame}
 		%/////////////////////////////////////////////////
-		\section{Messaging Performance Tool}
-		\begin{frame}{Messaging Performance Tool}
+		\section{Messaging Performance Tool: Proposed Extension}
+		\begin{frame}{Messaging Performance Tool: Proposed Extension}
        		\begin{tabular}{cl}  
            		\begin{tabular}{l}
              		\parbox{0.37\linewidth}{%  change the parbox width as appropiate
 						\begin{itemize}
-							\item Maestro Clients update (New Commands)
-							\item New component: Agent
-							\item Ability to change topology (Shut down router, etc.)
+							\setlength\itemsep{0.5em}
+							\item Required changes:
+							\begin{itemize}
+								\setlength\itemsep{0.5em}
+								\item Maestro Clients update (New Commands).
+								\item New component: Agent.
+								\item Ability to change topology (Shut down router, etc.).						
+							\end{itemize}
+							\vspace{0.5em}
+							\item Finished work:
+							\begin{itemize}
+								\setlength\itemsep{0.5em}
+								\item Updated Maestro Clients with new commands.
+								\item Updated Maestro Broker with new topics.
+								\item Implemented Agent component.
+							\end{itemize}
 						\end{itemize}
    					}
          		\end{tabular} 
@@ -99,10 +157,11 @@
            		\begin{tabular}{l}
              		\parbox{0.4\linewidth}{%  change the parbox width as appropiate
 						\begin{itemize}
-							\item Metadata $\rightarrow$ Configuration files
-							\item Metadata are Inventory or Graph File
-							\item Config based on Qpid-Dispatch version 
-							\item Auto deployment by Ansible
+							\setlength\itemsep{0.5em}						
+							\item Metadata are transformed into Configuration files.
+							\item Metadata consists of Inventory or Graph File (topology description).
+							\item Configuration files are based on Qpid-Dispatch version (specific Template for Ansible).
+							\item Automatic deployment of configuration files by Ansible to specific nodes.
 						\end{itemize}
    					}
          		\end{tabular} 
@@ -116,14 +175,23 @@
 		\section{Summary}
 		\begin{frame}{Summary}
 				\begin{itemize}
-						\item Upgrade of Messaging Performance Tool
+						\setlength\itemsep{0.5em}
+						\item Extension of Messaging Performance Tool
+						\vspace{0.5em}
 						\begin{itemize}
-							\item Add new commands to Maestro Clients
-							\item Implement Qpid-Dispatch Agent
+							\setlength\itemsep{0.5em}
+							\item Added new commands to Maestro Clients.
+							\item Implemented Qpid-Dispatch Agent.
 						\end{itemize}
-						\item Improvements of Topology Generator
-						\item Qpid-Dispatch performance measurements
-						\item Experiments with Qpid-Dispatch recovery
+						\vspace{1em}
+						\item Plan for next semester
+						\vspace{0.5em}
+						\begin{itemize}
+							\setlength\itemsep{0.5em}
+							\item Improvements of Topology Generator (more user friendly input, more default graphs).
+							\item Qpid-Dispatch performance measurements (measure the highest throughput and other metrics).
+							\item Experiments with Qpid-Dispatch recovery and topology convergence. 
+						\end{itemize}
 				\end{itemize}
 		\end{frame}
 		%/////////////////////////////////////////////////
