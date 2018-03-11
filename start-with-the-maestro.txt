@@ -1,0 +1,47 @@
+Repo: https://github.com/orpiske/maestro-java
+
+GIT convention
+    - all contributions via pull requests
+    - check TravisCI output (integrated automatically)
+    - check PR Quality Review
+    - Both should be green before pull-request
+
+Dispatch agent
+    - instance of class 'maestro-worker'
+    - Maestro Workers are sender, receiver, inspector, connector(?)
+    - TODO
+
+class MaestroWorker
+    - class for single worker
+    - TODO
+
+class MaestroWorkers
+    - TODO
+
+class AbstrctMaestroExecutor
+    - abstract class
+    - Exmaple of "command" handling
+    - one of the most imporatnt parts of the maestro for me
+
+class MaestroExecutorListener (? - command listeting)
+
+docker contianers with basic cluster
+    - star with that
+    - README.md about it
+    - build the docker container
+    - run contianers and do some stuff with that
+    - understand contianers code (.yml - something like docker file)
+    - run some easy tests on it
+    - then go to check the java code of Maestro
+
+    - ping: ping <container-name>
+    - broker user and pass: admin@admin
+    - test script on maestro-client  (/opt/maestro/maestro-test-scripts/groovy-scripts/utils/)
+        - single point for one broker
+        - multipoint for two interconect for example
+        - utils (ping....)
+
+Questions to code:
+1: AbstractMaestroPeer is an abstract class for inspectors/senders/receivers ? If I understand correctly that peer is part of MPT backend.
+2: There is a relationship between MaestroWorker and MaestroWorkerManager, how it works?  Manager can handle commands for worker so Manager is implementation of Worker interface?
+3: Can I understand MaestroContainer something like container with single Worker?

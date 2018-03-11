@@ -23,12 +23,12 @@
 %\documentclass[zadani,cprint]{fitthesis} % pro barevný tisk - odkazy jsou černé, znak VUT barevný
 %\documentclass[english,zadani,print]{fitthesis} % for the color print - links are black
 %\documentclass[english,zadani,cprint]{fitthesis} % for the print - links are black, logo is color
-% * Je-li prace psana v anglickem jazyce, je zapotrebi u tridy pouzit 
+% * Je-li prace psana v anglickem jazyce, je zapotrebi u tridy pouzit
 %   parametr english nasledovne:
-%   If thesis is written in english, it is necessary to use 
+%   If thesis is written in english, it is necessary to use
 %   parameter english as follows:
 %      \documentclass[english]{fitthesis}
-% * Je-li prace psana ve slovenskem jazyce, je zapotrebi u tridy pouzit 
+% * Je-li prace psana ve slovenskem jazyce, je zapotrebi u tridy pouzit
 %   parametr slovak nasledovne:
 %      \documentclass[slovak]{fitthesis}
 
@@ -44,15 +44,15 @@
 \renewcommand{\ttdefault}{lmtt}% zavede Latin Modern tt jako tt
 
 
-%% CHAPTER X                                                                                                              
-%% NAME                                                                                                                    
-%%                                                                                                                        
-%% ->                                                                                                                      
-%% X NAME                                                                                                                  
-%%                                                                                                                        
- \makeatletter                                                                                                                                                                                                                                   \def\@makechapterhead#1{%                                                                                                  
- \vspace*{50\p@}%                                                                                                        
- {\parindent \z@ \raggedright \normalfont                                                                                
+%% CHAPTER X
+%% NAME
+%%
+%% ->
+%% X NAME
+%%
+ \makeatletter                                                                                                                                                                                                                                   \def\@makechapterhead#1{%
+ \vspace*{50\p@}%
+ {\parindent \z@ \raggedright \normalfont
  \interlinepenalty\@M                                                                                                                                                                                                                                \Huge \bfseries \thechapter\ #1\par\nobreak                                                                                                                                                                                                        \vskip 40\p@                                                                                                                                                                                                                                  }}                                                                                                                        \makeatother
 
 
@@ -67,7 +67,7 @@
 % problém je, že balíček hyperref musí být uveden jako poslední, takže nemůže
 % být v šabloně
 % "hyperref" package create clickable links in pdf if you are using pdflatex.
-% Problem is that this package have to be introduced as the last one so it 
+% Problem is that this package have to be introduced as the last one so it
 % can not be placed in the template file.
 \ifWis
 \ifx\pdfoutput\undefined % nejedeme pod pdflatexem / we are not using pdflatex
@@ -116,8 +116,8 @@
   title.en={Performance Testing and Analysis of Qpid Dispatch Router}, %nazev prace v anglictine / thesis title in english
   %Autor / Author
   author={Jakub Stejskal},   %cele jmeno a prijmeni autora / full name and surname of the author
-  author.name={Jakub},   %jmeno autora (pro citaci) / author name (for reference) 
-  author.surname={Stejskal},   %prijmeni autora (pro citaci) / author surname (for reference) 
+  author.name={Jakub},   %jmeno autora (pro citaci) / author name (for reference)
+  author.surname={Stejskal},   %prijmeni autora (pro citaci) / author surname (for reference)
   author.title.p=Bc., %titul pred jmenem (nepovinne) / title before the name (optional)
   %author.title.a=PhD, %titul za jmenem (nepovinne) / title after the name (optional)
   %Ustav / Department
@@ -125,13 +125,13 @@
   %                  fill in appropriate abbreviation of the department according to assignment: UPSY/UIFS/UITS/UPGM
   %Skolitel / supervisor
   supervisor=Tomáš Fiedor, %cele jmeno a prijmeni skolitele / full name and surname of the supervisor
-  supervisor.name={Tomáš},   %jmeno skolitele (pro citaci) / supervisor name (for reference) 
-  supervisor.surname={Fiedor},   %prijmeni skolitele (pro citaci) / supervisor surname (for reference) 
+  supervisor.name={Tomáš},   %jmeno skolitele (pro citaci) / supervisor name (for reference)
+  supervisor.surname={Fiedor},   %prijmeni skolitele (pro citaci) / supervisor surname (for reference)
   supervisor.title.p={Ing.},   %titul pred jmenem (nepovinne) / title before the name (optional)
   %supervisor.title.a={},    %titul za jmenem (nepovinne) / title after the name (optional)
-  %Klicova slova, abstrakty, prohlaseni a podekovani je mozne definovat 
+  %Klicova slova, abstrakty, prohlaseni a podekovani je mozne definovat
   %bud pomoci nasledujicich parametru nebo pomoci vyhrazenych maker (viz dale)
-  %Keywords, abstracts, declaration and acknowledgement can be defined by following 
+  %Keywords, abstracts, declaration and acknowledgement can be defined by following
   %parameters or using dedicated macros (see below)
   %===========================================================================
   %Klicova slova / keywords
@@ -161,7 +161,7 @@
 %Declaration (for thesis in english should be in english)
 %\declaration{}
 
- \declaration{Hereby I declare that this master's thesis was prepared as an original author’s work under the supervision of Ing. Tomáš Fiedor. 
+ \declaration{Hereby I declare that this master's thesis was prepared as an original author’s work under the supervision of Ing. Tomáš Fiedor.
 The supplementary information was provided by Ing. Zdeněk Kraus and Otavio Rodolfo Piske from Red Hat, Inc.
 All the relevant information sources, which were used during preparation of this thesis, are properly cited and included in the list of references.}
 
@@ -184,7 +184,7 @@ All the relevant information sources, which were used during preparation of this
   \setlength{\parskip}{0pt}
 
   {\hypersetup{hidelinks}\tableofcontents}
-  
+
   % Seznam obrazku a tabulek (pokud prace obsahuje velke mnozstvi obrazku, tak se to hodi)
   % List of figures and list of tables (if the thesis contains a lot of pictures, it is good)
   \ifczech
@@ -194,14 +194,14 @@ All the relevant information sources, which were used during preparation of this
     \renewcommand\listfigurename{Zoznam obrázkov}
   \fi
   % \listoffigures
-  
+
   \ifczech
     \renewcommand\listtablename{Seznam tabulek}
   \fi
   \ifslovak
     \renewcommand\listtablename{Zoznam tabuliek}
   \fi
-  % \listoftables 
+  % \listoftables
 
   \ifODSAZ
     \setlength{\parskip}{0.5\bigskipamount}
@@ -217,8 +217,14 @@ All the relevant information sources, which were used during preparation of this
 
   % Text prace / Thesis text
   % ----------------------------------------------
-  \input{xstejs24-performance-01-chapters} % viz. obsah.tex / see obsah.tex
-              
+  \input{chapters/xstejs24-performance-01-chapter} % viz. obsah.tex / see obsah.tex
+  \input{chapters/xstejs24-performance-02-chapter}
+  \input{chapters/xstejs24-performance-03-chapter}
+  \input{chapters/xstejs24-performance-04-chapter}
+  \input{chapters/xstejs24-performance-05-chapter}
+  \input{chapters/xstejs24-performance-06-chapter}
+  \input{chapters/xstejs24-performance-07-chapter}
+  \input{chapters/xstejs24-performance-08-chapter}
 
   % Pouzita literatura / Bibliography
   % ----------------------------------------------
@@ -233,7 +239,7 @@ All the relevant information sources, which were used during preparation of this
     \def\@openbib@code{\addcontentsline{toc}{chapter}{Literatura}}
     \makeatother
     \bibliographystyle{bib-styles/czechiso}
-  \else 
+  \else
     \makeatletter
     \def\@openbib@code{\addcontentsline{toc}{chapter}{Bibliography}}
     \makeatother
@@ -271,7 +277,7 @@ All the relevant information sources, which were used during preparation of this
 %\iftwoside
 %  \cleardoublepage
 %\fi
-  
+
 \ifslovak
 %  \section*{Zoznam príloh}
 %  \addcontentsline{toc}{section}{Zoznam príloh}
@@ -288,13 +294,13 @@ All the relevant information sources, which were used during preparation of this
   \setlength{\parskip}{0pt}
   % seznam příloh / list of appendices
   % \printcontents[chapters]{l}{0}{\setcounter{tocdepth}{2}}
-  
+
   \ifODSAZ
     \setlength{\parskip}{0.5\bigskipamount}
   \else
     \setlength{\parskip}{0pt}
   \fi
-  
+
   % vynechani stranky v oboustrannem rezimu
   \iftwoside
     \cleardoublepage
