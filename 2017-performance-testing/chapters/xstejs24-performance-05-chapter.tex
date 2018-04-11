@@ -4,50 +4,7 @@
 % Chapter 5
 \chapter{Implementation}
 \label{Implementation}
-This chapter describes the implementation of components, which were described in the Chapter \ref{Analysis and Design}. The main part is the Agent module for MPT, which is implemented in Java and Groovy language. The second part is Topology Generator, which is python package for automatic generation of dispatch topology based on user's metadata. Since topology deployment is not part MPT or Topology Generator, there is also described \emph{Ansible} and \emph{Docker} technology. Measurement data gathering and reporting is done by MPT parts that has already been mentioned in the Chapter \ref{Analysis and Design}.
-
-
-\section{Used Technologies}
-Messaging Performance Tool is a large project with several parts. The most of MPT, such as command parsing, reporting, clients abstractions and so on, is written in Java language. But whole MPT is not pure Java code. To specify a test, Groovy is used. Groovy is basically lightweight version of Java with several advantages. From my point of view Groovy scripts are more readable for those who are not much familiar with Java code. Groovy scrips are also used as reaction for specific commands for extension points, but this is deeply described in the Subsection \ref{MPT Preparations}.
-
-On the other hand, Topology Generator is a new simple project. For easy integration to another projects, quick development, and easy code preview I developed it in \emph{Python} language. Whole generator is created as one package, which is available for installation on any machine with installed Python version 2.7 and higher. Already mentioned technologies are very common and almost every programmer have heard about Java and Python. In the following subsections I describe not common and well known technologies.
-
-\subsection{Ansible}
-Ansible \cite{Ansible} is simple automation framework which allow users to automate daily tasks on multiple nodes or containers. Basic types of tasks which can be automated by Ansible are:
-
-\begin{itemize}
-	\item \textbf{Provisioning}\,---\,setup the various servers user need in network infrastructure.
-	\item \textbf{Configuration management}\,---\,change configuration of an application, operation system or device. Basically it allows start, stop and restart services, install or update application or perform a wide variety of other configuration tasks.
-	\item \textbf{Application deployment}\,---\,automatic deployment of internally developed application to your systems with all dependencies.
-\end{itemize}
-
-Ansible scripts, called playbooks, are written in YAML language, It makes Ansible scripts easy to read for humans and very simple to manage. Another advantage is that user does not even need to know commands used to accomplish a particular tasks. All is needed to specify what state does user wants the system to be in. Ansible is available on multiple systems with really short list of dependencies; Linux based systems needs Python and Windows need PowerShell, both systems needs SSH. Ansible playbooks can be grouped together and create more complex scripts called roles. They are open-source and available in public repository.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=10cm]{obrazky-figures/ansible.png}
-  \caption{Ansible architecture. \todo{Placeholder}}
-  \label{fig:ansible_architecture}
-\end{figure}
-
-In this thesis is Ansible used for several tasks; main is to deploy systems on specific nodes. As I want to run performance tests of Qpid-dispatch over multiple topology scenarios it is necessary to do system deployment quickly and automatically, which is easy with Ansible. System deployment contains MPT installation, Qpid-dispatch installation and other services based on testing scenario. The next task is to create and deploy configuration files for each router machine. This task runs Topology generator and create configuration files for each machine based on generator output.
-
-
-\subsection{Docker}
-Docker \cite{Docker} is an open platform that provide developing, shipping, and running application separately from your infrastructure. Basically docker is specific type of virtualization technology. It allows the ability to package and run an application in a loosely isolated environment called a container. Docker containers are lightweight virtual machines run directly within the host machine's kernel. This means that you can run more containers than virtual machines on specific hardware, it is possible to ran containers on virtual machines.
-
-Docker container are build up from a dockerfile where container attributes are specified such as OS in container, environment variables, and steps for installing applications. Output of build command is a docker image. This image is ready for running as a container with another specific attributes such as exposed ports. Containers can be attached to same network which allow communication between all containers.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=10cm]{obrazky-figures/docker.png}
-  \caption{Docker architecture. \todo{Placeholder}}
-  \label{fig:ansible_architecture}
-\end{figure}
-
-
-Since docker is able to run services such as Qpid-dispatch very easily and also allow communication between containers. It is possible to deploy MPT with proper SUT in containers and analyze behavior in the container network or just run MPT on single machine. However, for proper performance results we need real machines, docker containers are used only for MPT development and trying some basic stuffs with MPT.
-
+This chapter describes the implementation of components, which were described in the Chapter \ref{Analysis and Design}. The main part is the Agent module for MPT, which is implemented in Java and Groovy language. The second part is Topology Generator, which is python package for automatic generation of dispatch topology based on user's metadata. Since topology deployment is not part MPT or Topology Generator, there is also described \emph{Ansible} script for it. Measurement data gathering and reporting is done by MPT parts that has already been mentioned in the Chapter \ref{Analysis and Design}.
 
 \section{Topology Generation}
 Qpid-dispatch has a lot of configurable attributes, which can influence router behavior. These attributes can be set up with an AMQP management tool called \emph{qdmanage}\footnotemark{} or you can specify them directly in the configuration file. Since qdmanage needs human interaction, it is more comfortable to create configuration file for each specific test case. Here comes Topology Generator on the scene.

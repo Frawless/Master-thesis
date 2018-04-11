@@ -5,10 +5,10 @@
 
 \chapter{Analysis and Design}
 \label{Analysis and Design}
-MPT is generally designed for performance testing of Broker. However, with the service growth, the need for performance testing of Qpid-Dispatch comes. This Chapter is focused on two things: firstly, analyze Qpid-Dispatch service, describe its capabilities and methodology. Secondly describe design of Topology Generator and Qpid-Dispatch Performance Module for MPT.
+MPT is specially designed for the performance testing of Broker. However, with the Qpid-Dispatch growth, the need for performance testing comes. In the following we will analyze the Qpid-Dispatch service, focusing on its capabilities and methodology. Moreover we will describe the design of Topology Generator and Qpid-Dispatch Performance Module for MPT, which are the main requirements for actual performance testing of Qpid-Dispatch router.
 
 \section{Qpid-Dispatch Router}
-Qpid-Dispatch is a lightweight AMQP message router for building scalable available and performant messaging networks. With respect to ISO/OSI\footnotemark{} model, this router is an application layer program running as a normal user program or as a daemon. Key features of Qpid-Dispatch are:
+Qpid-Dispatch is a lightweight AMQP message router suitable for building scalable and highly performant messaging networks. This router is an application layer program, with respect to ISO/OSI\footnotemark{} model, running either as a normal user program or as a daemon. In particular it has the following key features:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -17,106 +17,104 @@ Qpid-Dispatch is a lightweight AMQP message router for building scalable availab
 	\item Uses redundant network paths to route around failures.
 	\item Streamlines the management of large deployments.
 \end{itemize}
-The following theory about Qpid-Dispatch router is based on knowledge available~in~\cite{RH:Interconnect}.
+The following summary of Qpid-Dispatch router was composed based on knowledge available~in~\cite{RH:Interconnect}.
 
-\footnotetext{ISO/OSI - \url{http://www.studytonight.com/computer-networks/complete-osi-model}}
+\footnotetext{ISO/OSI\,---\,\url{http://www.studytonight.com/computer-networks/complete-osi-model}}
 
 \subsection{Theory of Operation}
-The router accepts AMQP connections from senders and receivers and create AMQP connections to Message Brokers or similar AMQP-based services. Through this connection is sender able to reach message receiver, which can be another client in the network or message broker. The client can exchange messages directly with another client without involving a broker at all. The router classifies incoming messages and routers them between senders and receivers. The router is designed to be deployed in topologies of multiple routers, preferably with redundant paths to provide continued connectivity in the case of any router in the network fails. For routing Qpid-Dispatch uses link-state routing protocols\footnotemark{} and algorithms similar to OSPF or IS-IS to calculate best path (path with the lowest cost) from sender to receiver through the whole network and to recover from failures.
-
-\footnotetext{Link-state protocols - \url{https://www.certificationkits.com/cisco-certification/ccna-articles/cisco-ccna-intro-to-routing-basics/cisco-ccna-link-state-routing-protocols/}}
+The router accepts AMQP connections from senders and receivers and further creates AMQP connections to Message Brokers or similar AMQP-based services. Through these connections sender is able to reach receiver, which can be another client in the network or a message broker. The client can exchange messages directly with another client without involving a broker at all. The router classifies all of these incoming messages and routes them between senders and receivers. The router is designed to be deployed in topologies of multiple routers, preferably with redundant paths to provide continually connectivity in the case any router in the network fails. For routing Qpid-Dispatch uses link-state routing protocols\footnote{Link-state protocols\,---\,\url{https://www.certificationkits.com/cisco-certification/ccna-articles/cisco-ccna-intro-to-routing-basics/cisco-ccna-link-state-routing-protocols/}} and algorithms similar to OSPF or IS-IS to calculate the best path (e.g. the path with the lowest cost) from sender to receiver through the whole network and to recover from failures.
 
 \subsection{Addresses and Connections}
 \label{Addresses and Connections}
-Qpid-Dispatch is able to connects clients servers, AMQP services, and other router implementations through network connections. The router provides multiple components and settings for specifying service on the other side of connection link.
+Qpid-Dispatch is able to connect client servers, AMQP services, and other router implementations through network connections. The router provides multiple components and settings for specifying the service on the other side of connection link as follows:
 
 \begin{description}
 	\setlength\itemsep{0em}
-	\item \textbf{Addresses\footnotemark{}}\,---\,are used to control the flow of messages across a network of routers. Addresses can specify messages and they are also used during the creation of links since links are bounded to specific address field of a source and a target. The addresses can refer to topics or queues that match multiple consumers to multiple producers. There are two types of addresses:
+	\item \textbf{Addresses\footnotemark{}}\,---\,are used to control the flow of messages across a network of routers. Addresses can specify messages and they are also used during the creation of links since links are bounded to the specific address field of a source and a target. The address can refer to topics or queues that match multiple consumers to multiple producers. There are two types of addresses:
 	\begin{itemize}
 		\setlength\itemsep{0em}
-		\item \textbf{mobile}\,---\,The address is a rendezvous between senders and receivers. The router is message distributor.
-		\item \textbf{link route}	\,---\,The addresses defines a private messaging path between sender and receiver. The router only passes messages between end points.
+		\item \textbf{mobile}\,---\,the address is a rendezvous between senders and receivers. The router is message distributor.
+		\item \textbf{link route}	\,---\,the address is a private messaging path between sender and receiver. The router only passes messages between end points.
 	\end{itemize}
-	\item \textbf{Listener}\,---\,accept client connections. Listeners has several types that are defined by their role:
+	\item \textbf{Listener}\,---\,accepts client connections. Listeners have several types that are defined by their role:
 	\begin{itemize}
 		\setlength\itemsep{0em}
-		\item \textbf{normal}\,---\,The connection is used for AMQP clients using normal message delivery.
-		\item \textbf{inter-router}	\,---\,The connection is created to another router. Inter-router connection can only be establish over inter-route listeners.
-		\item \textbf{route-container}	\,---\,The connection is established to a broker or other resource that holds known addresses.
+		\item \textbf{normal}\,---\,the connection is used for AMQP clients using normal message delivery.
+		\item \textbf{inter-router}\,---\,the connection is created to another router. Inter-router connection can only be established over inter-route listeners.
+		\item \textbf{route-container}\,---\,the connection is established to a broker or other resource that holds known address.
 	\end{itemize}
-	\item \textbf{Connector}\,---\,used as an interface for create connection with brokers or other AMQP entities using connectors. Such as listeners, connector has several types that are defined by their role:
+	\item \textbf{Connector}\,---\,is used as an interface for creation of connection with brokers or other AMQP entities using connectors. The same as listeners, connector has several types that are defined by their role:
 	\begin{itemize}
 		\setlength\itemsep{0em}
-		\item \textbf{normal}\,---\,The connection is used for AMQP clients using normal message delivery. The router will initiate the connection but links are created by the peer that accepts the connection.
-		\item \emph{Inter-router} and \emph{route-container} modes are the same such as listener's modes.
+		\item \textbf{normal}\,---\,the connection is used for AMQP clients using normal message delivery. The router will initiate the connection but links are created by the peer that accepts the connection.
+		\item \textbf{Inter-router} and \textbf{route-container}\,---\,they are the same such as listener's modes.
 	\end{itemize}
 \end{description}
 
 \footnotetext{Addresses in this discussion refer to AMQP protocol addresses, not to TCP/IP addresses.}
 
-To ensure security the router uses \emph{SSL/TLS - Sockets Layer and Transport Layer Security}\footnote{SSL - \url{https://tools.ietf.org/html/rfc6101}; TLS - \url{https://tools.ietf.org/html/rfc5246}} protocol and related certificates and \emph{SASL - Simple Authentication and Security Layer}\footnotemark{} protocol mechanisms to encrypt and authenticate remote peers. Router listeners act as network servers and connectors act as network clients. Both connection components may be configured securely with SSL/TLS and SASL.
+To ensure the security the router uses the \emph{SSL/TLS (Sockets Layer and Transport Layer Security)}\footnote{SSL\,---\,\url{https://tools.ietf.org/html/rfc6101}; TLS\,---\,\url{https://tools.ietf.org/html/rfc5246}} protocol and it is related certificates and \emph{SASL (Simple Authentication and Security Layer)}\footnotemark{} protocol mechanisms to encrypt and authenticate remote peers. Router listeners act as network servers and connectors act as network clients. Both of these components may be configured securely with SSL/TLS and SASL.
 
-\footnotetext{SASL - \url{https://tools.ietf.org/html/rfc4422}}
+\footnotetext{SASL\,---\,\url{https://tools.ietf.org/html/rfc4422}}
 
 
 \subsection{Message Routing}
 \label{Message Routing}
-Addresses have semantics associated with them. This semantics control how routers behave when they see the address being used. There are two ways how the router can routing messages based on addresses:
+Addresses have semantics associated with them. These semantics control how routers behave when they see the address being used. There are two ways how the router can route messages based on addresses:
 
 \begin{description}
 	\setlength\itemsep{0em}
-	\item \textbf{Routing pattern}\,---\,define the paths which message with a mobile address can take. Routing patterns can be used in both case of message delivery; with broker or directly through the router.
+	\item \textbf{Routing pattern}\,---\,define the paths which message with a mobile address can take. These routing patterns can be used in both case of message delivery; with broker or directly through the router.
 	\begin{itemize}
 		\setlength\itemsep{0em}
-		\item \textbf{Balanced}\,---\,An anycast\footnotemark{} method which allows multiple receivers to use the same address.
-		\item \textbf{Closest}\,---\,An anycast method in which every message is sent along the shortest path to reach the destination.
-		\item \textbf{Multicast}\,---\,method for send copy of the message to every receiver with the same address.
+		\item \textbf{Balanced}\,---\,anycast\footnotemark{} method in which multiple receivers are allowed to use the same address.
+		\item \textbf{Closest}\,---\,anycast method in which every message is sent along the shortest path to reach the destination.
+		\item \textbf{Multicast}\,---\,method in which every receiver with the same address receives the copy of the original message.
 	\end{itemize}
-	\item \textbf{Routing mechanism}\,---\,define the path to endpoint for message from sender to receiver.
+	\item \textbf{Routing mechanism}\,---\,define the path to endpoint from sender to receiver.
 	\begin{itemize}
 		\setlength\itemsep{0em}
-		\item \textbf{Message routed}\,---\,message delivery is done based on address in message's \emph{to} field. The router check destination address of the message and find the same address in its routing table. The message is sent to all links with that address.
-		\item \textbf{Link routed}\,---\,this method uses same routing table like Message routing but the difference is that the routing occurs during the link-attach operation and link attaches are propagated along the appropriate path to the destination. It results into a chain of links from source to destination.
+		\item \textbf{Message routed}\,---\,message delivery is done based on the address in message's \emph{to} field. The router checks the destination address of the message and finds the same address in its routing table. The message is then sent to all links with that address.
+		\item \textbf{Link routed}\,---\,this method uses the same routing table as Message routing with the difference that the routing occurs during the link-attach operation and link attaches are propagated along the appropriate path to the destination. This results into a chain of links from source to destination.
 	\end{itemize}
 \end{description}
-Message may be delivered with various degrees of reliability such as \emph{at most once}, \emph{at least once} and \emph{exactly once}.
+A message can be delivered with various degrees of reliability such as \emph{at most once}, \emph{at least once} or \emph{exactly once}.
 
-\footnotetext{Anycast vs. Multicast - Anycast method send data to every node in network. Multicast method send data only to specified group of nodes.}
+\footnotetext{Anycast vs. Multicast\,---\,anycast method sends data to every node in network, while multicast method sends data only to specified group of nodes.}
 
 \section{Automatic Topology Generator}
-For various kind of messaging systems testing we needs multiple topologies with different components and setting. Creating and deploying the scenarios manually for each test scenario is slow and annoying, after few scenarios. Solution to this problem is divided into two parts: simple topology generator, that transform metadata, defined by user, into configuration files for each component contained in metadata, and automatic \emph{Ansible} scripts, which deploy whole topology to physical machines. User has to define metadata file, single file for whole topology instead of single file for each component, and then start Ansible script which ensure configuration files generation and deployment.
+For proper testing of the various messaging systems we need multiple topologies with different components and different settings. However creating and deploying the scenarios manually for each test scenario is rather slow and annoying, even after just few scenarios. The solution to this problem is divided into two parts: a simple topology generator, that transform metadata, defined by user, into configuration files for each component contained in metadata, and automatic \emph{Ansible} scripts, which deploy the whole topology to actual physical machines. User has to define is a metadata file, a single file for the whole topology instead of single file for each component, and then start the Ansible script which ensures configuration files generation and the deployment.
 
 
 \subsection{Topology Components}
-Messaging system consists of multiple components with specific role. In our case, testing topologies will consider clients, brokers, and routers. Clients refer to message senders and receivers and there is no need for specific configuration of each clients at all. Message settings is another case, but MPT deal with it as was mentioned at Chapter \ref{Messaging Performance Tool}.
+Messaging system consists of multiple components with specific roles. In our case, testing topologies will consider clients, brokers, and routers. Clients refer to message senders and receivers, but there is no need for specific configuration for each client at all. Message settings is another case, but MPT deals with it as was mentioned at Chapter \ref{Messaging Performance Tool}.
 
 \subsubsection*{Broker}
-Broker configuration file offers various setting and protocols such as specialized queueing behaviors, message persistence, and manageability. The following list shows several capabilities of broker:
+Broker configuration file offers various settings and protocols such as specialized queuing behaviors, message persistence, or manageability. The following list shows selected capabilities of the broker:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item \textbf{User access}\,---\,allows guest access or authentication access for users.
+	\item \textbf{User access}\,---\,allows other guest or authentication access to users.
 	\item \textbf{Multiple Protocol Support}\,---\,broker supports AMQP, MQTT, STOMP, OpenWire and Core protocols.
 	\item \textbf{Connections}\,---\,can establish connection to another AMQP-based service such as another broker or router.
 	\item \textbf{Queues}\,---\,user can specify new queues in configuration file or allow auto-create option.
-	\item \textbf{Messaging types}\,---\,refer to approach how to deliver messages, examples are point-to-point and publish-subscribe approach.
-	\item \textbf{Logging level}\,---\,broker offers to setup different logging levels.
+	\item \textbf{Messaging types}\,---\,refers to approach how to deliver messages, examples are point-to-point and publish-subscribe approach.
+	\item \textbf{Logging level}\,---\,broker offers the setup for different logging levels.
 \end{itemize}
-However, broker configuration is not implemented yet, but design of automatic configuration generation will be shared with router configuration generation.
+However, broker configuration is not implemented yet, but the design of the automatic configuration generation will be shared with router configuration generation.
 
 \subsubsection*{Router}
-Just like broker configuration, router offer various types of configurations. The basics were explained in Subsections \ref{Addresses and Connections} and \ref{Message Routing}, but for better understanding of all capabilities I~recommend Qpid-Dispatch documentation \cite{RH:Interconnect}.
+Just like broker configuration, router offer various types of configurations. The basics were explained in Subsections \ref{Addresses and Connections} and \ref{Message Routing}, but for better understanding of all capabilities we~recommend to refer to Qpid-Dispatch documentation \cite{RH:Interconnect}.
 
 \subsection{Format of Input and Output}
-Input structure should be user-friendly and easy to update even in case of large topologies. As input is choose one file called \texttt{config.yml} in \emph{YAML}\footnotemark{}  language, which is similar to JSON but it's better readable for humans. Generator needs information about all hosts in topology and which type of topology it should generate. For that purpose there is two attributes in configuration file; first is \emph{inventory path} which refer to location of \emph{Inventory}. Inventory is file, containing all hosts in topology in specific format. This format is available in Appendix \ref{AP:Inventory}. It is simple configuration file with enumeration of host names and their IP addresses. Second attribute is which type of topology it should generate. There user can specify one of the simple types of graph, such as line, circle, complete, etc., which do not need any other information except Inventory or he can specify path to graph metadata. Graph metadata are more described in Subsection \ref{Graph Metadata}.
+The format of the input  should be user-friendly and easy to update even for large topologies. As the input we choose one file (\texttt{config.yml}) in \emph{YAML}\footnotemark{}  language, which is similar to JSON format but it is better readable for humans. Topology Generator needs information about all hosts in the topology and which type of topology it should generate. For that purpose there are two attributes in the configuration file; first is the \emph{inventory path} which refers to the location of \emph{Inventory}\,---\,file, containing all hosts in topology in the specific format (for its specialization refer to Appendix \ref{AP:Inventory}). It is a simple configuration file with enumeration of host names and their IP addresses. The second attribute is the type of the topology it should generate. The user can specify one of the simple types of graph, such as line, circle, complete, etc., which does not need any other information except Inventory or he can specify path to graph metadata, which are described in Subsection \ref{Graph Metadata} in more details.
 
-On the other hand, output format should be easy for automatic parsing. The best format for machine parsing is JSON or YAML format, since both of them are loaded with same functions in ansible. Output of the generator will be passed to ansible script immediately after creation without any user intervention. However, user should have option to see generator output in YAML format, because in case of larger topologies JSON is badly readable for human eyes. Output will be one JSON file with variables for template. Each node from Inventory will have its own variables separated from variables of other nodes. Scheme of the input and output for Topology Generator you can see in the Figure \ref{fig:generator}.
+On the other hand, output format should be easy for automatic parsing. The best format for machine parsing in Ansible is JSON or YAML format, since both of them are loaded with same functions. Output of the generator will be then passed to an Ansible script immediately after the creation without any user intervention. However, user should have option to see the generator output in YAML format, because in case of larger topologies JSON is badly readable for human eyes. Hence output will be one JSON file with variables for template. Each node from Inventory will have its own variables separated from variables of other nodes. Scheme of the input and output for Topology Generator is shown in the Figure \ref{fig:generator}.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=10cm]{obrazky-figures/generator.pdf}
-  \caption{Topology Generator with input and output scheme.}
+  \caption{Input and output scheme of the Topology Generator.}
   \label{fig:generator}
 \end{figure}
 
@@ -124,9 +122,9 @@ On the other hand, output format should be easy for automatic parsing. The best 
 
 \subsection{Graph Metadata}
 \label{Graph Metadata}
-At first, we should specify technology which will be used for implementation of Topology Generator. \emph{NetworkX} is a Python package for creation and manipulation of complex networks. This package offer features for creating graphs, multigraphs, random graph generators, plot created graph, and etc. NetworkX also offers graph import and export in YAML structured file. This type of file is very useful as graph metadata, simple example of this file is shown in Appendix \ref{AP:Graph Metadata}.
+The technology which will be used for the actual implementation of Topology Generator is \emph{NetworkX}, a Python package for creation and manipulation of complex networks. This package offers features for creating graphs, multigraphs, random graph generators, plot created graph, and many more. NetworkX also offers graph import and export in YAML structured file, which is useful as graph metadata; simple example of this file is shown in Appendix \ref{AP:Graph Metadata}.
 
-Here user can specify any setting for each node. For example, user can specify listener for router\,1, and connector for router\,2 as you can see on the example below.
+In this metadata user can specify any setting for each node. For example, user can specify the listener for router\,1, or connector for router\,2 as you can see in the example below.
 
 \begin{verbatim}
 ---
@@ -148,23 +146,34 @@ nodes:
   	  role: inter-router
 multigraph: false
 \end{verbatim}
-From this metadata NetworkX create two nodes with type, id, and listener or connector attributes. This attributes will be used for generating configuration files for each node. All possible attributes that user can specify for each node is available in Appendix \ref{AP:Qpid-Dispatch Configuration File Template}.
+From this metadata NetworkX creates two nodes with type, id, and listener or connector attributes. These attributes will be used to generates configuration files for each node. All possible attributes that user can specify for each node are available in Appendix \ref{AP:Qpid-Dispatch Configuration File Template}.
 
-However, specifying all attributes of each node is not very user-friendly approach, especially in case of large topologies. User could only specify nodes, and links between them and generator will add all necessary attributes for establish connection between nodes. Example of this metadata file you can see in Appendix \ref{AP:Graph Metadata}.
+However, specifying all attributes of each node is not very user-friendly approach, especially in case of large topologies. So user can only specify nodes, and links between them and generator will add all necessary attributes in order to establish connection between nodes. The example of this metadata file can be seen in Appendix \ref{AP:Graph Metadata}.
 
 \subsection{Topology Deployment}
-Every node specified in Inventory has to receive proper configuration files for services running on it. This job will be handled by Ansible, since it can connect to all nodes from Inventory and copy configuration files to proper destination folders. Ansible script load data from Topology Generator and create configuration files based on loaded variables and common template for Qpid-Dispatch. Created file will be sent to proper node based on node name from Inventory, which has to be same like router name specified in generated variables. You can see scheme of configuration deployment in the Figure \ref{fig:deployment}.
+Every node specified in the Inventory has to receive proper configuration files for services running on it. This job is handled by the Ansible, since it can connect to all nodes from Inventory and copy configuration files to proper destination folders. Ansible script load data from Topology Generator and creates configuration files based on loaded variables and the common template for Qpid-Dispatch. The created file will then be sent to the proper node based on node name from Inventory, which has to be same like router name specified in generated variables. The scheme of configuration deployment is depicted in the Figure \ref{fig:deployment}.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm]{obrazky-figures/deployment.pdf}
-  \caption{Scheme of configuration files deployment to the nodes.}
+  \caption{The scheme of configuration files deployment to the nodes.}
   \label{fig:deployment}
 \end{figure}
 
 
-\section{Qpid-Dispatch Performance Module}
-We saw architecture of Maesto in the Figure \ref{fig:msg_perf_tool}. This architecture cannot use all performance testing and network recovery possibilities of router. For better performance analysis and measurements is necessary to design and implement additional functionality for MPT.
+\section{Qpid-Dispatch Agent Performance Module}
+The architecture of Maestro (as depicted in the Figure \ref{fig:msg_perf_tool}) cannot use all performance testing and network recovery possibilities of the Qpid-Dispatch. For better performance analysis and measurements it is necessary to design and implement additional functionality for MPT.
+
+In the Figure \ref{fig:msg_perf_tool_update} we show updated version of Maestro architecture. Proper performance testing of router and network analysis with few routers needs some kind of an agent, which can manipulate each node. In particular, MPT should be able to shut down one of the router node and collect data about network behavior during this situation. All these actions will be handled by the new back-end component called \emph{Agent}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm]{obrazky-figures/msg_perf_tool_for_router.pdf}
+  \caption{The architecture of updated Maestro for testing of the Qpid-dispatch router.}
+  \label{fig:msg_perf_tool_update}
+\end{figure}
+
+In the Figure \ref{fig:agent_1} we show the simple scheme of topology and one agent monitoring the router\,2. Communication passes through the router\,2 and messages are delivered to receiver without problems. The Figure \ref{fig:agent_2} demonstrates the shutdown of router\,2  by the agent. In that case, the network will choose the redundant link through router\,3 in order to pass messages. This scenario can answer the question \emph{How does this incident influence the latency between sender and receiver?}
 
 \begin{figure}[H]
 	\centering
@@ -175,44 +184,34 @@ We saw architecture of Maesto in the Figure \ref{fig:msg_perf_tool}. This archit
 \subfloat[Router shut-down demonstration.\label{fig:agent_2}]{\includegraphics[width=1\linewidth]{obrazky-figures/agent_2.pdf}}
 \end{minipage}
 
-	\caption[Simple network with active router agent.]{Simple network with router shut-down demonstration.}\label{fig:agent}
+	\caption[A simple network with active router agent.]{Simple network with router shut-down demonstration.}\label{fig:agent}
 \end{figure}
 
-In the Figure \ref{fig:msg_perf_tool_update} is updated version of Maestro architecture. Proper performance testing of router and network analysis with few routers needs some kind of agent, which can manipulate each node. In particular, MPT should be able to shut down one of the router node and Collected Data Format about network behavior during this situation. This actions will be handled by new back-end component called \emph{Agent}.
+Another part is a communication inside Maestro cluster with new component. Communication between cluster back-end and user client is realized through Maestro Broker and for proper message distribution new topic has to be added. As was mentioned in Section \ref{Collected Data Format}, Maestro Clients communicates with back-end via specialized commands. Router Agent will accept new set of commands for router control. This set has to be added to existing Maestro Clients. All additional components or components for update are highlighted by red color in the Figure \ref{fig:msg_perf_tool_update}. The example of simple testing topology consisting of two routers and two brokers is also included in the Figure \ref{fig:msg_perf_tool_update}.
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=15cm]{obrazky-figures/msg_perf_tool_for_router.pdf}
-  \caption{Architecture of updated Maestro for testing of Qpid-dispatch router.}
-  \label{fig:msg_perf_tool_update}
-\end{figure}
-
-In the Figure \ref{fig:agent_1} you can see simple scheme of topology and one agent monitoring router\,2. Communication passing through router\,2 and message is delivered to receiver without problems. Shut-down demonstration is in the Figure \ref{fig:agent_2} where you can see command from agent to router\,2. In that case, the network will choose redundant link through router\,3. This scenario can answer the question \emph{How this incident influence latency between sender and receiver?}
-
-Another part is communication inside Maestro cluster with new component. Communication between cluster back-end and user client is happening through Maestro Broker and for proper message distribution new topic has to be added. As was mentioned in Section \ref{Collected Data Format}, Maestro Clients communicating with back-end via specialized command. Router Agent will accept new set of commands for router control. This set has to be added to existing Maestro Clients. All additional components or components for update are highlighted by red color in the Figure \ref{fig:msg_perf_tool_update}. Example of simple testing topology consists of two routers and two brokers is also available in that Figure.
 
 
 
 \subsection{Communication with Agent}
 \label{Communication with Agent}
-For communication inside Maestro testing cluster is used The Maestro Protocol which was described in Subsection \ref{Communication Between Components}. MPT Clients has to know how to communicate with new component in the cluster and for this its necessary to add new communication commands. The following list shows new commands which should be added:
+For the communication inside Maestro testing cluster the Maestro Protocol is used which was described in the Subsection \ref{Communication Between Components}. MPT Clients have to know how to communicate with this new component in the cluster and for this it is necessary to add new communication commands. The following list shows new commands which should be added:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item \textbf{MAESTRO\_NOTE\_START\_ROUTER (17)}\,---\,start specific router in the network.
-	\item \textbf{MAESTRO\_NOTE\_STOP\_ROUTER (18)}\,---\,stop specific router in the network.
-	\item \textbf{MAESTRO\_NOTE\_RESTART\_ROUTER (19)}\,---\,restart specific router in the network.
+	\item \textbf{MAESTRO\_NOTE\_START\_ROUTER (17)}\,---\,start the specific router in the network.
+	\item \textbf{MAESTRO\_NOTE\_STOP\_ROUTER (18)}\,---\,stop the specific router in the network.
+	\item \textbf{MAESTRO\_NOTE\_RESTART\_ROUTER (19)}\,---\,restart the specific router in the network.
 	\item \textbf{MAESTRO\_NOTE\_ROUTE\_ERROR (20)}\,---\,signals error during routing.
 \end{itemize}
 
 \subsection{Collected Data}
 \label{Collected Data}
-Collected data Format for new module will be almost same as it is in current version of MPT (described in Subsection \ref{Collected Data Format}). Since Qpid-Dispatch is written in C, there is no need to monitoring Java memory space. The following list shows updated data collected by Inspector:
+Collected Data Format for new module is almost the same as in the current version of MPT (described in Subsection \ref{Collected Data Format}). Since Qpid-Dispatch is written in C, there is no need to monitor Java memory space. The following list shows updated data collected by the Inspector:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
 	\item \textbf{Timestamp}\,---\,the date and time for the data sample in the format YYYY-MM-DD hh:mm:ss using the W3C defined standard for datetime.
-	\item \textbf{Load}\,---\,size of system load.
+	\item \textbf{Load}\,---\,size of the system load.
 	\item \textbf{Open file descriptors}\,---\,number of opened filed descriptors.
 	\item \textbf{Free file descriptors}\,---\,number of free file descriptors.
 	\item \textbf{Free memory}\,---\,free physical memory.
@@ -221,4 +220,45 @@ Collected data Format for new module will be almost same as it is in current ver
 	\item \textbf{Consumers}\,---\,number of active connectors connected to the router.
 	\item \textbf{Message amount}\,---\,amount of routered messages.
 \end{itemize}
-Data collected by senders and receivers remains same as its in current version of MPT.
+Data collected by senders and receivers remains the same as in the current version of MPT.
+
+\section{Used Technologies}
+Messaging Performance Tool is a project with several parts. The most of MPT, such as command parsing, reporting, clients abstractions and so on, is written in Java language. But whole MPT is not pure Java code. To specify a test, Groovy is used. Groovy is basically lightweight version of Java with several advantages. From my point of view Groovy scripts are more readable for those who are not much familiar with Java code. Groovy scrips are also used as reaction for specific commands for extension points, but this is deeply described in the Subsection \ref{MPT Preparations}.
+
+On the other hand, Topology Generator is a new simple project. For easy integration to another projects, quick development, and easy code preview I developed it in \emph{Python} language. Whole generator is created as one package, which is available for installation on any machine with installed Python version 2.7 and higher. Already mentioned technologies are very common and almost every programmer have heard about Java and Python. In the following subsections I describe not common and well known technologies.
+
+\subsection{Ansible}
+Ansible \cite{Ansible} is simple automation framework which allow users to automate daily tasks on multiple nodes or containers. Basic types of tasks which can be automated by Ansible are:
+
+\begin{itemize}
+	\item \textbf{Provisioning}\,---\,setup the various servers user need in network infrastructure.
+	\item \textbf{Configuration management}\,---\,change configuration of an application, operation system or device. Basically it allows start, stop and restart services, install or update application or perform a wide variety of other configuration tasks.
+	\item \textbf{Application deployment}\,---\,automatic deployment of internally developed application to your systems with all dependencies.
+\end{itemize}
+
+Ansible scripts, called playbooks, are written in YAML language, It makes Ansible scripts easy to read for humans and very simple to manage. Another advantage is that user does not even need to know commands used to accomplish a particular tasks. All is needed to specify what state does user wants the system to be in. Ansible is available on multiple systems with really short list of dependencies; Linux based systems needs Python and Windows need PowerShell, both systems needs SSH. Ansible playbooks can be grouped together and create more complex scripts called roles. They are open-source and available in public repository.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=10cm]{obrazky-figures/ansible.png}
+  \caption{Ansible architecture. \todo{Placeholder}}
+  \label{fig:ansible_architecture}
+\end{figure}
+
+In this thesis is Ansible used for several tasks; main is to deploy systems on specific nodes. As I want to run performance tests of Qpid-dispatch over multiple topology scenarios it is necessary to do system deployment quickly and automatically, which is easy with Ansible. System deployment contains MPT installation, Qpid-dispatch installation and other services based on testing scenario. The next task is to create and deploy configuration files for each router machine. This task runs Topology generator and create configuration files for each machine based on generator output.
+
+
+\subsection{Docker}
+Docker \cite{Docker} is an open platform that provide developing, shipping, and running application separately from your infrastructure. Basically docker is specific type of virtualization technology. It allows the ability to package and run an application in a loosely isolated environment called a container. Docker containers are lightweight virtual machines run directly within the host machine's kernel. This means that you can run more containers than virtual machines on specific hardware, it is possible to ran containers on virtual machines.
+
+Docker container are build up from a dockerfile where container attributes are specified such as OS in container, environment variables, and steps for installing applications. Output of build command is a docker image. This image is ready for running as a container with another specific attributes such as exposed ports. Containers can be attached to same network which allow communication between all containers.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=10cm]{obrazky-figures/docker.png}
+  \caption{Docker architecture. \todo{Placeholder}}
+  \label{fig:ansible_architecture}
+\end{figure}
+
+
+Since docker is able to run services such as Qpid-dispatch very easily and also allow communication between containers. It is possible to deploy MPT with proper SUT in containers and analyze behavior in the container network or just run MPT on single machine. However, for proper performance results we need real machines, docker containers are used only for MPT development and trying some basic stuffs with MPT.

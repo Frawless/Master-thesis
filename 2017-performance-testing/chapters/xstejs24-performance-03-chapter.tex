@@ -6,91 +6,92 @@
 \chapter{Messaging Performance Tool}
 \label{Messaging Performance Tool}
 % https://github.com/orpiske/msg-perf-tool
-Performance of \emph{Message-Oriented Middleware} (MOM) \cite{CURRY:MOM} is one of the most critical elements of quality assurence for enterprise integration system. There are multiple messaging components developed in Red Hat such as messaging clients, Message Broker, Message Router (Qpid-dispatch service) and stream-like message distributions tools. Note that from now on I will shorten the messaging client to just client.
+Performance of \emph{Message-Oriented Middleware} (MOM) \cite{CURRY:MOM} is one of the most critical elements of quality assurance for enterprise integration systems. There are multiple messaging components developed in the Red Hat company such as messaging clients, Message Broker, Message Router (Qpid-dispatch service) or stream-like message distributions tools---Kafka. All of these software needs performance testing to ensure quality standards of MOM. Note that we will shorten term the messaging client to just client in this thesis.
 
-A~Message Broker is an example of MOM. Its purpose is to receive, store and distribute messages, which are sent and received by clients. The performance capabilities of a Message Broker are important for its users, because being able to handle a large amount of transactions in a timely manner is an important characteristic of MOM. Users choose MOM for message distribution so they do not have to develop their own messaging distribution systems. Another benefit of using specialized MOM is robustness and guaranteed performance. For example in automated systems, where components communicates with each other by command exchange. Amount of exchanged commands is dependent on system size. We want to get systems results as soon as possible and for that is important to ensure smooth and quick message exchange.
+A~Message Broker is an example of MOM. Its main purpose is to receive, store and distribute messages, which are sent and received by clients. Users choose MOM for message distribution to reduce the development time and cost of their own solution. Another benefit of using specialized MOM is robustness and guaranteed performance. The performance capabilities of a MOM are critical attributes to its users, because being able to handle a large amount of transactions in a timely manner is a key characteristic of MOM. Good example are automated systems, where components communicates with each other by command exchange. Amount of exchanged commands is heavily dependent on the system size and since we want to get the results as soon as possible we need to ensure smooth and quick message exchange.
 
-\emph{The Maestro} \cite{ORPISKE:MSGPT} is a testing system designed for testing the performance of MOM. On the Figure \ref{fig:msg_perf_tool} you can see the architecture of Maestro. The Maestro is deployed as a cluster system on several machines. A~typical deployment consist of one node for Maestro Broker, one or more for Senders, one or more for Receivers and the SUT. The architecture of Maestro system consists of several components:
+\emph{Maestro} \cite{ORPISKE:MSGPT} is a testing system designed for testing the performance of MOM. The Maestro is deployed as a cluster system on several machines. A~typical deployment consist of one node for Maestro Broker, one or more for Senders, one or more for Receivers and the SUT. The architecture of Maestro system, depicted in the Figure \ref{fig:msg_perf_tool}, consists of the following components:
 
 \begin{description}
 	\setlength\itemsep{0em}
-	\item \textbf{Maestro Broker}\,---\,any \emph{Message Queuing Telemetry Transport\footnote{MQTT - \url{http://mqtt.org/}} (MQTT)} capable broker with several topics. This component takes care of distribution of control messages between other cluster components such as Maestro Clients and MPT Back-end.
-	\item \textbf{Meastro Clients}\,---\,this component contains the client API as well as the test scripts for each test case. A~sub-component called Reporter takes care of data reporting to the user, which means data visualization on the web.
-	\item \textbf{MPT Back-end}\,---\,consists of sender, receiver and inspector parts. Sender, and receiver ensure message sending to the SUT and receiving from SUT. Inspector monitors workload over the SUT and reporting collected performance metrics to the testing cluster. Maestro currently has two back-ends:
+	\item \textbf{Maestro Broker}\,---\,can be any \emph{Message Queuing Telemetry Transport\footnote{MQTT\,---\,\url{http://mqtt.org/}} (MQTT)} capable broker with several topics. The topic is queue with name where other messaging services can listen the traffic. This component takes care about distribution of control messages between other cluster components such as Maestro Clients and MPT Backend.
+	\item \textbf{Meastro Clients}\,---\,this component contains the client API as well as the test scripts for each test case. Moreover it contains a~sub-component called Reporter which interprets the test data to user in form of web data visualization.
+	\item \textbf{MPT Back-end}\,---\,consists of sender, receiver and inspector parts. Sender, and receiver ensure message sending to the SUT and receiving from SUT. Inspector monitors workload over the SUT and reports collected performance metrics to the data server. Maestro currently has two backends:
 	\begin{itemize}
-		\item \textbf{Java}\,---\,used for JMS-based\footnote{JMS - Java Message Service} testing, including \emph{Advanced Message Queuing Protocol (AMQP)} \cite{OASIS:AMQP}, OpenWire and Core protocols.
-		\item \textbf{C}\,---\,used for AMQP and \emph{Streaming Text Oriented Messaging Protocol\footnote{STOMP - \url{https://stomp.github.io/}} (STOMP)} protocol testing.
+		\item \textbf{Java}\,---\,used for JMS-based\footnote{JMS\,---\,Java Message Service} testing, including \emph{Advanced Message Queuing Protocol (AMQP)} \cite{OASIS:AMQP}, OpenWire and Core protocols.
+		\item \textbf{C}\,---\,used for AMQP and \emph{Streaming Text Oriented Messaging Protocol\footnote{STOMP\,---\,\url{https://stomp.github.io/}} (STOMP)} protocol testing.
 	\end{itemize}
 \end{description}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=15cm]{obrazky-figures/msg_perf_tool.pdf}
-  \caption{Architecture of the Maestro.}
+  \caption{Architecture of the Maestro. \todo{rozepsat}}
   \label{fig:msg_perf_tool}
 \end{figure}
 
 \newpage
 
 \section{Test Case Scenario}
-Configuration of each test case is specified by several options defined in Groovy\footnote{Object-oriented programming language for Java platform \url{http://groovy-lang.org/}} script. The script specifies test behavior with the following elements:
+The test is basically generation of huge amount of messages and send them to SUT and then receive them. Configuration of each test case is specified by several options defined in Groovy\footnote{Groovy\,---\,object-oriented programming language for Java platform \url{http://groovy-lang.org/}} script which influences the test behavior with the following elements:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item \textbf{message size}\,---\,message size in bytes,
+	\item \textbf{message size}\,---\,size of the generated test message in bytes,
 	\item \textbf{number of connected clients}\,---\,count of senders and receivers connected to the SUT,
-	\item \textbf{test duration (time or load)}\,---\,end condition of each test, can be specified by time, limit or message count,
-	\item \textbf{message rate}\,---\,the desired rate that the system should try to maintain (0 for unbounded rate).
+	\item \textbf{test duration (time or load)}\,---\,end condition of each test; can be specified by time, limit or message count,
+	\item \textbf{message rate}\,---\,the desired rate that the system should try to maintain through the test (set 0 for unbounded rate).
 \end{itemize}
 
-The test script is also responsible for starting and stopping the test. We can also specify the test profile. Depending on the test profile, the script may also be responsible for increasing or decreasing the workload on the SUT during the test scenario. The load can be modified by increasing the target rate or the number of parallel connections. Multiple combinations of this options can create a lot of test cases with different loads for the SUT. Every test will produce its own logs which are processed by the reporting sub-component on the client side and used for monitoring the metrics. Maestro Reporter produce data visualizations, such as charts, from stored logs.
+The test script is also responsible for start and stop the test. Moreover the test case can be extended by so called test profile. The script will then also be responsible for increasing or decreasing the workload on the SUT during the test scenario. This load can be modified by increasing either the target rate or the number of parallel connections. With multiple combinations of these options we can create a lot of test cases with different loads for the SUT and thus achieve a broad coverage of testing. Every test produces its own logs which are processed by the reporting sub-component on the client side and used for monitoring the metrics. Maestro Reporter produce data visualizations, such as test overview and charts (rate based on time, latency over the test), from these logs.
 
 \section{Communication Between Components}
 \label{Communication Between Components}
-The Maestro Protocol is a binary protocol implemented on top of MessagePack\footnotemark{}. For message exchange between nodes it currently uses MQTT protocol (version 3.1.1) and for sending the testing data to data server uses HTTP protocol (version 1.1). The messages exchanged between the peers of testing cluster are called notes in the following description.
+The actual communication between components during the test cases is realized using the Maestro Protocol\,---\,a binary protocol implemented on top of MessagePack\footnotemark{}. For the message exchange between nodes it currently uses MQTT protocol (version 3.1.1) and for sending the testing data to data server it uses HTTP protocol (version 1.1). The messages exchanged between the peers of testing cluster are called notes.
 
-\footnotetext{Messagepack - \url{https://msgpack.org/}}
+\footnotetext{Messagepack\,---\,\url{https://msgpack.org/}}
 
-Each note has a specific format containing three parts. First is \emph{Type} which is short integer that identifies the purpose of the note, which is one of the following values:
+Each note has a specific format consisting of three parts. First is the \emph{Type} which is short integer that identifies the purpose of the note, it is one of the following values:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item \textbf{Request (0)}\,---\,a note sent by a controller node to the test peers.
-	\item \textbf{Response (1)}\,---\,a note sent by a testing peer as a response for a request.
+	\item \textbf{Request (0)}\,---\,a note sent by a controller node to the test peers,
+	\item \textbf{Response (1)}\,---\,a note sent by a testing peer as a response for a request,
 	\item \textbf{Notification (2)}\,---\,a note sent by a testing peer as a reaction to an event.
 \end{itemize}
-The second part is \emph{Command} which identifies the action to be executed or, in some cases that was executed. Currently, there are 17 command represented by a long integer. The last part is \emph{Payload} which refers to data carried by the note as part of its command. Detailed description of commands and its payload is available in Appendix \ref{AP:commands}.
+The second part is the \emph{Command} which identifies the action to be executed or, in some cases, that was executed. Currently, there are 17 command represented by a long integer. And the last part is the \emph{Payload} which refers to the data carried by the note as part of its command. Detailed description of commands and its payload is available in Appendix \ref{AP:commands}.
 
 
 \section{Measuring Process}
 \label{Measuring Process}
-Measures process starts after dynamic test generation with options passed from the test file. Senders will start sending messages to the SUT. Inspector starts monitoring the behavior of the SUT and writes it to the disk. For monitoring, Inspector uses the Broker management interface. That is a REST interface that exposes (via HTTP protocol) internal JVM\footnote{JVM - Java Virtual Machine} and Broker detailed information. Data collection by Inspector is simple and pretty straightforward:
+After the dynamic test generation, with options from the test file, the measuring process starts. Senders will start sending messages to the SUT, while Inspector starts monitoring the behavior of the SUT and send measured data to the data server. For monitoring purpose, Inspector uses the Broker management interface\,---\,a REST interface that exposes (via HTTP protocol) an internal JVM\footnote{JVM\,---\,Java Virtual Machine} and Broker detailed information. The actual data collection by Inspector is straightforward:
 
 \begin{enumerate}
 	\setlength\itemsep{0em}
 	\item Inspector sends a HTTP request with the \emph{JavaScript Object Notation\footnotemark{} (JSON)} content to the Broker REST interface.
-	\item Broker evaluate the request and sent response to the Inspector.
+	\item Broker evaluates the request and sends response to the Inspector.
 	\item Inspector collects the response.
 \end{enumerate}
-Errors occurred during the information collection may cause the test case to fail.
+Note that errors occurred during the collection may cause the test case to fail.
 
-\footnotetext{JSON - \url{https://www.json.org/}}
+\footnotetext{JSON\,---\,\url{https://www.json.org/}}
 
-However, there are two problem factors; the first is that inspector should not influence the performance of the SUT. Current method for the information collection works like the management interface call method with request for information and get response. During this call, the method usually involves locks to guarantee the thread safety and exclusive access. However, calling this method too often can cause Broker performance degradation. In order to reduce this risk, the inspector enforces a collection interval of 10 seconds and uses only certain operations. This strategy reduces the hits on management interface to 2 or 3 hits every 10 seconds.
+However, there are two problem factors; the first is that the Inspector should not influence the performance of the SUT. Current solutions for the information collection works like the management interface method call with request for information and response retrieval. During this call, the method usually involves locks to guarantee the thread safety and exclusive access. However, calling this method too often can cause significant Broker performance degradation. In order to reduce this risk, the inspector enforces a collection interval of 10 seconds and restricts usage only to selected operations. This strategy reduces the hits on management interface to 2 or 3 hits every 10 seconds and presents suitable performance.
 
-The second, often problem factor, is the large size of the stored logs. This is mitigated by the usage of the compression methods. However, compressed logs can still fill the whole hard drive during the long test-run, so old logs has to be erased at some point of time. The collected logs can be safely erased when the test is completed. Currently the Maestro generates about 1\,Gb of uncompressed data per hour of testing.
+The other, problem factor, is the large size of the stored logs. This is mitigated by the usage of the compression methods. However, compressed logs can still fill the whole hard drive during the long test-run and so old logs has to be erased at some point of time. The collected logs can be safely erased when the test is completed. Currently the Maestro generates about 1\,Gb of uncompressed data per hour of testing.
 
 %Inspector also monitor node with broker (CPU, memory size)?
 
 %No. There's a new module being developed for that, which runs on top of Prometheus and monitors both the system and the test cluster: http://msg-qe-dev-01.tpb.lab.eng.brq.redhat.com:3000
 
 
-\section*{Testing Metrics}
+\subsection{Testing Metrics}
 \label{Testing Metrics}
-Which metrics are collected depends on the cluster component. In the Table \ref{tab:maestro_metrics} we can see the summary of the metrics, which are collected for each component.
+The type of metrics collected during tests depends on the cluster component. In the Table \ref{tab:maestro_metrics} we can see the summary of the metrics, which are collected for each component.
 
 \begin{table}[H]
 \centering
+\caption{The summary of Maestro metrics summary collected during test cases.}
 \begin{tabular}{|p{2.5cm}|p{3.5cm}|p{7cm}|}
 \hline
 \rowcolor[HTML]{C5E3DF}
@@ -98,29 +99,28 @@ Which metrics are collected depends on the cluster component. In the Table \ref{
 \textbf{Sender}                          & Throughput                            & Throughput of the sender                                        \\ \hline
 \textbf{Receiver}                        & Throughput                            & Throughput of the receiver                                      \\ \hline
 \textbf{}                                & Latency                               & Time between send and receive messages                           \\ \hline
-\textbf{Broker}			                & JVM heap memory                       & Maximum, minimum, and current Eden, Survivor, and Tenured space \\ \hline
-                                         & JVM non-heap                          & PermGen or Metaspace\footnotemark{}                                            \\ \hline
+\textbf{Broker}			                & JVM heap memory                       & Maximum, minimum, and current Eden, Survivor, and Tenured space\footnotemark{} \\ \hline
+                                         & JVM non-heap                          & PermGen or Metaspace                                            \\ \hline
                                          & Broker internals                      & Queue size and expiration count                                 \\ \hline
                                          & OS basic memory                       & Physical and swap memory usage                                  \\ \hline
                                          & OS resources                          & Count of file descriptors                                       \\ \hline
 \end{tabular}
-\caption{Maestro metrics summary.}
 \label{tab:maestro_metrics}
 \end{table}
 
 \footnotetext{Eden, Survivor and Tenured space are internal Java memory spaces.}
 
-Throughput of the sender or receiver refers to the message count sent/received during the performance test run. This metric is collected by each sender and receiver. Latency is collected only by receiver. It refers to the time between send and receive of the message. This time can by influenced by the  Quality of Service or other parameters. Since Messaging Broker is written in Java JVM memory metric is relevant. High JVM memory usage can point to the memory leak or bad algorithm implementation. Broker queue has size threshold and message expiration time. When no one picks-up the message from the queue after some period of time there is no need to keep old messages and its unnecessary to fill too much of the memory.
+Throughput of the sender or receiver refers to the message count sent/received during the performance test run. This metric is collected by each sender and receiver. On the other hand latency is collected only by receiver. This refers to the time between sending and receiving of the message and can be influenced by the Quality of Service or other parameters. Since Messaging Broker is written in Java, JVM memory metric is relevant. High JVM memory usage can point to the memory leak or bad algorithm implementation. Broker queue has size threshold and message expiration time. When no one picks-up the message from the queue after some period of time there is no need to keep old messages and its unnecessary to fill too much of the memory.
 
-Last metric is the OS resource spending during the performance testing. It is not relevant for broker performance, but it is helpful to know data e.g. CPU usage, memory usage, etc., in case of Broker crash debugging.
+Last metric is the OS resource spending during the performance testing. It is not relevant for broker performance, but it is helpful to know e.g. the CPU usage, memory usage, etc., in case of Broker crash debugging.
 
 \section{Collected Data Format}
 \label{Collected Data Format}
-Data are collected by Inspector. Inspector monitors the broker and collects information about the workload. Output of this measurement should be one file for each active inspector. The broker inspector file is composed of the following columns:
+Data are collected by Inspector. Inspector continuously monitors the broker and collects information about the workload. Output of this measurement should be one file for each active inspector. The broker inspector file is composed of the following columns:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item \textbf{Timestamp}\,---\,the date and time for the data sample in the format YYYY-MM-DD hh:mm:ss using the W3C defined standard for datetime.
+	\item \textbf{Timestamp}\,---\,the date and time of the data sample in the format YYYY-MM-DD hh:mm:ss using the W3C defined standard for datetime.
 	\item \textbf{Load}\,---\,size of the system load.
 	\item \textbf{Open file descriptors}\,---\,number of opened filed descriptors.
 	\item \textbf{Free file descriptors}\,---\,number of free file descriptors.
@@ -149,7 +149,7 @@ Data are collected by Inspector. Inspector monitors the broker and collects info
 	\item \textbf{Expired}\,---\,number of expired messages in the queue.
 \end{itemize}
 
-Maestro sender and receiver generate another relative performance testing data. Receiver generates latency file with the following data:
+Maestro sender and receiver generate another relative performance testing data. Receiver generates latency log with the following data:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -159,15 +159,15 @@ Maestro sender and receiver generate another relative performance testing data. 
 	\item \textbf{Interval Compressed Histogram}\,---\,compressed histogram of measurement's latency in HDR\footnotemark{} format.
 \end{itemize}
 
-Both, sender and receiver generate rate (throughput) data file. It contains data about send or received data by each peer. Data are stored in a compressed comma-separated values (CSV) file with the following columns:
+Both, sender and receiver generate rate (throughput) data files. These contain data about sent or received data by each peer. Data are stored in a compressed comma-separated values (CSV) file with the following columns:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item \textbf{eta}\,---\,represents the estimated time of departure/arrival for the message, relative to the start of the test.
-	\item \textbf{ata}\,---\,represents the actual time of departure/arrival for the message, relative to the start of the test.
+	\item \textbf{eta}\,---\,represents the estimated time of departure/arrival of the message, relative to the start of the test.
+	\item \textbf{ata}\,---\,represents the actual time of departure/arrival of the message, relative to the start of the test.
 \end{itemize}
 
-\footnotetext{HDR - \url{http://hdrhistogram.github.io/HdrHistogram/JavaDoc/org/HdrHistogram/package-summary.html}}
+\footnotetext{HDR\,---\,\url{http://hdrhistogram.github.io/HdrHistogram/JavaDoc/org/HdrHistogram/package-summary.html}}
 
 \section{Related Works}
 \label{Related Works}
