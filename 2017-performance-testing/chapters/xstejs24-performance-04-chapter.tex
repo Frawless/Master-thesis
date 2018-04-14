@@ -190,6 +190,9 @@ In the Figure \ref{fig:agent_1} we show the simple scheme of topology and one ag
 Another part is a communication inside Maestro cluster with new component. Communication between cluster back-end and user client is realized through Maestro Broker and for proper message distribution new topic has to be added. As was mentioned in Section \ref{Collected Data Format}, Maestro Clients communicates with back-end via specialized commands. Router Agent will accept new set of commands for router control. This set has to be added to existing Maestro Clients. All additional components or components for update are highlighted by red color in the Figure \ref{fig:msg_perf_tool_update}. The example of simple testing topology consisting of two routers and two brokers is also included in the Figure \ref{fig:msg_perf_tool_update}.
 
 
+\subsection{Extension Points}
+\label{Extension Points}
+After research and few discussions we decided to develop the agent as a dynamic service, which is able to run any specific code. At the begging of the test, the agent will receive the command for download some repository with specific scrips as a action handlers. The path to repository will be a payload of one of the new commands. After that, the agent will listen on the Maestro Broker topic for the agents and wait for user's command to execute. This command will transport the name of the handler script as a payload of the Maestro note. The agent will execute script from payload as an action on the node. In particular, the router restart handler can be part of downloaded repository and then can be performed after receive user commands with payload \emph{\"requests/router\_restart.groovy\"}. This functionality makes the agent dynamic, which offers to user execute any specific action what he wants.
 
 
 \subsection{Communication with Agent}
@@ -198,10 +201,10 @@ For the communication inside Maestro testing cluster the Maestro Protocol is use
 
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item \textbf{MAESTRO\_NOTE\_START\_ROUTER (17)}\,---\,start the specific router in the network.
-	\item \textbf{MAESTRO\_NOTE\_STOP\_ROUTER (18)}\,---\,stop the specific router in the network.
-	\item \textbf{MAESTRO\_NOTE\_RESTART\_ROUTER (19)}\,---\,restart the specific router in the network.
-	\item \textbf{MAESTRO\_NOTE\_ROUTE\_ERROR (20)}\,---\,signals error during routing.
+	\item \textbf{MAESTRO\_NOTE\_START\_AGENT (18)}\,---\,start the agent service.
+	\item \textbf{MAESTRO\_NOTE\_STOP\_AGENT (19)}\,---\,stop the agent service.
+	\item \textbf{MAESTRO\_NOTE\_AGENT\_SOURCE (21)}\,---\,path to user commands handlers.
+	\item \textbf{MAESTRO\_NOTE\_USER\_COMMAND (30)}\,---\,user's specific command.
 \end{itemize}
 
 \subsection{Collected Data}
