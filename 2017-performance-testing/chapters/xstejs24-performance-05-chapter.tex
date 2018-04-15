@@ -68,7 +68,7 @@ This code in template means, that if Ansible knows the variable \emph{section.at
 		host: 10.0.0.1
 \end{verbatim}
 
-The section wrapper is more complex, because it is needed to wrap start of the section and end of the section. This is handled by class methods \textbf{\textunderscore enter\textunderscore ()} and \textbf{\textunderscore exit\textunderscore ()} which allows you to implement objects that execute \textbf{\textunderscore enter\textunderscore ()} at start and \textbf{\textunderscore exit\textunderscore ()} at the end of some statement. Basically is that class created for each section and methods are invoked before first and after last attribute. Method \textbf{\textunderscore enter\textunderscore ()} wrap start of each section with following code:
+The section wrapper is more complex, because it is needed to wrap start of the section and end of the section. This is handled by class methods \texttt{\textunderscore enter\textunderscore ()} and \texttt{\textunderscore exit\textunderscore ()} which allows you to implement objects that execute \texttt{\textunderscore enter\textunderscore ()} at start and \texttt{\textunderscore exit\textunderscore ()} at the end of some statement. Basically is that class created for each section and methods are invoked before first and after last attribute. Method \texttt{\textunderscore enter\textunderscore ()} wrap start of each section with following code:
 
 \begin{verbatim}
 {%% if item.section_name is defined %%}
@@ -185,7 +185,7 @@ and setup Qpid-dispatch. The role is available at \url{https://github.com/rh-mes
 Since Ansible offers smart system with variables inside the playbooks, you can assign all path to configurations files to variable in the script or pass them with option during the playbook execution start. After these steps we are ready to execute few steps on the remote nodes:
 
 \begin{description}
-	\item \textbf{Install qdrouter-jinja2 and generate templates}\,---\,this tool is used for generate template. We need to install it on all of router nodes, because each router can have different version and it can affect the configuration file with deprecated attributes. After installation the templates are created.
+	\item \textbf{Install qdrouter-jinja2} and \textbf{generate templates}\,---\,this tool is used for generate template. We need to install it on all of router nodes, because each router can have different version and it can affect the configuration file with deprecated attributes. After installation the templates are created.
 	\item \textbf{Fill template on remotes}\,---\,the script now fill-up the template on each node. Since it has information about all nodes from configuration variables, it simple compare hostname with key from variables to assign proper data to each host.
 	\item \textbf{Restart Qpid-dispatch}\,---\,after the change of configuration, we need to restart each machine and reload the configuration.
 \end{description}
@@ -248,12 +248,12 @@ The other important method of agent is \texttt{handle()} override for \emph{Agen
 \label{Agent Capabilities}
 The current implemented version of agent offers much more functions that was originally designed. The agent is not focused only for Qpid-dispatch actions handling, but it can invoke action on node itself by execute extension points scripts. This makes agent usable also for Broker nodes, where it can simulate real network behavior during the testing. The agent also can run 3rd party software on node during the test, which can simulate any kind of unexpected behavior.
 
-The agent is specific kind of Maestro Worker. This means, that agent connected to the Maestro Broker can publish messages during the test about it's executions status or any additional information. You can see simple communication with agent notes handling in the Figure \ref{fig:agent_demo}. The notes are send from front-end through Maestro Broker. Agent then invoke specific handle method based on received note. Inspector keeps inspecting the Qpid-dispatch by requests about hist state every 15\,seconds.
+The agent is specific kind of Maestro Worker. This means, that agent connected to the Maestro Broker can publish messages during the test about it's executions status or any additional information. You can see simple communication with agent notes handling in the Figure \ref{fig:agent_demo}. The notes are send from front-end through Maestro Broker. Agent then invoke specific handle method based on received note. Inspector keeps inspecting the Qpid-dispatch by requests about his state every 15\,seconds.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=13cm]{obrazky-figures/agent_demo.pdf}
-  \caption{Communication inside the Maestro with agent notes handling depiction.}
+  \caption{Communication inside the Maestro with agent notes handling.}
   \label{fig:agent_demo}
 \end{figure}
 
@@ -261,6 +261,10 @@ The agent is specific kind of Maestro Worker. This means, that agent connected t
 
 \subsection{AMQP Management Inspector}
 \label{AMQP Management Inspector}
-The imformation collection about the router itself are not gathered by the agent. For this purpose, we developed new type of Maestro Inspector especially for AMQP Management. AMQP Management is layered on top of the AMQP protocol and it access the inner data about router by simple requests and responses. \todo{dopsat}
+The information collection about the router itself are not gathered by the agent. For this purpose, we developed new type of Maestro Inspector especially for AMQP Management. AMQP Management is layered on top of the AMQP protocol and it access the inner data about the router by a simple requests and responses. Qdmanage tool has implemented whole operations for AMQP Management, however qdmanage is a Python tool and we want to integrate only Java code with AMQP Management requests into Maestro. AMQP Management offers CRUD operations for router configuration and inter informations. For AMQP Inspector we are fine with only Read operation to get specific information about running instance of Qpid-dispatch.
 
-\subsection{Deployment Changes}
+
+
+Using QPID JSM, update of maestro inspector start - start after the test start and pick up specific maestro inspector (artemis, ampq), update start inspector with payload.
+
+ \todo{dopsat po implementaci}
