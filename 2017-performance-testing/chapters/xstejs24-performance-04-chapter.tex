@@ -206,7 +206,11 @@ For the communication inside Maestro testing cluster the Maestro Protocol is use
 	\item \textbf{MAESTRO\_NOTE\_USER\_COMMAND (30)}\,---\,user's specific command.
 \end{itemize}
 
-\subsection{Collected Data}
+\subsection{AMQP Inspector}
+\label{AMQP Inspector}
+\todo{Dopsat}
+
+\subsubsection*{Collected Data}
 \label{Collected Data}
 Collected Data Format for new module is almost the same as in the current version of MPT (described in Subsection \ref{Collected Data Format}). Since Qpid-Dispatch is written in C, there is no need to monitor Java memory space. The following list shows updated data collected by the Inspector:
 
@@ -233,27 +237,27 @@ On the other hand, Topology Generator is a new simple project. For easy integrat
 Ansible \cite{Ansible} is simple automation framework which allow users to automate daily tasks on multiple nodes or containers. Basic types of tasks which can be automated by Ansible are:
 
 \begin{itemize}
-	\item \textbf{Provisioning}\,---\,setup the various servers user need in network infrastructure.
-	\item \textbf{Configuration management}\,---\,change configuration of an application, operation system or device. Basically it allows start, stop and restart services, install or update application or perform a wide variety of other configuration tasks.
-	\item \textbf{Application deployment}\,---\,automatic deployment of internally developed application to your systems with all dependencies.
+	\item \textbf{Provisioning}\,---\,setups the various servers user needs in the network infrastructure.
+	\item \textbf{Configuration management}\,---\,changes configuration of an application, operation system or device. Basically this allows starting, stopping and restarting services, installing or updating applications or performing a wide variety of other configuration tasks.
+	\item \textbf{Application deployment}\,---\,automatically deploys the internally developed application to specified systems with all dependencies.
 \end{itemize}
 
-Ansible scripts, called playbooks, are written in YAML language, It makes Ansible scripts easy to read for humans and very simple to manage. Another advantage is that user does not even need to know commands used to accomplish a particular tasks. All is needed to specify what state does user wants the system to be in. Ansible is available on multiple systems with really short list of dependencies; Linux based systems needs Python and Windows need PowerShell, both systems needs SSH. Ansible playbooks can be grouped together and create more complex scripts called roles. They are open-source and available in public repository.
+Ansible scripts, called playbooks, are written in YAML language. This makes Ansible scripts easy to read for humans and simple to manage. Another advantage is that the user does not even need to know commands used to accomplish a particular tasks. All that is needed is to specify what state does user wants the system to be in. Ansible is available on multiple systems with really short list of dependencies; Linux based systems requires Python installed and Windows needs PowerShell; both systems requires SSH. Moreover, Ansible playbooks can be grouped together and create more complex scripts called roles. They are open-source and available in public repository.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=10cm]{obrazky-figures/ansible.png}
-  \caption{Ansible architecture. \todo{Placeholder}}
+  \caption{Ansible architecture. \todo{Placeholder - dobre popsat}}
   \label{fig:ansible_architecture}
 \end{figure}
 
-In this thesis is Ansible used for several tasks; main is to deploy systems on specific nodes. As I want to run performance tests of Qpid-dispatch over multiple topology scenarios it is necessary to do system deployment quickly and automatically, which is easy with Ansible. System deployment contains MPT installation, Qpid-dispatch installation and other services based on testing scenario. The next task is to create and deploy configuration files for each router machine. This task runs Topology generator and create configuration files for each machine based on generator output.
+We use Ansible used for several tasks; mainly to deploy systems on specific nodes. As I want to run performance tests of Qpid-dispatch over multiple topology scenarios it is necessary to do system deployment quickly and automatically, which is easy with Ansible. System deployment contains installation of MPT, Qpid-dispatch and other services based on testing scenario. The next task is to create and deploy configuration files for each router machine. This task runs Topology generator and creates configuration files for each machine based on generator output.
 
 
 \subsection{Docker}
-Docker \cite{Docker} is an open platform that provide developing, shipping, and running application separately from your infrastructure. Basically docker is specific type of virtualization technology. It allows the ability to package and run an application in a loosely isolated environment called a container. Docker containers are lightweight virtual machines run directly within the host machine's kernel. This means that you can run more containers than virtual machines on specific hardware, it is possible to ran containers on virtual machines.
+Docker \cite{Docker} is an open platform that provides developing, shipping, and running application separately from the infrastructure. Basically Docker is a specific type of virtualization technology. It allows to package and run an application in a loosely isolated environment called a container. These containers are lightweight virtual machines running directly within the host machine's kernel. This means that one can run more containers than virtual machines on specific hardware, and it is possible to run containers on virtual machines.
 
-Docker container are build up from a dockerfile where container attributes are specified such as OS in container, environment variables, and steps for installing applications. Output of build command is a docker image. This image is ready for running as a container with another specific attributes such as exposed ports. Containers can be attached to same network which allow communication between all containers.
+Docker container is build up from a dockerfile where container attributes are specified such as OS, environment variables, or steps for installing applications. Output of build command is then a docker image. This image is ready for running as a container with another specific attributes such as exposed ports. Containers can be attached to same network which allow communication between all containers.
 
 \begin{figure}[H]
   \centering
