@@ -208,25 +208,61 @@ For the communication inside Maestro testing cluster the Maestro Protocol is use
 
 \subsection{AMQP Inspector}
 \label{AMQP Inspector}
-\todo{Dopsat}
+The important part of performance testing is measurements of internal metrics of SUT. Maestro offers Maestro inspector for this kind of measurements. However, current version can monitor only Broker, because Inspector is implemented for specific interface which is provided by Broker. Since Broker is written in Java and provides access to JMX\footnote{JMX\,---\,\url{http://www.oracle.com/technetwork/articles/java/javamanagement-140525.html}} via Jolokia\footnote{Jolokia\,---\,\url{https://jolokia.org/}}, we cannot use current Inspector for router as well. The router offers \emph{AMQP management} for interaction with the router on the fly, which is different than Jolokia access. The Jolokia access is based on HTTP/JSON format message exchange between requester and SUT. AMQP Management is based on AMQP messages with specific format.
+
+The router offers these information after proper AMQP request to an opened up listener with specific properties:
+
+\begin{itemize}
+	\setlength\itemsep{0em}
+		\item \textbf{name}\,---\,this property is always setup to \textbf{self}.
+		\item \textbf{operation}\,---\,AMQP management offers classic CRUD operations. For inspect message we will always use option called \textbf{QUERY}.
+		\item \textbf{type}\,---\,this property represents interior package which will parse the request, we will use \textbf{org.amqp.management}.
+		\item \textbf{entityType}\,---\,this property is configurable. We use there several options with prefix \textbf{org.apache.qpid.dispatch.} based on request purpose. The options are:
+		\begin{itemize}
+			\setlength\itemsep{0em}
+			\item \emph{router}\,---\,general informations about the router.
+			\item \emph{router.stats}\,---\,detailed informations about the router.
+			\item \emph{router.link}\,---\,informations about the route links.
+			\item \emph{router.node}\,---\,general informations about neighbour nodes.
+			\item \emph{router.address}\,---\,informations about addresses on the router.r
+			\item \emph{connector}\,---\,informations about connections.
+			\item \emph{allocator}\,---\,informations about memory metrics.
+			\item \emph{config.autolink}\,---\,informations about created auto links.
+			\item \emph{config.linkRoute}\,---\,informations about created link routes.
+		\end{itemize}
+		\item \textbf{body}\,---\,this property is message payload, which is empty list. Exceptions are auto links and link routes requests, which needs additional information in the body.
+\end{itemize}
 
 \subsubsection*{Collected Data}
 \label{Collected Data}
-Collected Data Format for new module is almost the same as in the current version of MPT (described in Subsection \ref{Collected Data Format}). Since Qpid-Dispatch is written in C, there is no need to monitor Java memory space. The following list shows updated data collected by the Inspector:
+Data collected by the AMQP Inspector is different than collect current version of Inspector. After the discussion, we decided to collect data about \emph{general statistics}, \emph{router links} and \emph{memory}. Note, that each data set has multiple data columns, which are all available in Appendix \ref{AMQP Inspector Data Sets}. The following describes the most important data collected by the AMQP Inspector:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
 	\item \textbf{Timestamp}\,---\,the date and time for the data sample in the format YYYY-MM-DD hh:mm:ss using the W3C defined standard for datetime.
-	\item \textbf{Load}\,---\,size of the system load.
-	\item \textbf{Open file descriptors}\,---\,number of opened filed descriptors.
-	\item \textbf{Free file descriptors}\,---\,number of free file descriptors.
-	\item \textbf{Free memory}\,---\,free physical memory.
-	\item \textbf{Free swap memory}\,---\,swap free memory.
-	\item \textbf{Swap committed}\,---\,swap committed memory.
-	\item \textbf{Consumers}\,---\,number of active connectors connected to the router.
-	\item \textbf{Message amount}\,---\,amount of routered messages.
+	\item \textbf{General Statistics}\,---\,basic informations about the router such as active connections, addresses, auto links, accepted messages and so on.
+	\begin{itemize}
+		\setlength\itemsep{0em}
+		\item \textbf{Address Count}\,---\,activate addresses at current time.
+		\item \textbf{Connections Count}\,---\,active connections at current time.
+	\end{itemize}
+	\item \textbf{Router Links}\,---\,informations about all router links which were opened to the router.
+	\begin{itemize}
+		\setlength\itemsep{0em}
+		\item \textbf{Accepted Message Count}\,---\,accepted messages at current time.
+		\item \textbf{Delivered Message Count}\,---\,delivered messages at current time.
+		\item \textbf{Released Message Count}\,---\,released messages at current time.
+		\item \textbf{Undelivered Message Count}\,---\,undelivered messages at current time.
+	\end{itemize}
+	\item \textbf{Memory Statistics}\,---\,informations about allocated memory by the router.
+	\begin{itemize}
+		\setlength\itemsep{0em}
+		\item \textbf{Total Allocated Memory}\,---\,total allocated memory.
+		\item \textbf{Memory Allocated by Threads}\,---\,total memory allocated by threads.
+	\end{itemize}
 \end{itemize}
-Data collected by senders and receivers remains the same as in the current version of MPT.
+
+Each data set is converted to chart, which represents collected values for each request. Data collected by senders and receivers remains the same as in the current version of MPT.
 
 \section{Used Technologies}
 Messaging Performance Tool is a project with several parts. The most of MPT, such as command parsing, reporting, clients abstractions and so on, is written in Java language. But whole MPT is not pure Java code. To specify a test, Groovy is used. Groovy is basically lightweight version of Java with several advantages. From my point of view Groovy scripts are more readable for those who are not much familiar with Java code. Groovy scrips are also used as reaction for specific commands for extension points, but this is deeply described in the Subsection \ref{MPT Preparations}.
