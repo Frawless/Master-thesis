@@ -189,30 +189,6 @@ All the relevant information sources, which were used during preparation of this
 
   {\hypersetup{hidelinks}\tableofcontents}
 
-  % Seznam obrazku a tabulek (pokud prace obsahuje velke mnozstvi obrazku, tak se to hodi)
-  % List of figures and list of tables (if the thesis contains a lot of pictures, it is good)
-  \ifczech
-    \renewcommand\listfigurename{Seznam obrázků}
-  \fi
-  \ifslovak
-    \renewcommand\listfigurename{Zoznam obrázkov}
-  \fi
-  % \listoffigures
-
-  \ifczech
-    \renewcommand\listtablename{Seznam tabulek}
-  \fi
-  \ifslovak
-    \renewcommand\listtablename{Zoznam tabuliek}
-  \fi
-  % \listoftables
-
-  \ifODSAZ
-    \setlength{\parskip}{0.5\bigskipamount}
-  \else
-    \setlength{\parskip}{0pt}
-  \fi
-
   % vynechani stranky v oboustrannem rezimu
   % Skip the page in the two-sided mode
   \iftwoside
@@ -274,7 +250,8 @@ All the relevant information sources, which were used during preparation of this
   \renewcommand{\appendixtocname}{Prílohy}
   \renewcommand{\appendixname}{Príloha}
 \fi
-%  \appendixpage
+ \appendixpage
+
 
 % vynechani stranky v oboustrannem rezimu
 % Skip the page in the two-sided mode
@@ -310,4 +287,32 @@ All the relevant information sources, which were used during preparation of this
     \cleardoublepage
   \fi
   \input{xstejs24-performance-30-prilohy-appendices} % viz. prilohy.tex / see prilohy.tex
+
+  % Seznam obrazku a tabulek (pokud prace obsahuje velke mnozstvi obrazku, tak se to hodi)
+  % List of figures and list of tables (if the thesis contains a lot of pictures, it is good)
+  \ifczech
+    \renewcommand\listfigurename{Seznam obrázků}
+  \fi
+  \ifslovak
+    \renewcommand\listfigurename{Zoznam obrázkov}
+  \fi
+  \listoffigures
+
+  \ifczech
+    \renewcommand\listtablename{Seznam tabulek}
+  \fi
+  \ifslovak
+    \renewcommand\listtablename{Zoznam tabuliek}
+  \fi
+  \listoftables
+
+  \ifODSAZ
+    \setlength{\parskip}{0.5\bigskipamount}
+  \else
+    \setlength{\parskip}{0pt}
+  \fi
+
+  % \listofalgorithms
+  % \addtocontents{loa}{\def\string\figurename{Algorithm}}
+
 \end{document}

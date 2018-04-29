@@ -282,8 +282,8 @@ Ansible scripts, called playbooks, are written in YAML language. This makes Ansi
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=10cm]{obrazky-figures/ansible.png}
-  \caption{Ansible architecture. \todo{Placeholder - dobre popsat}}
+  \includegraphics[width=12cm]{obrazky-figures/ansible_architecture.pdf}
+  \caption{Ansible architecture witch several nodes. Inventory and Playbook are passed to Ansible Management node, which execute playbook on all node specified in the inventory.}
   \label{fig:ansible_architecture}
 \end{figure}
 
@@ -297,10 +297,10 @@ Docker container is build up from a dockerfile where container attributes are sp
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=10cm]{obrazky-figures/docker.png}
-  \caption{Docker architecture. \todo{Placeholder}}
-  \label{fig:ansible_architecture}
+  \includegraphics[width=13cm]{obrazky-figures/docker.png}
+  \caption{Docker architecture with all its components and commands. Docker can pull or build specific image and then run it in docker container.}
+  \label{fig:docker_architecture}
 \end{figure}
 
 
-Since docker is able to run services such as Qpid-dispatch very easily and also allow communication between containers. It is possible to deploy MPT with proper SUT in containers and analyze behavior in the container network or just run MPT on single machine. However, for proper performance results we need real machines, docker containers are used only for MPT development and trying some basic stuffs with MPT.
+Since docker is able to run services such as Qpid-dispatch very easily and also allow communication between containers. It is possible to deploy MPT with proper SUT in containers and analyze behavior in the container network or just run MPT on single machine. However, for proper performance results we need real machines, docker containers are used only for MPT development and trying some basic stuffs with MPT. The docker architecture is depicted in the Figure \ref{fig:docker_architecture}\footnote{Image is taken over from \url{https://robinsystems.com/blog/containers-deep-dive-lxc-vs-docker-comparison/}.}.

@@ -224,24 +224,65 @@ The main part of the Agent is the method called \texttt{callbacksWrapper()}. Sin
 		\SetKwIF{try}{catch}{catch}{try}{}{catch}{catch}{}
 		\SetKw{in}{in}
 		\SetKw{var}{var}
+		\SetKw{fce}{Function: }
 
+		\fce callbacksWrapper()\;
 		\KwIn{externalPointPath, codeDir, note}
 		\KwOut{sendReplyOk() or sendReplyFail()}
 
 		\var thread = Thread()\;
-		thread.start(groovyHandler.runExternalPoint())\;
+
 		\etry{}{
 			\var groovyHandler = GroovyHandler()\;
 			groovyHandler.setInitialPath(externalPointPath)\;
+			groovyHandler.setWorkerOptions(getWorkerOptions())\;
 			groovyHandler.setMaestroNote(note);
+			thread.start(groovyHandler.runCallbacks())\;
 		}{
 			sendReplyFail()\;
 		}
 
 		sendReplyOk()\;
 
-		 \caption{Basic functionality of \texttt{callbacksWrapper()} method. \todo{Urcite vylepsit}}
+		 \caption{Basic functionality of \texttt{callbacksWrapper()} method. This method create new thread for each extension point and tries to execute it.}
 		 \label{alg:agent_note_handle}
+	\end{algorithm}
+\end{center}
+
+In the new threads we execute \texttt{runCallbacks()} methods, which loads all files from extension point directory and tries to execute them. This method is in specific class, which contains parameters for each execution. The parameters are originally contained in the note's payload. The Algorithm \ref{alg:agent_run_callbacks} captures \texttt{runCallbacks()} method.
+
+\begin{center}
+	\begin{algorithm}[H]
+		\LinesNumbered
+		\DontPrintSemicolon
+
+		\SetKwFor{forPy}{for}{:}{}
+		\SetKwIF{If}{ElseIf}{Else}{if}{:}{else if}{else}{}
+		\SetKwIF{try}{catch}{catch}{try}{}{catch}{catch}{}
+		\SetKw{in}{in}
+		\SetKw{var}{var}
+		\SetKw{fce}{Function: }
+
+		\fce runCallbacks()\;
+		\KwIn{groovyHandler as this class}
+		\KwOut{sendReplyOk() or sendReplyFail()}
+
+		\forPy{file in extensionPointDirectory}{
+				\etry{}{
+						\var grovyObject = loadFileAsGroovyObject(file)\;
+						groovyObject.invokeMethod(”setMaestroNote”, this.maestroNote)\;
+						groovyObject.invokeMethod(”setWorkerOptions”, this.workerOptions)\;
+						groovyObject.invokeMethod(”setMaestroClient”, this.client)\;
+						groovyObject.invokeMethod(”handle”, this.context)\;
+				}{
+						sendReplyFail()\;
+				}
+		}
+
+		sendReplyOk()\;
+
+		 \caption{The method \texttt{runCallbacks()} loop over each file in the extension point directory. Tries to load each file and execute it.}
+		 \label{alg:agent_run_callbacks}
 	\end{algorithm}
 \end{center}
 
@@ -268,11 +309,11 @@ The collection of information about the router itself are not gathered by the ag
 
 \subsubsection*{Basic Evaluation}
 
-The Maestro Inspector is designed to run specific Inspector class based on users definition in testing script. Currently, Maestro offers ActiveMQ Inspector for the Broker and AMQP Inspector for the Router. The Inspector will receive note with \emph{inspector start} command, which carry string payload. This payload is name of specific inspector implementation that will be started. The start inspector mechanism is depicted in the Figure \ref{fig:inspector_start} and in the Algorithms \ref{alg:startInspector} and \ref{alg:requester}.
+The Maestro Inspector is designed to run specific Inspector class based on users definition in testing script. Currently, Maestro offers ActiveMQ Inspector for the Broker and AMQP Inspector for the Router. The Inspector will receive note with \emph{inspector start} command, which carry string payload. This payload is name of specific inspector implementation that will be started. The start inspector mechanism is depicted in the Figure \ref{fig:inspector_start} and in the Algorithms \ref{alg:startInspector}.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=13cm]{obrazky-figures/placeholder.png}
+  \includegraphics[width=13cm]{obrazky-figures/inspector_start.pdf}
   \caption{Inner mechanism of Maestro Inspector during the receive start inspector note.}
   \label{fig:inspector_start}
 \end{figure}
@@ -308,6 +349,15 @@ The Maestro Inspector is designed to run specific Inspector class based on users
 		 \label{alg:startInspector}
 	\end{algorithm}
 \end{center}
+
+The AMQP Inspector uses of request-response message mechanism with the SUT. The inspector creates message with Java library \emph{Qpid JMS}\footnote{Qpid-JMS\,---\,\url{https://qpid.apache.org/components/jms/index.html}}. The message specification was described in the Subsection \ref{AMQP Inspector}. Since we want to collect as much relevant data as possible, we are sending four request-response messages with different entityType option every 5\,seconds during the whole test. For response collecting it is necessary to create temporary queue. That queue is used by the router as and response destination. The destination is contained in field \emph{response-to}. The request message is represented as an object with type of \emph{JMS Message}. The main Inspector's process mechanism is described in the Algorithm \ref{alg:requester}. The message request-response mechanism is depicted in the Figure \ref{fig:collector}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm]{obrazky-figures/inspector_collector.pdf}
+  \caption{Whole Inspector process including message creation, message send, collect and parse.}
+  \label{fig:collector}
+\end{figure}
 
 \begin{center}
 	\begin{algorithm}[H]
@@ -349,12 +399,3 @@ The Maestro Inspector is designed to run specific Inspector class based on users
 		 \label{alg:requester}
 	\end{algorithm}
 \end{center}
-
-The AMQP Inspector uses of request-response message mechanism with the SUT. The inspector creates message with Java library \emph{Qpid JMS}\footnote{Qpid-JMS\,---\,\url{https://qpid.apache.org/components/jms/index.html}}. The message specification was described in the Subsection \ref{AMQP Inspector}. Since we want to collect as much relevant data as possible, we are sending four request-response messages with different entityType option every 5\,seconds during the whole test. For response collecting it is necessary to create temporary queue. That queue is used by the router as and response destination. The destination is contained in field \emph{response-to}. The request message is represented as an object with type \emph{JMS Message}. The whole request-response process mechanism is depicted in the Figure \ref{fig:inspector_requests} and in the Algorithm \ref{alg:requester}.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=13cm]{obrazky-figures/placeholder.png}
-  \caption{Request-response mechanism of AMQP Inspector and the SUT.}
-  \label{fig:inspector_requests}
-\end{figure}
