@@ -1,12 +1,14 @@
 \documentclass[hyperref={pdfpagelabels=false, unicode},pdf,slideColor,fyma,9pt]{beamer}
 \usepackage[utf8]{inputenc}		%kodovani zdrojoveho textu
-\usepackage[czech]{babel} 		%cestina
+\usepackage[english]{babel} 		%cestina
 \usepackage[IL2]{fontenc}		%font vyladeny pro cestinu
 \usepackage{lmodern}			%odstraneni varovani pro IL2
 \usepackage{graphicx}
 \usepackage{color}
-\usepackage{multirow}	
+\usepackage{multirow}
 \usepackage{subfigure}
+
+% \usepackage[UKenglish]{isodate}
 
 \newcommand\myqt[1]{\quotedblbase #1\textquotedblleft}
 
@@ -17,7 +19,7 @@
 \mode<presentation> {
   \usetheme{Boadilla}
 	\usecolortheme{default}
-	
+
   %\setbeamercovered{Berlin beaver default}
 	%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
 %\setbeamertemplate{headline}{}
@@ -36,7 +38,7 @@
   \end{beamercolorbox}}%
   \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,center]{date in head/foot}%
     \insertframenumber{} / \inserttotalframenumber\hspace*{1ex}
-  \end{beamercolorbox}%  
+  \end{beamercolorbox}%
   \vskip0pt%
 }
 \makeatletter
@@ -44,7 +46,7 @@
 
 
 \title{Performance Testing and Analysis of Qpid-Dispatch Router}
-\subtitle{Term Project}
+% \subtitle{Master Thesis}
 \author[Bc. Jakub Stejskal]{Bc. Jakub Stejskal}
 \institute[]{Faculty of Information Technology}
 \date[]{\today}
@@ -52,147 +54,173 @@
 \begin{document}
 		\begin{frame}
 				\titlepage
+        \begin{figure}[ht]
+        	\begin{center}
+        		\scalebox{0.25}{\includegraphics{figures/maestro-logo.pdf}}
+        	\end{center}
+        \end{figure}
 		\end{frame}
-		
+
 		%/////////////////////////////////////////////////
 		\section{Motivation}
 		\begin{frame}{Motivation}
-			\begin{itemize}
-			\setlength\itemsep{0.5em}
-				\item Why should we care about performance?
-				\vspace{0.5em}						
-				\begin{itemize}
-						\setlength\itemsep{0.5em}
-						\item Good Performance $\rightarrow$ Good Quality.
-						\item Solid performance leads to a good customer satisfaction.
-				\end{itemize}	
-				\vspace{0.5em}	
-				\item Why should performance testing be automated?	
-				\vspace{0.5em}		
-				\begin{itemize}
-						\setlength\itemsep{0.5em}
-						\item Can reveal potential performance bugs.
-						\item Can lead to overall application performance by locating performance hotspots.
-				\end{itemize}				
-			\end{itemize}
-			\begin{figure}[ht]
-				\begin{center}
-					\scalebox{0.23}{\includegraphics{figures/CSAT.png}\footnote{\tiny{}CSAT Figure - \url{https://www.linkedin.com/pulse/faster-response-times-linked-high-csat-peter-thalman}}}
-				\end{center}
-			\end{figure}
+      \begin{tabular}{cl}
+        \begin{tabular}{l}
+            \parbox{0.45\linewidth}{%  change the parbox width as appropiate
+            \begin{itemize}
+            \setlength\itemsep{0.5em}
+              \item What is Maestro?
+              \vspace{0.5em}
+              \begin{itemize}
+                  \setlength\itemsep{0.5em}
+                  \item Performance tool for \textbf{Message-oriented middleware}.
+                  \item Automated, provides reporting.
+                  \item Single node, multi node or cluster testing.
+              \end{itemize}
+              \vspace{0.5em}
+              \item Capabilities
+              \vspace{0.5em}
+              \begin{itemize}
+                  \setlength\itemsep{0.5em}
+                  \item \textbf{Throughput} measurements.
+                  \item \textbf{Latency} measurements.
+              \end{itemize}
+            \end{itemize}
+            }
+        \end{tabular}
+        & \begin{tabular}{l}
+            \scalebox{0.25}{\includegraphics{figures/msg_perf_tool.pdf}}
+          \end{tabular} \\
+      \end{tabular}
 		\end{frame}
 		%/////////////////////////////////////////////////
-		\section{Qpid-Dispatch}
-		\begin{frame}{Qpid-Dispatch}
-				\begin{itemize}
-						\setlength\itemsep{0.5em}
-						\item Application layer router. 
-						\item Manages message routing in the network.
-						\item Communicates with Messaging Broker and Messaging Clients.		
-						\item Each router has configuration file with specified links to other components.
-						\item Networks with routers can be configured with redundant links in case of node crash.
-				\end{itemize}	
-			\begin{figure}[ht]
-				\begin{center}
-					\scalebox{0.3}{\includegraphics{figures/routing.png}\footnote{\tiny{}Routing Figure - \url{http://coretanbocahit.blogspot.cz/2016/10/lab-39-eigrp-filtering-ip-genap.html}}}
-				\end{center}
-			\end{figure}									
+		\section{Extension: Maestro-Agent and AMQP Inspector}
+		\begin{frame}{Extensions: Maestro-Agent and AMQP Inspector}
+      \begin{tabular}{cl}
+        \begin{tabular}{l}
+            \parbox{0.55\linewidth}{%  change the parbox width as appropiate
+            \begin{itemize}
+                \setlength\itemsep{0.5em}
+                \item Enables automatic \textbf{SUT} (Software Under Test) changes during the test.
+                \item \textbf{Groovy} code handler.
+                \item Can fetch and process external repositories.
+                \item Monitors \textbf{Qpid-dispatch}.
+                \item Request-response mechanism over \textbf{AMQP}.
+                \item \textbf{Topology Generator} for automatic deployment and configuration.
+            \end{itemize}
+            }
+        \end{tabular}
+        & \begin{tabular}{l}
+            \scalebox{0.40}{\includegraphics{figures/agent_demo.pdf}}
+          \end{tabular} \\
+      \end{tabular}
 		\end{frame}
 		%/////////////////////////////////////////////////
-		\section{Messaging Performance Tool}
-		\begin{frame}{Messaging Performance Tool}
-       		\begin{tabular}{cl}  
-           		\begin{tabular}{l}
-             		\parbox{0.37\linewidth}{%  change the parbox width as appropiate
-						\begin{itemize}
-							\setlength\itemsep{0.5em}
-							\item Cluster performance testing system.
-							\item Load handlers are Sender and Receiver.
-							\item Inspector is monitoring component.
-							\item Communication between back-end and Maestro Clients through Maestro Broker.
-							\item Measured data are send to data server from Inspector.
-						\end{itemize}
-   					}
-         		\end{tabular} 
-         		& \begin{tabular}{l}
-           			\scalebox{0.32}{\includegraphics{figures/msg_perf_tool.pdf}}
-           		\end{tabular} \\
-			\end{tabular}					
-		\end{frame}
-		%/////////////////////////////////////////////////
-		\section{Messaging Performance Tool: Proposed Extension}
-		\begin{frame}{Messaging Performance Tool: Proposed Extension}
-       		\begin{tabular}{cl}  
-           		\begin{tabular}{l}
-             		\parbox{0.37\linewidth}{%  change the parbox width as appropiate
-						\begin{itemize}
-							\setlength\itemsep{0.5em}
-							\item Required changes:
-							\begin{itemize}
-								\setlength\itemsep{0.5em}
-								\item Maestro Clients update (New Commands).
-								\item New component: Agent.
-								\item Ability to change topology (Shut down router, etc.).						
-							\end{itemize}
-							\vspace{0.5em}
-							\item Finished work:
-							\begin{itemize}
-								\setlength\itemsep{0.5em}
-								\item Updated Maestro Clients with new commands.
-								\item Updated Maestro Broker with new topics.
-								\item Implemented Agent component.
-							\end{itemize}
-						\end{itemize}
-   					}
-         		\end{tabular} 
-         		& \begin{tabular}{l}
-           			\scalebox{0.32}{\includegraphics{figures/msg_perf_tool_for_router.pdf}}
-           		\end{tabular} \\
-			\end{tabular}	
-		\end{frame}		
-		%/////////////////////////////////////////////////
-		\section{Topology Generator}
-		\begin{frame}{Topology Generator}
-       		\begin{tabular}{cl}  
-           		\begin{tabular}{l}
-             		\parbox{0.4\linewidth}{%  change the parbox width as appropiate
-						\begin{itemize}
-							\setlength\itemsep{0.5em}						
-							\item Metadata are transformed into Configuration files.
-							\item Metadata consists of Inventory or Graph File (topology description).
-							\item Configuration files are based on Qpid-Dispatch version (specific Template for Ansible).
-							\item Automatic deployment of configuration files by Ansible to specific nodes.
-						\end{itemize}
-   					}
-         		\end{tabular} 
-         		& \begin{tabular}{l}
-           			\scalebox{0.3}{\includegraphics{figures/generator.pdf}} \\ \\ \\
-           			\scalebox{0.3}{\includegraphics{figures/deployment.pdf}}
-           		\end{tabular} \\
-			\end{tabular}						
-		\end{frame}
+		% \section{Extension: Topology Generator}
+		% \begin{frame}{Extension: Topology Generator}
+    %    		\begin{tabular}{cl}
+    %        		\begin{tabular}{l}
+    %          		\parbox{0.4\linewidth}{%  change the parbox width as appropiate
+		% 				\begin{itemize}
+		% 					\setlength\itemsep{0.5em}
+		% 					\item Metadata transformed into Configuration files.
+    %           \begin{itemize}
+    %             \item Inventory
+    %             \item Graph File
+    %           \end{itemize}
+		% 					\item Automatic deployment by \textbf{Ansible}.
+		% 				\end{itemize}
+   % 					}
+    %      		\end{tabular}
+    %      		& \begin{tabular}{l}
+    %        			\scalebox{0.3}{\includegraphics{figures/generator.pdf}} \\ \\ \\
+    %        			\scalebox{0.3}{\includegraphics{figures/deployment.pdf}}
+    %        		\end{tabular} \\
+		% 	\end{tabular}
+		% \end{frame}
+    %/////////////////////////////////////////////////
+    \section{Measurements}
+    \begin{frame}{Experimental Evaluation}
+      \begin{itemize}
+          \setlength\itemsep{0.5em}
+          \item \textbf{Latency} vs. \textbf{Throughput} vs. \textbf{Behavioral} testing.
+          \item The figure shows throughput comparison of \textbf{Messaging Broker} and \textbf{Qpid-dispatch}.
+      \end{itemize}
+      \begin{figure}[ht]
+        \begin{center}
+          \scalebox{0.7}{\includegraphics{figures/throughput.pdf}}
+        \end{center}
+      \end{figure}
+    \end{frame}
+    %/////////////////////////////////////////////////
+		\section{Measurements II.}
+    \begin{frame}{Experimental Evaluation}
+      \begin{itemize}
+          \setlength\itemsep{0.5em}
+          \item Latency is measured by \textbf{Maestro Receiver}.
+          \item The figure shows latency comparison between \textbf{Messaging Broker} and \textbf{Qpid-dispatch}.
+      \end{itemize}
+      \begin{figure}[ht]
+        \begin{center}
+          \scalebox{0.7}{\includegraphics{figures/latency.pdf}}
+          % \scalebox{0.4}{\includegraphics{figures/agent.pdf}}
+        \end{center}
+      \end{figure}
+    \end{frame}
+    %/////////////////////////////////////////////////
+    \section{Measurements III.}
+    \begin{frame}{Experimental Evaluation}
+      \begin{itemize}
+          \setlength\itemsep{0.5em}
+          \item Latency and throughput can be affected by the \textbf{Agent}.
+          \item The figure shows behavioral test case, during which one node of topology is shut down.
+      \end{itemize}
+      \begin{figure}[ht]
+        \begin{center}
+          \scalebox{0.7}{\includegraphics{figures/agent_latency.pdf}}
+        \end{center}
+      \end{figure}
+    \end{frame}
 		%/////////////////////////////////////////////////
 		\section{Summary}
 		\begin{frame}{Summary}
 				\begin{itemize}
 						\setlength\itemsep{0.5em}
-						\item Extension of Messaging Performance Tool
+						\item Extensions of the Maestro
 						\vspace{0.5em}
 						\begin{itemize}
 							\setlength\itemsep{0.5em}
-							\item Added new commands to Maestro Clients.
-							\item Implemented Qpid-Dispatch Agent.
+							\item \textbf{Maestro-Agent}
+							\item \textbf{AMQP Inspector}
+              \item \textbf{Topology Generator} (external tool)
 						\end{itemize}
 						\vspace{1em}
-						\item Plan for next semester
+						\item Experimental Evaluation
 						\vspace{0.5em}
 						\begin{itemize}
 							\setlength\itemsep{0.5em}
-							\item Improvements of Topology Generator (more user friendly input, more default graphs).
-							\item Qpid-Dispatch performance measurements (measure the highest throughput and other metrics).
-							\item Experiments with Qpid-Dispatch recovery and topology convergence. 
+							\item \textbf{Throughput} and \textbf{latency}, \textbf{behavioral} testing.
+              \item Single node, multi node or cluster topologies.
+              \item Topologies consists of \textbf{Qpid-dispatch} and other messaging services.
+              \item Automatic generation of specific topologies.
 						\end{itemize}
 				\end{itemize}
 		\end{frame}
 		%/////////////////////////////////////////////////
+    \section{Contacts}
+    \begin{frame}{Contacts}
+      \begin{figure}[ht]
+        \begin{center}
+          \scalebox{0.30}{\includegraphics{figures/maestro-logo.pdf}}
+        \end{center}
+      \end{figure}
+      \begin{center}
+        \begin{itemize}
+          \item Jakub Stejskal\,---\,jstejska@redhat.com, xstejs24@stud.fit.vutbr.cz
+          \item Otavio Rudolfo Piske\,---\,opiske@redhat.com (Author of Maestro)
+          \item GitHub\,---\,\url{https://github.com/maestro-performance/}
+        \end{itemize}
+    \end{center}
+    \end{frame}
+    %/////////////////////////////////////////////////
 \end{document}
