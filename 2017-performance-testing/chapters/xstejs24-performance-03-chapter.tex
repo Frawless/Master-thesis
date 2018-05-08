@@ -173,6 +173,12 @@ Both, sender and receiver generate rate (throughput) data files. These contain d
 \label{Related Works}
 % popsat podobne "existujici" reseni (samozrejme, obcas neexistuje ;), ale verim, ze zde se neco najde). Nejlepsi je i se vuci tem "related tools" vymezit (jako napr. "The tool ... cannot be used because it does not support ...")
 
-One of the related tools for performance testing is \emph{SpecJMS} \cite{SPECJMS}. It is the industry-standard benchamrk for evaluating the performance of eterprise message-oriented middlevare servers based on JMS.
+Since Maestro is relatively new system, there is few existing performance testing tools. Noteworthy are two tools, which was used for testing before the maestro development. These tools are \emph{SpecJMS} \cite{SPECJMS} and \emph{JMeter}\footnote{JMeter\,---\,\url{https://jmeter.apache.org/}}. The pros and cons are described in the followings.
 
-\todo{optat se otavia proc je to naprd}
+\subsubsection*{SpecJMS}
+SpecJMS is the industry-standard benchmark for evaluating the performance of enterprise message-oriented middlevare servers based on JMS. Basically, SpecJMS runs real-world scenario, which simulates real load over the messaging topology. SpecJMS collecting data during the test and then evaluate it into a score. This score is standardized value, which represent performance of the tested system. Each system tested by SpecJMS can be compared with another systems right on the basis of computed score. Note, that a fair comparison between a tested systems involve run the tests on the same hardware.
+
+The great pros of SpecJMS is comparison between the different tested systems only by the performance score. However, it has poor test case capabilities, since the test case is pre-defined by the SpecJMS developers and designed only for JMS. Nowadays, the benchmark tool is retired and is no longer supported.
+
+\subsubsection*{JMeter}
+The Apache JMeter is an open source software designed to load test functional behavior and measure performance. JMeter system is basically IDE written in Java, which offers performance testing of web applications, servers and MOM (via JMS only) by a simulation of a heavy load. JMeter testing script capabilities are better then SpecJMS has, but still it is the main reason why it is not used for Qpid-dispatch testing. Also the JMS restriction for MOM is not very comfortable, since Qpid-dispatch can handle more than only JMS connection such as Qpid-proton, Ruby or any connection type which is able to use the AMQP protocol. The different connections type during the test can be tested by Maestro as well. Maestro also implements interior data collection about the router itself, which is very useful during the performance bug hunt.
