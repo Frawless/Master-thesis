@@ -11,55 +11,299 @@ Since the testing was done over multiple topology types, we used Topology Genera
 
 \section{Basic Performance Measurements}
 \label{Basic Performance Measurements}
-Maestro works as the orchestration system, and requires proper infrastructure before we could run any test for our experimental evaluation. The architecture of Maestro, described in the Chapter \ref{Messaging Performance Tool}, specifies that in ideal scenario one needs at least four machines for running a simple test: maestro broker, sender, receiver, and SUT. The amount of needed machines rises with more complex scenarios and larger networks. Examples of generated topologies are depicted in the Figure \ref{fig:basic_topologies}. For both of these configurations we compared the throughput and latency of these combinations and discuss the results with supervisors and author of MPT.
+Maestro works as the orchestration system, and requires proper infrastructure before we could run any test for our experimental evaluation. The architecture of Maestro, described in the Chapter \ref{Messaging Performance Tool}, specifies that in ideal scenario one needs at least four machines for running a simple test: maestro broker, sender, receiver, and SUT. The amount of needed machines rises with more complex scenarios and larger networks. Examples of generated topologies are depicted in the Figures \ref{fig:basic_topologies}. For these configurations we compared the throughput and latency of these combinations and discuss the results with supervisors and author of MPT. During the all measurements we used Maestro Inspector for inspect one of the SUT depend on the topology type. Note, that for Qpid-Dispatch we used AMQP Inspector and for Broker me used Activemq Inspector. The topologies was picked based on current performance testing and know topologies, where was already found some performance degradation during the previous testing.
 
 \begin{figure}[h]
 	\centering
 	\begin{minipage}{0.45\linewidth}
-		\subfloat[Topology consists of routers.\label{fig:basic_topology_router}]{\includegraphics[width=\linewidth]{obrazky-figures/basic_topology_router.pdf}}
+		\subfloat[Topology with a single Router.\label{fig:basic_topology_router}]{\includegraphics[width=\linewidth]{obrazky-figures/basic_topology_router_single.pdf}}
 	\end{minipage}
 	\begin{minipage}{0.45\linewidth}
-		\subfloat[Topology with Broker in the middle.\label{fig:basic_topology_broker}]{\includegraphics[width=\linewidth]{obrazky-figures/basic_topology_broker.pdf}}
+		\subfloat[Topology with a single Broker.\label{fig:basic_topology_broker}]{\includegraphics[width=\linewidth]{obrazky-figures/basic_topology_broker_single.pdf}}
 	\end{minipage}
-	\caption[A simple network with active router agent.]{Topologies created for basic performance testing and experiments.}\label{fig:basic_topologies}
+	\begin{minipage}{0.45\linewidth}
+		\subfloat[Topology consists of routers.\label{fig:basic_topology_router_line}]{\includegraphics[width=\linewidth]{obrazky-figures/basic_topology_router.pdf}}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\subfloat[Topology with Broker in the middle.\label{fig:basic_topology_broker_line}]{\includegraphics[width=\linewidth]{obrazky-figures/basic_topology_broker.pdf}}
+	\end{minipage}
+	\caption[Topologies created for basic performance testing and experiments.]{Topologies created for basic performance testing and experiments.}\label{fig:basic_topologies}
 \end{figure}
 
 \subsection{Throughput}
 \label{Throughput}
+We measured throughput only by load generators\,---\,\emph{Maes\-tro Sender} and \emph{Maestro Receiver}. Load generation depends on the test properties. One can see the test properties for each test case in the Table \ref{tab:test_case_throughput}. Maestro is able to create an unbounded rate test, during which it generates as much load as it can. This type of test was used to reach the maximum handled rate of Qpid-dispatch and Message Broker. The unbound rate during the test is achieved by set environment variable \emph{RATE} to value 0. The throughput test cases are focused on maximum throughput of simple or complex topology.
 
-\begin{figure*}[h]
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begingroup
+\setlength{\tabcolsep}{10pt} % Default value: 6pt
+\renewcommand{\arraystretch}{1.35} % Default value: 1
+	\begin{table}[H]
 	\centering
-	\includegraphics[width=1\linewidth]{obrazky-figures/charts-excel/throughput.pdf}
-	\caption{Chart of the maximum throughput of router and broker during specific test cases.}
-	\label{fig:max_rate}
-\end{figure*}
+	\caption{Test case settings for throughput measurements}
+	\label{tab:test_case_throughput}
+	\begin{tabular}{|c|c|c|c|c|}
+	\hline
+	\rowcolor[HTML]{C5E3DF}
+	\cellcolor[HTML]{C5E3DF}                                         & \multicolumn{4}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Value}}                                                                          \\ \cline{2-5}
+	\rowcolor[HTML]{C5E3DF}
+	\cellcolor[HTML]{C5E3DF}                                         & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Singlepoint}} & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Multipoint}} \\ \cline{2-5}
+	\rowcolor[HTML]{C5E3DF}
+	\multirow{-3}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Test Property}} & \textbf{Router}                 & \textbf{Broker}                 & \textbf{Full Router}            & \textbf{With Broker}           \\ \hline
+	\textbf{MESSAGE\_SIZE}                                           & \multicolumn{4}{c|}{256}                                                                                                             \\ \hline
+	\textbf{PARALLEL\_COUNT}                                         & \multicolumn{4}{c|}{5}                                                                                                               \\ \hline
+	\textbf{TEST\_DURATION}                                          & \multicolumn{4}{c|}{15m}                                                                                                             \\ \hline
+	\textbf{RATE}                                                    & \multicolumn{4}{c|}{\cellcolor[HTML]{FFFFFF}0}                                                                                       \\ \hline
+	\end{tabular}
+	\end{table}
+\endgroup
 
-We measured throughput only by load generators\,---\,\emph{Maes\-tro Sender} and \emph{Maestro Receiver}. Load generation depends on the test properties. Maestro is able to create an unbounded rate test, during which it generates as much load as it can. This type of test was used to reach the maximum handled rate of Qpid-dispatch and its result is depicted in the Figure \ref{fig:max_rate}. However, the maximum rate was not achievable on all topology types. Qpid-dispatch offers two modes\,---\,\emph{standalone} and \emph{interior}, where the standalone works as a single router machine in the network, while interior type works with multiple routers. The current version of Qpid-dispatch has an ability to load balance when buffers are almost full. This ability offers faster message delivery in cost of a slower throughput. We compared standalone and interior router as depicted in the Figure \ref{fig:max_rate} as the first case study. One can see that \todo{dopsat popis obrazku}
+\subsubsection*{Single Node}
+The first of tests was ran against the single node topologies, which are depicted in the Figures \ref{fig:basic_topology_router} and \ref{fig:basic_topology_broker}. These topologies contains only one SUT node, which are forwarding messages from sender to receiver. During the test is the SUT node inspected by the proper Maestro Inspector.
 
-But, throughput can also be influenced by other network devices. As you can see in the Figure \ref{fig:max_rate}, the lone router (pink and red color) can reach around 90\,000 messages per second, while lone broker reaches only about 30\,000 messages per second. However, when we try to add another component, the throughput changes significantly. The topology with three routers uses the flow-control of interior setting which cause perceptible throughput degradation of that network (shown by green color). On the other hand, when we replace router in the middle by broker, the throughput is raised to 50\,000 messages per second. Thus one can see that load balancer of Qpid-dispatch should be improved, because throughput degradation is too high as we demonstrated. However, It has to be said that high throughput does not necessarily mean better performance. We discuss this in the Subsection \ref{Latency}.
+The measured throughput is depicted in the Figure \ref{fig:rate-single}. In that Figure one can see the comparison of 15\,minutes long tests, which is oriented to achieve highest possible throughput. The one can see that maximum throughput of Qpid-Dispatch as an standalone network component can reach around 90\,0000 messages per second. On the other hand, the lone Messaging Broker reaches only about 30\,000 messages per second. This throughput difference is caused by the fact, that Broker stores all of the messages in the memory till the client wants them. This is main feature of the broker, cause it operates as an message distributor in the network. The router only routes the messages to the destination which does not need to store message in the memory.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{obrazky-figures/charts/singlepoint-throughput.pdf}
+	\caption{Chart of the maximum throughput of router and broker during the singlepoint test case.}
+	\label{fig:rate-single}
+\end{figure}
+
+In the Figure \ref{fig:router-single-memory} we can see the memory usage of Qpid-dispatch during the test. We can see here, that totally allocated is around 45\,MB from which is used around 13\,---\,28\,MB. If we compare this with the memory allocation for the Broker, we can see the huge difference between these values. The memory allocated for the Broker is depicted in the Figure \ref{fig:broker-single-memory}. Here we can see that allocated is around 2\,GB of memory and used is around 300\,---\,900\,MB. This is caused by the store message in the memory.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{obrazky-figures/charts/singlepoint-router-throughput-memory.pdf}
+	\caption{Chart of the memory usage of Qpid-Dispatch during the test.}
+	\label{fig:router-single-memory}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{obrazky-figures/charts/singlepoint-broker-throughput-memory.pdf}
+	\caption{Chart of the unsettled messages of Qpid-Dispatch during the test.}
+	\label{fig:broker-single-memory}
+\end{figure}
+
+The Qpid-Dispatch need some time to evaluate the messages and send them to the receiver. In the Figure \ref{fig:router-single-routerLink} we can see the histogram of unsettled messages during the test. This charts shows the number off received messages, which are not yet evaluated. Note, that throughput is around 90\,000 messages per second.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{obrazky-figures/charts/singlepoint-router-throughput-routerLink.pdf}
+	\caption{Chart of the unsettled messages of Qpid-Dispatch during the test.}
+	\label{fig:router-single-routerLink}
+\end{figure}
+
+
+\subsubsection*{Multipoint Topology}
+For the multipoint experiments was used topologies depicted in the Figures \ref{fig:basic_topology_router_line} and \ref{fig:basic_topology_broker_line}. The network throughput can be influenced by another devices connected to the topology. The singlepoint topology was extended by another components by add two other routers around the original SUT. The versions of the new added SUTs are the same as the original ones.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{obrazky-figures/charts/multipoint-throughput.pdf}
+	\caption{Chart of the maximum throughput of router and broker during the multipoint test case.}
+	\label{fig:rate-multipoint-router}
+\end{figure}
+
+In the Figure \ref{fig:rate-multipoint-router} one can see, that the adding the routers to the broker node raises achievable throughput to the 48\,000 messages per second. \todo{popsat proc} However, the topology consists only of the routers has significant performance degradation. The throughput falls from the 90\,000 messages per second to the approximately 23\,000 messages per second. This degradation is caused by the interior flow-control mechanism, which should prevent the overload of the network. However, in this case study we can see that the performance degradation is too high and the mechanism used in the Qpid-Dispatch should be re-implemented.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{obrazky-figures/charts/multipoint-router-only-throughput-memory.pdf}
+	\caption{Chart of the memory usage of Qpid-Dispatch during the test.}
+	\label{fig:router-multipoint-memory}
+\end{figure}
+
+Based on that mechanism, the memory usage of the middle router depicted in the Figure \ref{fig:router-multipoint-memory} is higher than during the previous case study. Memory used by all threads is there sometimes two times higher and the mean value is around 43\,MB. The flow-control mechanism also affected the unsettled message count, which is multiple times higher than in the previous test case. The unpresettled message count is depicted in the Figure \ref{fig:router-multipoint-routerLink}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{obrazky-figures/charts/multipoint-router-only-throughput-routerLink.pdf}
+	\caption{Chart of the unsettled messages of Qpid-Dispatch during the test.}
+	\label{fig:router-multipoint-routerLink}
+\end{figure}
+
+On the other the, memory allocated for the broker component remains the same as in the previous case study. The memory monitoring for this case study is depicted in the Figure \ref{fig:broker-multipoint-memory}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{obrazky-figures/charts/multipoint-router-broker-throughput-memory.pdf}
+	\caption{Chart of the unsettled messages of Qpid-Dispatch during the test.}
+	\label{fig:broker-multipoint-memory}
+\end{figure}
+
+
+\subsubsection*{Conclusion}
+The collected data during the throughput measurements reveals unexpected and considerable performance degradation in the serial connection of the Qpid-Dispatch. For comparison between the single and multipoint case study here is the Figure \ref{fig:basic-throughput-comparison}, which puts together all throughput measurements data into one chart. Here one can see the performance improvement between single instance Broker test and the test of topology with the router (blue versus green color), and performance degradation between router topologies (red and yellow color). The results are also available in the Table \ref{tab:throughput-summary}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{obrazky-figures/charts/basic-throughput.pdf}
+	\caption{Comparison of all measured throughputs for different components and topologies.}
+	\label{fig:basic-throughput-comparison}
+\end{figure}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begingroup
+\setlength{\tabcolsep}{10pt} % Default value: 6pt
+\renewcommand{\arraystretch}{1.35} % Default value: 1
+	\begin{table}[]
+	\centering
+	\caption{Table with collected data with highlighted performance improvements and degradations.}
+	\label{tab:throughput-summary}
+	\begin{tabular}{|c|c|c|c|c|}
+	\hline
+	\rowcolor[HTML]{C5E3DF}
+	\cellcolor[HTML]{C5E3DF}                                         & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Throughput (Msg/s)}}             & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Memory}} \\ \cline{2-5}
+	\rowcolor[HTML]{C5E3DF}
+	\multirow{-2}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Test Property}} & \textbf{Expected}             & \textbf{Measured}                                    & \textbf{Total}              & \textbf{Used max}              \\ \hline
+	\textbf{Single Router}                                           & -                             & 90\,000                                                & 45\,MB                       & 28\,MB                          \\ \hline
+	\textbf{Single Broker}                                           & -                             & 30\,000                                                & 2\,GB                        & 0.9\,GB                         \\ \hline
+	\textbf{Line of Routers}                                         & 90\,000                         & \cellcolor[HTML]{FFCCC9}23000                        & 49\,MB                       & 43\,MB                          \\ \hline
+	\textbf{Line with Broker}                                        & \cellcolor[HTML]{FFFFFF}30000 & \cellcolor[HTML]{9AFF99}{\color[HTML]{333333} 48\,000} & 2\,GB                        & 0.9\,GB                         \\ \hline
+	\end{tabular}
+	\end{table}
+\endgroup
+
 
 \subsection{Latency}
 \label{Latency}
-Latency is measured only by Maestro Receiver from certain load samples. Since the Broker is a distribution service, which needs to store messages for some time, or create and keep queues for clients, it has higher requirements for system resources. On the other hand Qpid-dispatch has only one purpose\,---\,to route the messages. This makes it more faster than the Broker. So high load can be unprofitable, especially in the case of topology with broker. The broker can handle less messages than router, but using router can raise broker's throughput since it can control the load. Thus it gives more time to broker to process messages even with higher load.
+Latency is measured only by Maestro Receiver from certain load samples. Since the Broker is a distribution service, which needs to store messages for some time, or create and keep queues for clients, it has higher requirements for system resources. On the other hand Qpid-dispatch has only one purpose\,---\,to route the messages. This makes it more faster than the Broker. So high load can be unprofitable, especially in the case of topology with broker. The broker can handle less messages than router, but using router can raise broker's throughput since it can control the load. Thus it gives more time to broker to process messages even with higher load. The test cases for latency measurements has slightly different settings than throughput measurement. The settings for this measurements are shown in the Table \ref{tab:test_case_latency}. Note, that \emph{RATE} and \emph{TEST\_DURATION} are sets for each of five connected clients, which means that test is finished after send 10\,000\,000 messages.
 
-In the Figure \ref{fig:latency} you can see the latency difference that we measured between those two services. You can see the measured latency on specified topology of three routers (red), and two routers with some middle-broker (blue). The latency curve proves, that router is able to deliver messages into its destination faster than broker, because broker needs to store them in the memory. The latency of the topology with broker reaches more than 1\,000\,$\mu$s; on the other hand, topology consisting of routers has significantly better latency that tops around 256\,$\mu$s. Note, that both of those tests were run on the same machines and with the same test setting: 10\,000\,000 messages, 80\% of maximum rate with five parallel senders and receivers and 256 byte message size.
-
-
-\begin{figure}[h]
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begingroup
+\setlength{\tabcolsep}{10pt} % Default value: 6pt
+\renewcommand{\arraystretch}{1.35} % Default value: 1
+	\begin{table}[H]
 	\centering
-	\includegraphics[width=1\linewidth]{obrazky-figures/charts-excel/latency.pdf}
-	\caption{Latency chart showing the difference between router and broker latency at 80\,\% of maximum rate. The router's latency is significantly better than latency of Broker.}
-	\label{fig:latency}
+	\caption{Test case settings for latency measurements.}
+	\label{tab:test_case_latency}
+	\begin{tabular}{|c|c|c|c|c|}
+	\hline
+	\rowcolor[HTML]{C5E3DF}
+	\cellcolor[HTML]{C5E3DF}                                         & \multicolumn{4}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Value}}                                                                          \\ \cline{2-5}
+	\rowcolor[HTML]{C5E3DF}
+	\cellcolor[HTML]{C5E3DF}                                         & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Singlepoint}} & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Multipoint}} \\ \cline{2-5}
+	\rowcolor[HTML]{C5E3DF}
+	\multirow{-3}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Test Property}} & \textbf{Router}                            & \textbf{Broker}      & \textbf{Full Router}            & \textbf{With Broker}           \\ \hline
+	\textbf{MESSAGE\_SIZE}                                           & \multicolumn{4}{c|}{256}                                                                                                             \\ \hline
+	\textbf{PARALLEL\_COUNT}                                         & \multicolumn{4}{c|}{5}                                                                                                               \\ \hline
+	\textbf{TEST\_DURATION}                                          & \multicolumn{4}{c|}{2000000}                                                                                                         \\ \hline
+	\textbf{RATE}                                                    & \cellcolor[HTML]{FFFFFF}15\,000      & 4\,600                    & 3\,600                    & 7\,600                   \\ \hline
+	\end{tabular}
+	\end{table}
+\endgroup
+
+\subsubsection*{Single Node}
+The latency measurements are done with 80\% of maximum rate measurements, which were discussed in the Subsection \ref{Throughput}. In the Figure \ref{fig:latency-single-router} you can see the latency difference that we measured between Qpid-Dispatch and Message Broker. In single node measurements, the router's latency is slightly higher in the most of the cases. This is caused by the Maestro Sender and Receiver technology, because they are implemented in Java and Maestro Sender and Receiver using JMS for send an receive message, which is same approach as the Broker uses. For better latency comparison is necessary to measure Broker's latency with current implementations and Qpid-Dispatch's latency with Python clients. However, current version of Maestro offers only the JMS clients.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{obrazky-figures/charts/singlepoint-latency.pdf}
+	\caption{Chart of the latency comparison between the router and the broker during singlepoint test case.}
+	\label{fig:latency-single-router}
 \end{figure}
 
-Another interesting comparison is between the latency of single instance router and broker. In the Figure~\ref{fig:latency_single} one can see the latency output from the test with the same load of 70\,000 messages per second. Broker can reach this rate with additional queue settings. This configuration improves the distribution of incoming load between multiple queues. That causes that Broker is slightly faster than the router in 40\% cases, but even with that, router is faster in other cases. Router latency has threshold around 60\,$\mu$s, while Broker's has threshold over 1\,000\,$\mu$s. The conclusion is, that router should be much faster than Broker during certain circumstances.
+The memory used by Qpid-dispatch is slightly lower and much stable than in the case of maximum throughput as one can see in the Figure \ref{fig:latency-single-router-memory}. This proves, that used memory is mild to the  load. If the load on the router is higher than it needs more memory for proper routing. In the Figure \ref{fig;latency-single-broker-memory} one can see the Inspector output for Broker's used memory. The used memory is here much stable then in the previous cases, which is caused, as in the router case, by lower load on the Broker. Maximum used memory is same as in the previous cases.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=1\linewidth]{obrazky-figures/charts-excel/latency_single.pdf}
-	\caption{Router and broker latency comparison during the same load. You can see that router's latency is more stable than latency of Broker.}
-	\label{fig:latency_single}
+	\includegraphics[width=1\linewidth]{obrazky-figures/charts/singlepoint-router-latency-memory.pdf}
+	\caption{Chart of the memory usage of Qpid-Dispatch during the test.}
+	\label{fig:latency-single-router-memory}
 \end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{obrazky-figures/charts/singlepoint-broker-latency-memory.pdf}
+	\caption{Chart of the unsettled messages of Qpid-Dispatch during the test.}
+	\label{fig:latency-single-broker-memory}
+\end{figure}
+
+The last thing for the singlepoint latency measurements is unpresettled messages for the router available in the Figure \ref{fig:latency-router-routerLink}. From the Inspector outputs one can see, that the Broker handled 10\,000\,000 messages in more than 7\,minutes, but the router handled the same amount of messages much faster approximately in 2\,minutes and 20\,seconds.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{obrazky-figures/charts/singlepoint-router-latency-routerLink.pdf}
+	\caption{Chart of the unsettled messages of Qpid-Dispatch during the test.}
+	\label{fig:latency-router-routerLink}
+\end{figure}
+
+
+\subsubsection*{Multipoint Topology}
+One can see the measured latency on multinode topology of three routers, and two routers with middle-broker in the Figure \ref{fig:latency-multipoint-router}. The latency curve proves, that routers are able to deliver messages into its destination faster than topology with the Broker, because the Broker needs to store them in the memory. The latency of the topology with broker reaches around 16\,$\mu$s in 90\,\% of samples; on the other hand, topology consisting of routers has significantly better latency that is around 1\,$\mu$s in 90\,\% of samples. The conclusion is that the collected data proves the router should be much faster than the broker during the certain circumstances..
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{obrazky-figures/charts/multipoint-latency.pdf}
+	\caption{Chart of the latency comparison between the router and the broker during multipoint test case.}
+	\label{fig:latency-multipoint-router}
+\end{figure}
+
+Collected data about the memory usage proves the previous statements. In the Figure \ref{fig:latency-multiple-router-memory} is shown used memory by Qpid-Dispatch. The curve is very stable and the values moves around the 9\,MB of used memory. The used memory by the Broker shown in the Figure \ref{fig:latency-multiple-broker-memory} is very similar as in the previous measurements.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{obrazky-figures/charts/multipoint-router-only-latency-memory.pdf}
+	\caption{Chart of the memory usage of Qpid-Dispatch during the test.}
+	\label{fig:latency-multiple-router-memory}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{obrazky-figures/charts/multipoint-router-broker-latency-memory.pdf}
+	\caption{Chart of the unsettled messages of Qpid-Dispatch during the test.}
+	\label{fig:latency-multiple-broker-memory}
+\end{figure}
+
+Since the router applies the flow control during this measurement and the rate is setup to 80\,\% of maximum, the unpressetled message count is here much lower than in the other cases as it is depicted in the Figure \ref{fig:latency-multiple-router-routerLink}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{obrazky-figures/charts/multipoint-router-only-latency-routerLink.pdf}
+	\caption{Chart of the unsettled messages of Qpid-Dispatch during the test.}
+	\label{fig:latency-multiple-router-routerLink}
+\end{figure}
+
+
+\subsubsection*{Conclusion}
+During the latency measurements we collected and compared data for the Qpid-Dispatch and Message Broker topologies. The summary of latency measurements is available in the Table \ref{tab:latency-summary}. Is it was already mentioned, Qpid-Dispatch is faster in the model environment the Message Broker. How to achieve better comparison of latency measurements is discussed in the Section \ref{Maestro Clients in Python} as a part of possible improvements.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begingroup
+\setlength{\tabcolsep}{10pt} % Default value: 6pt
+\renewcommand{\arraystretch}{1.35} % Default value: 1
+	\begin{table}[]
+	\centering
+	\caption{Table with collected latency data with highlighted performance improvements and degradations.}
+	\label{tab:latency-summary}
+	\begin{tabular}{|c|c|c|c|c|}
+	\hline
+	\rowcolor[HTML]{C5E3DF}
+	\cellcolor[HTML]{C5E3DF}                                         & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Latency ($\mu$s)}} & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Memory}} \\ \cline{2-5}
+	\rowcolor[HTML]{C5E3DF}
+	\multirow{-2}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Test Property}} & \textbf{90\,\%}                           & \textbf{99\,\%}          & \textbf{Total}              & \textbf{Used max}              \\ \hline
+	\textbf{Single Router}                                           & 2.263                                    & 12.495                  & 38\,MB                       & 28\,MB                          \\ \hline
+	\textbf{Single Broker}                                           & 0.386                                    & 181.759                 & 2\,GB                        & 0.9\,GB                         \\ \hline
+	\textbf{Line of Routers}                                         & \cellcolor[HTML]{9AFF99}1.292            & 50.815                  & 46\,MB                       & 8\,MB                           \\ \hline
+	\textbf{Line with Broker}                                        & \cellcolor[HTML]{FFCCC9}15.487           & 1031.167                & 2\,GB                        & 0.9\,GB                         \\ \hline
+	\end{tabular}
+	\end{table}
+\endgroup
 
 
 \section{Behavior Measurements}
@@ -73,7 +317,7 @@ Moreover, we present some preliminary results with using the agent extension and
 % Please add the following required packages to your document preamble:
 % \usepackage[table,xcdraw]{xcolor}
 % If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \caption{Summarization of lost messages during the connection issues.}
 \label{my-label}
@@ -91,7 +335,7 @@ Long Shutdown & 89       & 1304451      \\ \hline
 
 The Figure \ref{fig:agent_throughput} also shows, that test case with long shutdown is longer about 10 seconds that other scenarios and the throughput after the shutdown is quite higher. This means that router high throughput to even the messages lost.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{obrazky-figures/charts-excel/agent.pdf}
 	\caption{Router throughput comparison during the same load after different unexpected events.}
@@ -100,13 +344,9 @@ The Figure \ref{fig:agent_throughput} also shows, that test case with long shutd
 
 Latency of test cases cases with the agent function demonstration is depicted in the Figure \ref{fig:agent_latency}. You can see that router is able to even the latency during the restart and short shutdown with test run without any unexpected behavior. On the other hand, long shutdown (red) gets worse latency almost for 50 percentile of messages.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{obrazky-figures/charts-excel/agent_latency.pdf}
 	\caption{Router and broker latency comparison during the same load.}
 	\label{fig:agent_latency}
 \end{figure}
-
-\section{Performance Testing on Various Generated Topology}
-
-\section{Testing results}

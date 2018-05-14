@@ -141,8 +141,8 @@
   supervisor.title.p={Ing.},   %titul před jménem (nepovinné) / title before the name (optional)
   % supervisor.title.a={Ph.D.},    %titul za jménem (nepovinné) / title after the name (optional)
   % Klíčová slova / keywords
-  keywords.cs={Testování, analýza výkonu, testování výkonu, síťové technologie, router, Qpid-Dispatch}, % klíčová slova v českém či slovenském jazyce / keywords in czech or slovak language
-  keywords.en={Testing, performance analysis, performance testing, network technologies, router, Qpid-Dispatch}, % klíčová slova v anglickém jazyce / keywords in english
+  keywords.cs={Testování, analýza výkonu, testování výkonu, síťové technologie, router, Qpid-Dispatch, AMQP}, % klíčová slova v českém či slovenském jazyce / keywords in czech or slovak language
+  keywords.en={Testing, performance analysis, performance testing, network technologies, router, Qpid-Dispatch, AMQP}, % klíčová slova v anglickém jazyce / keywords in english
   % Abstrakt / Abstract
   abstract.cs={Výkonností testování aplikací nabírá v poslední době na důležitosti během vývoje aplikací všeho druhu. Tato práce mapuje základy testování výkonu, které jsou aplikovatelné na libovolné aplikace. Následně analýzuje testování výkonu komponent používaných v Messaging systémech a to konkrétně Messaging Broker a Qpid-Dispatch. Využívané metody testování výkonu je zaměřeno zejména na Messaging Broker pomocí Messaging Performance Tool. Dále je popsáno vylepšení této aplikaci o rozšíření testování systému Qpid-Dispatch a její možnosti při automatizovaném testování. Výsledná zpráva vyhodnocuje navrženou aplikaci, zhodnocuje výkon komponenty Qpid-Dispatch a rozvíjí myšlenky pro další rozšíření.}, % abstrakt v českém či slovenském jazyce / abstract in czech or slovak language
   abstract.en={Application performance testing has recently become more important during the application development of all kinds. This paper maps the fundamentals of performance testing that are commonly used. It analyze performance testing of components used in Messaging systems, especially Messaging Broker and Qpid-Dispatch. Currently used methods for performance testing of this components are primarily focused on Messaging Broker by Messaging Performance Tool. This paper also describes improvements of Messaging Performance Tool to extend performance testing of Qpid-Dispatch and its capabilities in automatic testing. The final report evaluates the proposed application, the performance of Qpid-Dispatch component and develops ideas for future works.}, % abstrakt v anglickém jazyce / abstract in english
@@ -154,11 +154,19 @@
 % The supplementary information was provided by Mr. Y
 % All the relevant information sources, which were used during preparation of this thesis, are properly cited and included in the list of references.},
   % Poděkování (nepovinné, nejlépe v jazyce práce) / Acknowledgement (optional, ideally in the language of the thesis)
-  acknowledgment={I would like to thank to my supervisors, Ing. Tomáš Fiedor from BUT VUT and Ing. Zdeněk Kraus from Red Hat, Inc. for guiding and important information about performance problems. Also to my colleagues Otavio Rodolfo Piske for his time during introduction and explanation of his Messaging Performance Tool and Dominik Lenoch for Qpid-Dispatch introduction.},
+  acknowledgment={I would like to thank to my supervisors, Ing. Tomáš Fiedor from BUT VUT and Ing. Zdeněk Kraus from Red Hat, Inc. for guiding and important information about performance problems. Also to my colleagues Otavio Rodolfo Piske for his time during introduction, explanation of his Messaging Performance Tool and help with the development and CI integration, and Dominik Lenoch for Qpid-Dispatch introduction.},
   %acknowledgment={Here it is possible to express thanks to the supervisor and to the people which provided professional help
 %(external submitter, consultant, etc.).},
   % Rozšířený abstrakt (cca 3 normostrany) - lze definovat zde nebo níže / Extended abstract (approximately 3 standard pages) - can be defined here or below
-  extendedabstract={Do tohoto odstavce bude zapsán rozšířený výtah (abstrakt) práce v českém (slovenském) jazyce.},
+  extendedabstract={Jedním z hlavních cílů během vývoje softwaru je přijatelný výkon vytvořené aplikace. Mimořádný důraz na výkonost softwaru je pak kladen například na aplikace používané ve vesmírných programech, zdravotnictví, armádních systémech a nebo v systémech pro distribuci energie. V těchto odvětvích je nutno garantovat správné chování aplikace po neomezenou dobu běhu pod vysokou zátěží, a to bez viditelných výkonostních problémů jako je vysoká doba odezvy, častá zpoždění nebo vypršení časových limitů pro spojení. Protože sebemenší chyba pak může mít fatální následky.
+
+  Současně je v dnešních dnech vyžadován hladký běh síťových aplikací a systémů a to hlavně kvůli stále frekventovanější komunikaci přes internet. Pro internetovou komunikaci využíváme různé komponenty jako jsou hardwarové směrovače či přepínače, ale také softwarové verze těchto komponent spojené do tzv. \emph{Messaging systémů}. Příkladem součásti těchto systémů je komponenta \emph{Message Broker}\,---\,distributor zpráv v~síti\,---\,nebo \emph{Qpid-dispatch}\,---\,směrovač na aplikační vrstvě. Obě komponenty jsou vyvíjeny společností Red Hat Inc. a k jejich výkonostnímu testování se používá nástroj Maestro.
+
+  Hlavním přínosem této práce je tímto rozšíření zmíněného nástroje pro výkoností testování Maestro, který se zaměřuje na výkonostní testování Messaging systémů (Message-oriented middleware), s důrazným zaměřením na komponentu Messaging Broker. Práce popisuje zejména architekturu celého systému a komunikaci mezi jednotlivými komponentami pomocí MQTT protokolu. Aby bylo možné využívat nástroj Maestro pro testování Qpid-Dispatch efektivně a s možností simulovat reálný provoz, je dále nutné navrhnout a realizovat nové komponenty pro Maestra, které tento druh testování umožnily. Těmito komponentami je \emph{Maestro Agent}, který umožňuje za běhu testu vyvolat externí události v síti, a \emph{AMQP Inspector}, který umožňuje kontinuální monitorování právě Qpid-Dispatch, například pro sledování počtu připojení, velikosti alokované paměti nebo počtu přenesených zpráv. Implementace těchto komponent ale vyžaduje zásahy do komunikačního systému Maestra.
+
+  Součástí implementace je také navržení a realizace externího nástroje pro generování a následné nahrání topologií skládajících se z~Qpid-Dispatch uzlů. Tento nástroj umožňuje na základě metadat vytvořit konfigurační soubory pro všechny Qpid-Dispatch uzly v síti a pomocí nástroje Ansible jsme schopni tyto soubory jednoduše a automatizovaně nahrát na cílové stroje, čímž lze relativně snadno topologii měnit například mezi různými testy.
+
+  Realizovaná implementace byla experimentálně ověřena na sadě příkladů s různými topologiemi. Díky integračnímu nástroji Jenkins bylo rovněž možné provádět plně automatizované testování, včetně změn topologie. Testování probíhalo na strojích v laboratoři s operačním systémem Red Hat Enterprise Linux a nainstalovanými komponentami Qpid-Dispatch, případně Messaging Broker. Experimenty byly prová\-dě\-ny s verzí Maestra 1.3.0, kde byly zakomponovány rozšíření Maestro Agent a AMQP Inspector. Namě\-ře\-né výsledky ukazují řadu zajímavých faktů, jako například přilišná degradace propustnosti linky při topologii sériového zapojení několika Qpid-Dispatch routerů. Zdrojové kódy jsou zveřejněny jako open-source a jsou dostupné na GitHubu. Navržené a implementované rozšíření je již reálně nasazené a používá se k výkonostnímu testování nových verzí komponent Messaging Broker a Qpid-dispatch.},
   %faculty={FIT}, % FIT/FEKT/FSI/FA/FCH/FP/FAST/FAVU/USI/DEF
   faculty.cs={Fakulta informačních technologií}, % Fakulta v češtině - pro využití této položky výše zvolte fakultu DEF / Faculty in Czech - for use of this entry select DEF above
   faculty.en={Faculty of Information Technology}, % Fakulta v angličtině - pro využití této položky výše zvolte fakultu DEF / Faculty in English - for use of this entry select DEF above
@@ -264,23 +272,6 @@
 %  \cleardoublepage
 %\fi
 
-\ifslovak
-%  \section*{Zoznam príloh}
-%  \addcontentsline{toc}{section}{Zoznam príloh}
-\else
-  \ifczech
-%    \section*{Seznam příloh}
-%    \addcontentsline{toc}{section}{Seznam příloh}
-  \else
-%    \section*{List of Appendices}
-%    \addcontentsline{toc}{section}{List of Appendices}
-  \fi
-\fi
-  \startcontents[chapters]
-  \setlength{\parskip}{0pt}
-  % seznam příloh / list of appendices
-  % \printcontents[chapters]{l}{0}{\setcounter{tocdepth}{2}}
-
   \ifODSAZ
     \setlength{\parskip}{0.5\bigskipamount}
   \else
@@ -315,6 +306,26 @@
   \else
     \setlength{\parskip}{0pt}
   \fi
+
+  \input{xstejs24-performance-30-zkratky-shortcuts}
+  \newpage
+
+  \ifslovak
+  %  \section*{Zoznam príloh}
+  %  \addcontentsline{toc}{section}{Zoznam príloh}
+  \else
+    \ifczech
+     \section*{Seznam příloh}
+     \addcontentsline{toc}{section}{Seznam příloh}
+    \else
+     \section*{List of Appendices}
+     \addcontentsline{toc}{section}{List of Appendices}
+    \fi
+  \fi
+    \startcontents[chapters]
+    \setlength{\parskip}{0pt}
+    % seznam příloh / list of appendices
+    \printcontents[chapters]{l}{0}{\setcounter{tocdepth}{2}}
 
   % Přílohy / Appendices
   \input{xstejs24-performance-30-prilohy-appendices}
