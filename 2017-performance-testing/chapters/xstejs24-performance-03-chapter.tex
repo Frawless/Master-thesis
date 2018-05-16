@@ -6,17 +6,17 @@
 \chapter{Messaging Performance Tool}
 \label{Messaging Performance Tool}
 % https://github.com/orpiske/msg-perf-tool
-Performance of \emph{Message-Oriented Middleware} (MOM) \cite{CURRY:MOM} is one of the most critical elements of quality assurance for enterprise integration systems. There are multiple messaging components developed in the Red Hat company such as messaging clients, Message Broker, Message Router (Qpid-dispatch service) or stream-like message distributions tools---Kafka. All of these software needs performance testing to ensure quality standards of MOM. Note that we will shorten term the messaging client to just client in this thesis.
+The performance of \emph{Message-Oriented Middleware} (MOM) \cite{CURRY:MOM} is one of the most critical elements of quality assurance for enterprise integration systems. There are multiple messaging components developed in the Red Hat company such as messaging clients, Message Broker, Message Router (Qpid-dispatch service) or stream-like message distributions tools---Kafka. All of these software needs performance testing to ensure quality standards of MOM. Note that we will shorten the term the messaging client to just client in this thesis.
 
-A~Message Broker is an example of MOM. Its main purpose is to receive, store and distribute messages, which are sent and received by clients. Users choose MOM for message distribution to reduce the development time and cost of their own solution. Another benefit of using specialized MOM is robustness and guaranteed performance. The performance capabilities of a MOM are critical attributes to its users, because being able to handle a large amount of transactions in a timely manner is a key characteristic of MOM. Good example are automated systems, where components communicates with each other by command exchange. Amount of exchanged commands is heavily dependent on the system size and since we want to get the results as soon as possible we need to ensure smooth and quick message exchange.
+The~Message Broker is an example of MOM. Its main purpose is to receive, store and distribute messages, which are sent and received by clients. Users choose MOM for message distribution to reduce the development time and cost of their own solution. Another benefit of using specialized MOM is robustness and guaranteed performance. The performance capabilities of a MOM are critical attributes to its users, because being able to handle a large amount of transactions in a timely manner is a key characteristic of MOM. Good example are automated systems, where components communicates with each other by command exchange. The amount of exchanged commands is heavily dependent on the system size and since we want to get the results as soon as possible we need to ensure smooth and quick message exchange.
 
-\emph{Maestro} \cite{ORPISKE:MSGPT} is a testing system designed for testing the performance of MOM. The Maestro is deployed as a cluster system on several machines. A~typical deployment consist of one node for Maestro Broker, one or more for Senders, one or more for Receivers and the SUT. The architecture of Maestro system, depicted in the Figure \ref{fig:msg_perf_tool}, consists of the following components:
+\emph{Maestro} (or Messaging Performance Tool) \cite{ORPISKE:MSGPT} is a testing system designed for testing the performance of MOM. The Maestro is deployed as a cluster system on several machines. A~typical deployment consist of one node for Maestro Broker, one or more for Maestro Senders, and one or more for Maestro Receivers and the SUT. The architecture of Maestro system, depicted in the Figure \ref{fig:msg_perf_tool}, consists of the following components:
 
 \begin{description}
 	\setlength\itemsep{0em}
-	\item \textbf{Maestro Broker}\,---\,can be any \emph{Message Queuing Telemetry Transport\footnote{MQTT\,---\,\url{http://mqtt.org/}} (MQTT)} capable broker with several topics. The topic is queue with name where other messaging services can listen the traffic. This component takes care about distribution of control messages between other cluster components such as Maestro Clients and MPT Backend.
-	\item \textbf{Meastro Clients}\,---\,this component contains the client API as well as the test scripts for each test case. Moreover it contains a~sub-component called Reporter which interprets the test data to user in form of web data visualization.
-	\item \textbf{MPT Back-end}\,---\,consists of sender, receiver and inspector parts. Sender, and receiver ensure message sending to the SUT and receiving from SUT. Inspector monitors workload over the SUT and reports collected performance metrics to the data server. Maestro currently has two backends:
+	\item \textbf{Maestro Broker}\,---\,can be any \emph{Message Queuing Telemetry Transport\footnote{MQTT\,---\,\url{http://mqtt.org/}} (MQTT)} capable broker with several topics. The topic is a queue with a name where other messaging services can listen on the traffic. This component takes care of distribution of control messages between other cluster components such as Maestro Clients and MPT Backend.
+	\item \textbf{Meastro Clients}\,---\,this component contains the client API as well as the test scripts for each test case. Moreover it contains a~sub-component called Reporter which interprets the test data to user in form of web data visualizations.
+	\item \textbf{MPT Back-end}\,---\,consists of sender, receiver and inspector parts. Sender and receiver handle message sending to the SUT and receiving from SUT. Inspector monitors workload over the SUT and reports collected performance metrics to the data server. Maestro currently has two backends:
 	\begin{itemize}
 		\item \textbf{Java}\,---\,used for JMS-based\footnote{JMS\,---\,Java Message Service} testing, including \emph{Advanced Message Queuing Protocol (AMQP)} \cite{OASIS:AMQP}, OpenWire and Core protocols.
 		\item \textbf{C}\,---\,used for AMQP and \emph{Streaming Text Oriented Messaging Protocol\footnote{STOMP\,---\,\url{https://stomp.github.io/}} (STOMP)} protocol testing.
@@ -26,32 +26,32 @@ A~Message Broker is an example of MOM. Its main purpose is to receive, store and
 \begin{figure}[H]
   \centering
   \includegraphics[width=15cm]{obrazky-figures/msg_perf_tool.pdf}
-  \caption{Architecture of the Maestro. The Maestro contains Maestro Clients as an front-end, Maestro Broker as a message distributor and sender, receiver and inspectors as a backend.}
+  \caption{The architecture of the Maestro. The Maestro contains Maestro Clients as a front-end; Maestro Broker as a message distributor; and sender, receiver and inspectors as a backend.}
   \label{fig:msg_perf_tool}
 \end{figure}
 
 \newpage
 
 \section{Test Case Scenario}
-The test is basically generation of huge amount of messages and send them to SUT and then receive them. Configuration of each test case is specified by several options defined in Groovy\footnote{Groovy\,---\,object-oriented programming language for Java platform \url{http://groovy-lang.org/}} script which influences the test behavior with the following elements:
+The test is basically a generation of huge amount of messages followed by sending them to SUT and then receiving them. The configuration of each test case is specified by several options defined in the Groovy\footnote{Groovy\,---\,object-oriented programming language for Java platform \url{http://groovy-lang.org/}} script which influences the test behavior with the following elements:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
 	\item \textbf{message size}\,---\,size of the generated test message in bytes,
-	\item \textbf{number of connected clients}\,---\,count of senders and receivers connected to the SUT,
-	\item \textbf{test duration (time or load)}\,---\,end condition of each test; can be specified by time, limit or message count,
-	\item \textbf{message rate}\,---\,the desired rate that the system should try to maintain through the test (set 0 for unbounded rate).
+	\item \textbf{number of connected clients}\,---\,the count of senders and receivers connected to the SUT,
+	\item \textbf{test duration (time or load)}\,---\,the end condition of each test; can be specified by time, limit or message count,
+	\item \textbf{message rate}\,---\,the desired rate that the system should try to maintain through the test (0 for unbounded rate).
 \end{itemize}
 
-The test script is also responsible for start and stop the test. Moreover the test case can be extended by so called test profile. The script will then also be responsible for increasing or decreasing the workload on the SUT during the test scenario. This load can be modified by increasing either the target rate or the number of parallel connections. With multiple combinations of these options we can create a lot of test cases with different loads for the SUT and thus achieve a broad coverage of testing. Every test produces its own logs which are processed by the reporting sub-component on the client side and used for monitoring the metrics. Maestro Reporter produce data visualizations, such as test overview and charts (rate based on time, latency over the test), from these logs.
+The test script is also responsible for starting and stopping the test. Moreover the test case can be extended by the so called test profile. The script will then also be responsible for increasing or decreasing the workload on the SUT during the test scenario. This load can be modified by increasing either the target rate or the number of parallel connections. With multiple combinations of these options we can create a lot of test cases with different loads for the SUT and thus achieve a broad coverage of testing. Every test produces its own logs which are processed by the reporting sub-component on the client side and used for monitoring the metrics. Maestro Reporter produces data visualizations, such as the test overview and charts (rate based on time and latency over the test) from these logs.
 
 \section{Communication Between Components}
 \label{Communication Between Components}
-The actual communication between components during the test cases is realized using the Maestro Protocol\,---\,a binary protocol implemented on top of MessagePack\footnotemark{}. For the message exchange between nodes it currently uses MQTT protocol (version 3.1.1) and for sending the testing data to data server it uses HTTP protocol (version 1.1). The messages exchanged between the peers of testing cluster are called notes.
+The actual communication between components during the test cases is realized using the Maestro Protocol\,---\,a binary protocol implemented on top of the MessagePack\footnotemark{}. For the message exchange between nodes it currently uses MQTT protocol (version 3.1.1) and for sending the testing data to the data server it uses HTTP protocol (version 1.1). The messages exchanged between the peers of testing cluster are called notes.
 
 \footnotetext{Messagepack\,---\,\url{https://msgpack.org/}}
 
-Each note has a specific format consisting of three parts. First is the \emph{Type} which is short integer that identifies the purpose of the note, it is one of the following values:
+Each note has a specific format consisting of three parts. First is the \emph{Type} which is short integer that identifies the purpose of the note, and is one of the following values:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -59,12 +59,12 @@ Each note has a specific format consisting of three parts. First is the \emph{Ty
 	\item \textbf{Response (1)}\,---\,a note sent by a testing peer as a response for a request,
 	\item \textbf{Notification (2)}\,---\,a note sent by a testing peer as a reaction to an event.
 \end{itemize}
-The second part is the \emph{Command} which identifies the action to be executed or, in some cases, that was executed. Currently, there are 18 command represented by a long integer. And the last part is the \emph{Payload} which refers to the data carried by the note as part of its command. Detailed description of commands and its payload is available in Appendix \ref{AP:commands}.
+The second part is the \emph{Command} which identifies the action to be executed or, in some cases, that was executed. Currently, there are 18 commands represented by a long integer. And the last part is the \emph{Payload} which refers to the data carried by the note as part of its command. Detailed description of commands and its payload is available in Appendix \ref{AP:commands}.
 
 
 \section{Measuring Process}
 \label{Measuring Process}
-After the dynamic test generation, with options from the test file, the measuring process starts. Senders will start sending messages to the SUT, while Inspector starts monitoring the behavior of the SUT and send measured data to the data server. For monitoring purpose, Inspector uses the Broker management interface\,---\,a REST interface that exposes (via HTTP protocol) an internal JVM\footnote{JVM\,---\,Java Virtual Machine} and Broker detailed information. The actual data collection by Inspector is straightforward:
+After the dynamic test generation, with options from the test file, the measuring process starts. Senders will start sending messages to the SUT, while Inspector starts monitoring the behavior of the SUT and sends measured data to the data server. For monitoring purpose, Inspector uses the Broker management interface\,---\,a REST interface that exposes (via HTTP protocol) an internal JVM\footnote{JVM\,---\,Java Virtual Machine} and Broker detailed information. The actual data collection by Inspector is straightforward:
 
 \begin{enumerate}
 	\setlength\itemsep{0em}
@@ -76,9 +76,9 @@ Note that errors occurred during the collection may cause the test case to fail.
 
 \footnotetext{JSON\,---\,\url{https://www.json.org/}}
 
-However, there are two problem factors; the first is that the Inspector should not influence the performance of the SUT. Current solutions for the information collection works like the management interface method call with request for information and response retrieval. During this call, the method usually involves locks to guarantee the thread safety and exclusive access. However, calling this method too often can cause significant Broker performance degradation. In order to reduce this risk, the inspector enforces a collection interval of 10 seconds and restricts usage only to selected operations. This strategy reduces the hits on management interface to 2 or 3 hits every 10 seconds and presents suitable performance.
+However, there are two problem factors; the first is that the Inspector should not influence the performance of the SUT. Current solution for the information collection works like the management interface method call with request for information and response retrieval. During this call, the method usually involves locks to guarantee the thread safety and exclusive access. However, calling this method too often can cause a significant Broker performance degradation. In order to reduce this risk, the inspector enforces a collection interval of 10 seconds and restricts usage only to selected operations. This strategy reduces the hits on management interface to 2 or 3 hits every 10 seconds and presents a suitable performance.
 
-The other, problem factor, is the large size of the stored logs. This is mitigated by the usage of the compression methods. However, compressed logs can still fill the whole hard drive during the long test-run and so old logs has to be erased at some point of time. The collected logs can be safely erased when the test is completed. Currently the Maestro generates about 1\,Gb of uncompressed data per hour of testing.
+The other problem factor is the large size of the stored logs. This is mitigated by the usage of the compression methods. However, compressed logs can still fill the whole hard drive during the long test-run and so old logs has to be erased at some point of time. Collected logs can be safely erased when the test is completed. Currently the Maestro generates about 1\,Gb of uncompressed data per hour of testing.
 
 %Inspector also monitor node with broker (CPU, memory size)?
 
@@ -173,12 +173,12 @@ Both, sender and receiver generate rate (throughput) data files. These contain d
 \label{Related Works}
 % popsat podobne "existujici" reseni (samozrejme, obcas neexistuje ;), ale verim, ze zde se neco najde). Nejlepsi je i se vuci tem "related tools" vymezit (jako napr. "The tool ... cannot be used because it does not support ...")
 
-Since Maestro is relatively new system, there is few existing performance testing tools. Noteworthy are two tools, which was used for testing before the maestro development. These tools are \emph{SpecJMS} \cite{SPECJMS} and \emph{JMeter}\footnote{JMeter\,---\,\url{https://jmeter.apache.org/}}. The pros and cons are described in the followings.
+While Maestro is relatively new system, there are only few existing performance testing tools for MOM. Noteworthy are two tools, which were used for performance testing before the maestro development. These tools are \emph{SpecJMS} \cite{SPECJMS} and \emph{JMeter}\footnote{JMeter\,---\,\url{https://jmeter.apache.org/}}, the advantages and disadvantages are described in the following.
 
 \subsubsection*{SpecJMS}
-SpecJMS is the industry-standard benchmark for evaluating the performance of enterprise message-oriented middlevare servers based on JMS. Basically, SpecJMS runs real-world scenario, which simulates real load over the messaging topology. SpecJMS collecting data during the test and then evaluate it into a score. This score is standardized value, which represent performance of the tested system. Each system tested by SpecJMS can be compared with another systems right on the basis of computed score. Note, that a fair comparison between a tested systems involve run the tests on the same hardware.
+SpecJMS is the industry-standard benchmark for evaluating the performance of enterprise message-oriented middlevare servers based on JMS. Basically, SpecJMS runs real-world scenarios, which simulate real load over the messaging topology. SpecJMS collects data during the test and then evaluates it as a score. This score is a standardized value, which represent a performance of the tested system. Each system tested by SpecJMS can be compared with another system based on the computed score. Note, that a fair comparison between a tested systems involves run the tests on the same hardware.
 
-The great pros of SpecJMS is comparison between the different tested systems only by the performance score. However, it has poor test case capabilities, since the test case is pre-defined by the SpecJMS developers and designed only for JMS. Nowadays, the benchmark tool is retired and is no longer supported.
+The great advantage of SpecJMS is the comparison between the different tested systems only based on the performance score. However, it has a poor test case capabilities, since the test cases are pre-defined by the SpecJMS developers and designed only for JMS. Nowadays, this benchmark tool is retired and is no longer supported.
 
 \subsubsection*{JMeter}
-The Apache JMeter is an open source software designed to load test functional behavior and measure performance. JMeter system is basically IDE written in Java, which offers performance testing of web applications, servers and MOM (via JMS only) by a simulation of a heavy load. JMeter testing script capabilities are better then SpecJMS has, but still it is the main reason why it is not used for Qpid-dispatch testing. Also the JMS restriction for MOM is not very comfortable, since Qpid-dispatch can handle more than only JMS connection such as Qpid-proton, Ruby or any connection type which is able to use the AMQP protocol. The different connections type during the test can be tested by Maestro as well. Maestro also implements interior data collection about the router itself, which is very useful during the performance bug hunt.
+The Apache JMeter is an open source software designed to load test the functional behavior and measure performance. JMeter system is basically an IDE written in Java, which offers a performance testing of web applications, servers and MOM (via JMS only) by a simulation of a heavy load. JMeter testing script capabilities are better then SpecJMS has. Also the JMS restriction for MOM is not very comfortable, since Qpid-dispatch can handle more than only JMS connections such as Qpid-proton, Ruby or any connection type which is able to use the AMQP protocol. The different connection type during the test can be tested by Maestro as well. Maestro also implements interior data collection about the router itself, which is very useful during the performance bug hunt.

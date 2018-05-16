@@ -1,0 +1,18 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {algocf}{\numberline {1}{\ignorespaces Template generation by qdrouter\unhbox \voidb@x \kern \z@ \char `\discretionary {-}{}{}jinja2.\relax }}{38}{algocf.1}
+\contentsline {algocf}{\numberline {2}{\ignorespaces Default connectivity generation.\relax }}{40}{algocf.2}
+\contentsline {algocf}{\numberline {3}{\ignorespaces Connectors and link routes generation. The algorithm describes function \texttt {generate\_connectors()}.\relax }}{41}{algocf.3}
+\contentsline {algocf}{\numberline {4}{\ignorespaces Basic functionality of \texttt {callbacksWrapper()} method. This method create new thread for each extension point and tries to execute it.\relax }}{43}{algocf.4}
+\contentsline {algocf}{\numberline {5}{\ignorespaces The method \texttt {runCallbacks()} loop over each file in the extension point directory. Tries to load each file and execute it.\relax }}{44}{algocf.5}
+\contentsline {algocf}{\numberline {6}{\ignorespaces Handler method for startInspector note which creates instance of specific inspector implementation.\relax }}{46}{algocf.6}
+\contentsline {algocf}{\numberline {7}{\ignorespaces Method for start new implementation of the Inspector. This method continuously send requests to the SUT, collects, parse and write the response into csv file.\relax }}{47}{algocf.7}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
