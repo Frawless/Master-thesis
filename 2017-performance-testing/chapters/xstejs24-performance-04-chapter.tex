@@ -207,10 +207,10 @@ The architecture of Maestro (as depicted in the Figure \ref{fig:msg_perf_tool}) 
 
 In the Figure \ref{fig:msg_perf_tool_update} we show updated version of Maestro architecture. Proper performance testing of router and network analysis with few routers needs special agent, which can manipulate each node. In particular, Maestro should be able to shut down one of the router node and collect data about network behavior during this situation. All these actions will be handled by the new back-end component called \emph{Agent}.
 
-\begin{figure}[H]
+\begin{figure}[h]
   \centering
   \includegraphics[width=15cm]{obrazky-figures/msg_perf_tool_for_router.pdf}
-  \caption{The architecture of updated Maestro for testing of the Qpid-dispatch router.}
+  \caption{The architecture of updated Maestro for testing of the Qpid-dispatch router. The arrows represent communications between the Maestro components and with the SUT. The line value represents the number of connections where default is 1. The C front-end is no longer need for this version.}
   \label{fig:msg_perf_tool_update}
 \end{figure}
 

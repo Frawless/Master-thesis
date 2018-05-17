@@ -20,8 +20,8 @@ Since the testing was executed over multiple topology types, we used Topology Ge
 \hline
 \rowcolor[HTML]{C5E3DF}
 \textbf{} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Machine}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{CPU}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{RAM (Gb)}} \\ \hline
-SUT       & Opteron                                                       & 8                                                         & 8                                                      \\ \hline
-Clients   & IBM Xeon                                                      & 16                                                        & 16                                                     \\ \hline
+SUT & Opteron & 8 & 8 \\ \hline
+Clients & IBM Xeon & 16 & 16 \\ \hline
 \end{tabular}
 \end{table}
 
@@ -45,6 +45,24 @@ Maestro works as the orchestration system, and requires proper infrastructure be
 	\end{minipage}
 	\caption[Examples of experimental topologies created for basic performance testing and experiments with Maestro.]{Examples of experimental topologies created for basic performance testing and experiments with Maestro. The arrows indicates the communication path between topology components.}\label{fig:basic_topologies}
 \end{figure}
+
+Each test case has specific parameters which can be defined by the user. The summary of available parameter is in the following:
+\begin{itemize}
+	\setlength\itemsep{0em}
+	\item \textbf{MESSAGE\_SIZE}\,---\,message size in bytes.
+	\item \textbf{PARALLEL\_COUNT}\,---\,number of connected clients to the SUT during the test.
+	\item \textbf{TEST\_DURATION}\,---\,test duration defined as time value (120s, 10m) or number of messages (10\,000\,000) to transfer.
+	\item \textbf{RATE}\,---\,number defines rate of each connected client; 0 represents unbound test.
+	\item \textbf{INSPECTOR\_NAME}\,---\,name of inspector implementation (ActivemqInspector or InterconnectInspector).
+	\item \textbf{MANAGEMENT\_INTERFACE}\,---\,URL where inspector will inspect the SUT.
+	\item \textbf{MAESTRO\_BROKER}\,---\,URL to Maestro Broker.
+	\item \textbf{SEND\_RECEIVE\_URL} (singlepoint only)\,---\,URL for connect sender and receiver.
+	\item \textbf{SEND\_URL}\,---\,URL for connect sender.
+	\item \textbf{RECEIVE\_URL}\,---\,URL for connect receiver.
+	\item \textbf{EXT\_POINT\_SOURCE}\,---\,URL to public git repository with code handlers.
+	\item \textbf{EXT\_POINT\_BRANCH}\,---\,branch which should be used for ext point repository.
+	\item \textbf{EXT\_POINT\_COMMAND}\,---\,command to execute by the Agent.
+\end{itemize}
 
 \subsection{Throughput}
 \label{Throughput}
@@ -155,13 +173,13 @@ The collected data during the throughput measurements reveal unexpected and cons
 	\begin{tabular}{|l|r|r|r|r|}
 	\hline
 	\rowcolor[HTML]{C5E3DF}
-	\cellcolor[HTML]{C5E3DF}                                         & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Throughput (Msg/s)}}             & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Memory}} \\ \cline{2-5}
+	\cellcolor[HTML]{C5E3DF} & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Throughput (Msg/s)}} & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Memory}} \\ \cline{2-5}
 	\rowcolor[HTML]{C5E3DF}
-	\multirow{-2}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Test Type}} & \textbf{Expected}             & \textbf{Measured}                                    & \textbf{Total}              & \textbf{Used max}              \\ \hline
-	\textbf{Single Router}                                           & -                             & 90\,000                                                & 45\,MB                       & 28\,MB                          \\ \hline
-	\textbf{Single Broker}                                           & -                             & 30\,000                                                & 2\,GB                        & 0.9\,GB                         \\ \hline
-	\textbf{Line of Routers}                                         & 90\,000                         & \cellcolor[HTML]{FFCCC9}23\,000                        & 49\,MB                       & 43\,MB                          \\ \hline
-	\textbf{Line with Broker}                                        & 30\,000 & \cellcolor[HTML]{9AFF99}48\,000 & 2\,GB                        & 0.9\,GB                         \\ \hline
+	\multirow{-2}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Test Type}} & \textbf{Expected} & \textbf{Measured} & \textbf{Total} & \textbf{Used max} \\ \hline
+	\textbf{Single Router} & - & 90\,000 & 45\,kB & 28\,kB \\ \hline
+	\textbf{Single Broker} & - & 30\,000 & 2\,GB & 0.9\,GB \\ \hline
+	\textbf{Line of Routers} & 90\,000 & \cellcolor[HTML]{FFCCC9}23\,000 & 49\,kB & 43\,kB \\ \hline
+	\textbf{Line with Broker} & 30\,000 & \cellcolor[HTML]{9AFF99}48\,000 & 2\,GB & 0.9\,GB \\ \hline
 	\end{tabular}
 	\end{table}
 \endgroup
@@ -192,30 +210,41 @@ Latency is measured only by Maestro Receiver from certain load samples. Since th
 	\begin{tabular}{|l|r|r|r|r|}
 	\hline
 	\rowcolor[HTML]{C5E3DF}
-	\cellcolor[HTML]{C5E3DF}                                         & \multicolumn{4}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Value}}                                                                          \\ \cline{2-5}
+	\cellcolor[HTML]{C5E3DF} & \multicolumn{4}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Value}} \\ \cline{2-5}
 	\rowcolor[HTML]{C5E3DF}
-	\cellcolor[HTML]{C5E3DF}                                         & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Singlepoint}} & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Multipoint}} \\ \cline{2-5}
+	\cellcolor[HTML]{C5E3DF} & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Singlepoint}} & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Multipoint}} \\ \cline{2-5}
 	\rowcolor[HTML]{C5E3DF}
-	\multirow{-3}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Test Property}} & \textbf{Router}                            & \textbf{Broker}      & \textbf{Full Router}            & \textbf{With Broker}           \\ \hline
-	\textbf{MESSAGE\_SIZE [B]}                                       & \multicolumn{4}{r|}{256}                  \\ \hline
-	\textbf{PARALLEL\_COUNT}                                         & \multicolumn{4}{r|}{5}                    \\ \hline
-	\textbf{TEST\_DURATION}                                       & \multicolumn{4}{r|}{2\,000\,000 messages}          \\ \hline
-	\textbf{RATE}                                                    & 15\,000      & 4\,600                    & 3\,600                    & 7\,600                   \\ \hline
+	\multirow{-3}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Test Property}} & \textbf{Router} & \textbf{Broker} & \textbf{Full Router} & \textbf{With Broker} \\ \hline
+	\textbf{MESSAGE\_SIZE [B]} & \multicolumn{4}{r|}{256} \\ \hline
+	\textbf{PARALLEL\_COUNT} & \multicolumn{4}{r|}{5} \\ \hline
+	\textbf{TEST\_DURATION} & \multicolumn{4}{r|}{2\,000\,000 messages} \\ \hline
+	\textbf{RATE} & 15\,000 & 4\,600 & 3\,600 & 7\,600 \\ \hline
 	\end{tabular}
 	\end{table}
 \endgroup
 
 \subsubsection*{Single Node}
-The latency measurements are done with 80\% of maximum rate, which were discussed in the Subsection \ref{Throughput}. In the Figure \ref{fig:latency-single-router} you can see the latency difference that we measured between Qpid-Dispatch and Message Broker. In single node measurements, the router's latency is slightly higher in the most of the cases. This is caused by the Maestro Sender and Receiver technologies, because they are implemented in Java and Maestro Sender and Receiver are using JMS for sending and receiving messages, which is same approach as the Broker uses. For better latency comparison it is necessary to measure Broker's latency with current implementations and Qpid-Dispatch's latency with Python clients. However, the current version of Maestro offers only the JMS clients.
+The latency measurements are done with 80\% of maximum rate, which were discussed in the Subsection \ref{Throughput}. In the Figure \ref{fig:latency-single-router} you can see the latency difference that we measured between Qpid-Dispatch and Message Broker. In single node measurements, the router's latency is slightly higher in the most of the cases. After discussion we did not find a reason why is router slower then Broker in that case.
+
+%This is caused by the Maestro Sender and Receiver technologies, because they are implemented in Java and Maestro Sender and Receiver are using JMS for sending and receiving messages, which is same approach as the Broker uses. For better latency comparison it is necessary to measure Broker's latency with current implementations and Qpid-Dispatch's latency with Python clients. However, the current version of Maestro offers only the JMS clients.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{obrazky-figures/charts/singlepoint-latency.pdf}
-	\caption{Latency chart showing the difference between the router and the broker latency at 80\,\% of maximum rate. One can see that router is slower, but this is caused by the technology used in the Maestro Clients which is same as in the Broker.}
+	\caption{Latency chart showing the difference between the router and the broker latency at 80\,\% of maximum rate.}
 	\label{fig:latency-single-router}
 \end{figure}
 
-The memory used by Qpid-dispatch is slightly lower and much stable than in the case of maximum throughput as one can see in the Figure \ref{fig:latency-single-router-memory}. This proves, that used memory is dependent to the load. If the load on the router is higher then it needs more memory for proper routing. In the Figure \ref{fig:latency-single-broker-memory} one can see the Inspector output for Broker's used memory. The used memory here is much stable than in the previous cases, which is caused, as in the router case, by lower load on the Broker. Maximum used memory stags the same as in the previous cases.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{obrazky-figures/charts/singlepoint-latency-18k.pdf}
+	\caption{Latency chart showing the difference between the router and the broker latency at same load. Router's latency is significantly better then in previous case.}
+	\label{fig:latency-single-same-load}
+\end{figure}
+
+However, we tried to rerun the latency measurements with same load for both test cases. The load was set to 4\,500 messages per second for each connected client. The output is depicted in the Figure \ref{fig:latency-single-same-load}, where the router is significantly faster, but still slower than Broker. This is probably caused by some Maestro internal processes.
+
+The memory used by Qpid-dispatch is slightly lower and much stable than in the case of maximum throughput as one can see in the Figure \ref{fig:latency-single-router-memory}. This proves, that used memory is dependent to the load. If the load on the router is higher then it needs more memory for proper routing.
 
 \begin{figure}[H]
 	\centering
@@ -224,12 +253,15 @@ The memory used by Qpid-dispatch is slightly lower and much stable than in the c
 	\label{fig:latency-single-router-memory}
 \end{figure}
 
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{obrazky-figures/charts/singlepoint-broker-latency-memory.pdf}
 	\caption{The Broker's memory usage has lesser spike when the load is only about of 80\,\% of maximum.}
 	\label{fig:latency-single-broker-memory}
 \end{figure}
+
+In the Figure \ref{fig:latency-single-broker-memory} one can see the Inspector output for Broker's used memory. The used memory here is much stable than in the previous cases, which is caused, as in the router case, by lower load on the Broker. Maximum used memory stags the same as in the previous cases.
 
 \subsubsection*{Multipoint Topology}
 One can see the measured latency on multinode topology of three routers, and two routers with middle-broker in the Figure \ref{fig:latency-multipoint-router}. The latency curve proves, that routers are able to deliver messages into its destination faster than the topology with the Broker, again because the Broker needs to store them in the memory. The latency of the topology with broker reaches around 16\,$\mu$s in 90\,\% of samples; on the other hand, topology consisting of routers has significantly better latency that is around 1\,$\mu$s in 90\,\% of samples. The conclusion is that the collected data proves the router should be much faster than the broker during the certain circumstances..
@@ -258,7 +290,8 @@ Collected data about the memory usage proves the previous statements. In the Fig
 \end{figure}
 
 \subsubsection*{Conclusion}
-During the latency measurements we collected and compared data for the Qpid-Dispatch and Message Broker topologies. The summary of latency measurements is available in the Table \ref{tab:latency-summary}. Is it was already mentioned, Qpid-Dispatch is faster in the model environment the Message Broker. How to achieve better comparison of latency measurements is discussed in the Section \ref{Maestro Clients in Python} as a part of possible improvements.
+During the latency measurements we collected and compared data for the Qpid-Dispatch and Message Broker topologies. The summa
+ry of latency measurements is available in the Table \ref{tab:latency-summary}. Is it was already mentioned, Qpid-Dispatch is faster in the model environment the Message Broker.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
@@ -274,18 +307,18 @@ During the latency measurements we collected and compared data for the Qpid-Disp
 	\begin{tabular}{|l|r|r|r|r|r|}
 	\hline
 	\rowcolor[HTML]{C5E3DF}
-	\multicolumn{1}{|c|}{\cellcolor[HTML]{C5E3DF}}                                     & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Latency (us)}}                                                        & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Memory}}                                                                 & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}}                                                                                         \\ \cline{2-5}
+	\multicolumn{1}{|c|}{\cellcolor[HTML]{C5E3DF}} & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Latency ($\mu$s)}} & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Memory}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}} \\ \cline{2-5}
 	\rowcolor[HTML]{C5E3DF}
-	\multicolumn{1}{|c|}{\multirow{-2}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Test Type}}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{90 \%}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{99 \%}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Total}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Used max}} & \multicolumn{1}{c|}{\multirow{-2}{*}{\cellcolor[HTML]{C5E3DF}\textbf{\begin{tabular}[c]{@{}c@{}}Duration \\ (seconds)\end{tabular}}}} \\ \hline
-	\textbf{Single Router}                                                             & 2.263                                                       & 12.495                                                      & 38 KB                                                       & 28 KB                                                          & \cellcolor[HTML]{9AFF99}136                                                                                                           \\ \hline
-	\textbf{Single Broker}                                                             & 0.386                                                       & 181.759                                                     & 2 GB                                                        & 0.9 GB                                                         & \cellcolor[HTML]{FFCCC9}425                                                                                                           \\ \hline
-	\textbf{Line of Routers}                                                           & \cellcolor[HTML]{9AFF99}1.292                               & 50.815                                                      & 46 KB                                                       & 8 KB                                                           & \cellcolor[HTML]{FFCCC9}540                                                                                                           \\ \hline
-	\textbf{Line with Broker}                                                          & \cellcolor[HTML]{FFCCC9}15.487                              & 1031.167                                                    & 2 GB                                                        & 0.9 GB                                                         & \cellcolor[HTML]{9AFF99}250                                                                                                           \\ \hline
+	\multicolumn{1}{|c|}{\multirow{-2}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Test Type}}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{90 \%}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{99 \%}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Total}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Used max}} & \multicolumn{1}{c|}{\multirow{-2}{*}{\cellcolor[HTML]{C5E3DF}\textbf{\begin{tabular}[c]{@{}c@{}}Duration \\ (s)\end{tabular}}}} \\ \hline
+	\textbf{Single Router} & 2.263 & 12.495 & 38 KB & 28 KB & \cellcolor[HTML]{9AFF99}136 \\ \hline
+	\textbf{Single Broker} & 0.386 & 181.759 & 2 GB & 0.9 GB & \cellcolor[HTML]{FFCCC9}425 \\ \hline
+	\textbf{Line of Routers} & \cellcolor[HTML]{9AFF99}1.292 & 50.815 & 46 KB & 8 KB & \cellcolor[HTML]{FFCCC9}540 \\ \hline
+	\textbf{Line with Broker} & \cellcolor[HTML]{FFCCC9}15.487 & 1031.167 & 2 GB & 0.9 GB & \cellcolor[HTML]{9AFF99}250 \\ \hline
 	\end{tabular}
 	\end{table}
 \endgroup
 
-\newpage
+
 \section{Behavior Measurements}
 \label{Behavior Measurements}
 Moreover, we present some results collected during the behavioral testing with using the Maestro Agent extension. The topologies used in the following scenarios are depicted in the Figure \ref{fig:agent_topologies}. The topology depicted in the Figure \ref{fig:agent_line} is used for demonstrate Agent functions and message loss during the crash. The other topology depicted in the Figure \ref{fig:agent_redundant} represent basic line link with redundant router\,2 which is configured as a slave and root router\,3 which is master. Here we demonstrate recovery time of Qpid-Dispatch.
@@ -293,15 +326,15 @@ Moreover, we present some results collected during the behavioral testing with u
 \begin{figure}[h]
 	\centering
 	\begin{minipage}{0.45\linewidth}
-		\subfloat[Topology with a single Broker node.\label{fig:agent_line}]{\includegraphics[width=\linewidth]{obrazky-figures/basic_topology_router_agent_line.pdf}}
+		\subfloat[Line topology with connected Inspector and Agent.\label{fig:agent_line}]{\includegraphics[width=\linewidth]{obrazky-figures/basic_topology_router_agent_line.pdf}}
 	\end{minipage}
 	\begin{minipage}{0.45\linewidth}
-		\subfloat[Topology with a single router node.\label{fig:agent_redundant}]{\includegraphics[width=\linewidth]{obrazky-figures/basic_topology_router_agent_redundant.pdf}}
+		\subfloat[Topology with redundant router.\label{fig:agent_redundant}]{\includegraphics[width=\linewidth]{obrazky-figures/basic_topology_router_agent_redundant.pdf}}
 	\end{minipage}
 	\caption[Examples of experimental topologies created for behavioral performance testing and experiments with Maestro.]{Examples of experimental topologies created for behavioral performance testing and experiments with Maestro. The arrows indicates the communication path between the topology components and the numbers represent cost for the path.}\label{fig:agent_topologies}
 \end{figure}
 
-On each topology was performed four tests with different actions performed by the Agent. The test properties remains the same as during the latency testing for router line topology with the difference in test duration, which was set to six minutes. The following actions, with additional parameter such as duration, were performed during test:
+On each topology was performed four tests with different actions performed by the Agent. The test properties remains the same as during the latency testing for router line topology with the difference in test duration, which was set to 1\,500\,000 messages per connected client. The following actions, with additional parameter such as duration, were performed during test:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -310,7 +343,8 @@ On each topology was performed four tests with different actions performed by th
 \end{itemize}
 
 \subsection{Agent Demonstration}
-The agent performed specific action in the third minute of test scenario (there can be small delay caused by repository download on the Agent). The shutdown actions has specific duration, which was set to 10, 60 and 120\,seconds. Since topology used for this type of tests does not have any redundant path to destination or Broker work message store, the messages got lost during the actions. Note, that the test was triggered without message acknowledgment settings for the router and the clients. In the Figure \ref{fig:agent-throughput} one can see the throughput affected by the restart and shutdown actions in every case study. The magnitude of the action impact is based on the action duration, hence the longer shutdown will provide more message lost than short restart. However, the chart proves, that routers can establish lost connection with the clients without problems when the router is started.
+\label{Agent Demonstration}
+The agent performed specific action in the third minute of test scenario (there can be small delay caused by repository download on the Agent). The shutdown actions has specific duration, which was set to 10, 60 and 120 seconds. Since topology used for this type of tests does not have any redundant path to destination or Broker work message store, the messages got lost during the actions. Note, that the test was triggered without message acknowledgment settings for the router and the clients. In the Figure \ref{fig:agent-throughput} one can see the throughput affected by the restart and shutdown actions in every case study. The magnitude of the action impact is based on the action duration, hence the longer shutdown will provide more message lost than short restart. However, the chart proves, that routers can establish lost connection with the clients without problems when the router is started again. The different test duration points to the fact, that Maestro detect connections issues and wait for the connection establishment.
 
 \begin{figure}[H]
 	\centering
@@ -319,7 +353,7 @@ The agent performed specific action in the third minute of test scenario (there 
 	\label{fig:agent-throughput}
 \end{figure}
 
-The latency is affected as well, one can see that significant message amount raise the latency from 1\,$\mu$s to 64\,$\mu$s. However note, that some messages was lost which lead to smaller number of samples for latency compute. The message lost ratio is captured in the Table~\ref{tab:agent_demonstration}.
+The latency is affected as well, one can see that significant message amount raise the latency from 1\,$\mu$s to 64\,$\mu$s. However note, that some messages was lost which lead to smaller number of samples for latency compute. The message lost ratio is captured in the Table~\ref{tab:agent_demonstration}. One can see that Qpid-Dispatch lost 39\,518 messages which correspond to throughput for 2\,195\,$\mu$s. Regarding this, we can say that router restart interrupt the link for 2,195\,$\mu$s.
 
 \begin{figure}[H]
 	\centering
@@ -337,18 +371,18 @@ The latency is affected as well, one can see that significant message amount rai
 \renewcommand{\arraystretch}{1.35} % Default value: 1
 	\begin{table}[H]
 	\centering
-	\caption{Table with summary of lost messages during the perform specific action on the router node. \todo{upravit hodnoty podle new testu}}
+	\caption{Table with summary of lost messages during the perform specific action on the middle router node.}
 	\label{tab:agent_demonstration}
 	\begin{tabular}{|l|r|r|r|r|}
 	\hline
 	\rowcolor[HTML]{C5E3DF}
-	\cellcolor[HTML]{C5E3DF}                                  & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}}                                        & \multicolumn{3}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Message Lost}}                                                                                                                          \\ \cline{3-5}
+	\cellcolor[HTML]{C5E3DF} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}} & \multicolumn{3}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Message Lost}} \\ \cline{3-5}
 	\rowcolor[HTML]{C5E3DF}
 	\multirow{-2}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Action}} & \multicolumn{1}{c|}{\multirow{-2}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Duration (s)}}} & \multicolumn{1}{l|}{\cellcolor[HTML]{C5E3DF}\textbf{Expected}} & \multicolumn{1}{l|}{\cellcolor[HTML]{C5E3DF}\textbf{Lost}} & \multicolumn{1}{l|}{\cellcolor[HTML]{C5E3DF}\textbf{Percent}} \\ \hline
-	Restart                                                   & 0                                                                                    &                                                                & XXX                                                        & X \%                                                          \\ \cline{1-2} \cline{4-5}
-	                                                          & 10                                                                                   &                                                                & XXX                                                        & X \%                                                          \\ \cline{2-2} \cline{4-5}
-	                                                          & 60                                                                                   &                                                                & XXX                                                        & X \%                                                          \\ \cline{2-2} \cline{4-5}
-	\multirow{-3}{*}{Shutdown}                                & 120                                                                                  & \multirow{-4}{*}{7\,500\,000}                                      & XXX                                                        & X \%                                                          \\ \hline
+	Restart & 0 & & 39\,518 & 0.53 \% \\ \cline{1-2} \cline{4-5}
+	 & 10 & & 220\,445 & 2.94 \% \\ \cline{2-2} \cline{4-5}
+	 & 60 & & 871\,661 & 11,62 \% \\ \cline{2-2} \cline{4-5}
+	\multirow{-3}{*}{Shutdown} & 120 & \multirow{-4}{*}{7\,500\,000} & 918\,266 & 12.25 \% \\ \hline
 	\end{tabular}
 	\end{table}
 \endgroup
@@ -378,7 +412,7 @@ During this experiment the Agent perform the same actions as in the previous tes
 	\label{fig:agent-redundant-latency}
 \end{figure}
 
-Since we want to know how long it takes to router to re-establish connections after crash we can find the answer in the Figure \ref{fig:agent-redundant-unpressetled}. One can see the detail of test case with restart router action which is executed three minutes after the test starts. The monitored router is the redundant one, so we can see that it handled load for two seconds. After this time the master router was able to route load again and the slave router just waits for another communicaiton.
+Since we want to know how long it takes to router to re-establish connections after crash we can find the answer in the Figure \ref{fig:agent-redundant-unpressetled}. One can see the detail of test case with restart router action which is executed three minutes after the test starts. The monitored router is the redundant one, so we can see that it handled load for two seconds. After this time the master router was able to route load again and the slave router just waits for another communication. This statement is also supported by results collected and discuss in the Section \ref{Agent Demonstration}.
 
 \begin{figure}[H]
 	\centering
@@ -387,49 +421,29 @@ Since we want to know how long it takes to router to re-establish connections af
 	\label{fig:agent-redundant-unpressetled}
 \end{figure}
 
-The conclusion is, that Qpid-Dispatch is able to recover after crash in less than three seconds, when there is no block for service start. When the router is down, the topology is updated and the previous hop does not have path to the crashed router, so the clients cannot affect the router start after the crash.
+The conclusion is, that Qpid-Dispatch is able to recover after crash in less than three seconds, when there is no block for service start. When the router is down, the topology is updated and the previous hop does not have path to the crashed router, so the clients cannot affect the router start after the crash. However, even with redundant path there is a chance that some messages are lost as it is captured in the Table \ref{tab:agent_redundant_lost}. For avoid this cases it is necessary to turn on acknowledge mechanism for AMQP messages, which should avoid message lost but it will affect the performance.
 
-% Moreover, we present some preliminary results with using the agent extension and changing the behavior of topology depicted in the Figure \ref{fig:basic_topologies}. In the Figure \ref{fig:agent_throughput} you can see throughput of few simple tests during which middle router is restarted or shut down. The throughput spikes are caused by these events. Since router does not have any queues to store messages, the messages are then discarded and lost. However, the sender does not receive acknowledgment of lost messages so it is not router responsibility. In the Table \ref{tab:agent_simple} you can see the duration of each executed operation and rate of lost messages during the operation (with expected amount of messages being 10\,000\,000). For example during the restart, router was completely shutdown for a second during which no messages arrived. However, after the restart there was some time to balance the load to the previous point. This leads to message lost equals to 2 seconds rate.
-
-
-% % Please add the following required packages to your document preamble:
-% % \usepackage[table,xcdraw]{xcolor}
-% % If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-% \begin{table}[H]
-% \centering
-% \caption{Summarization of lost messages during the connection issues.}
-% \label{my-label}
-% \begin{tabular}{|c|r|r|}
-% \hline
-% \rowcolor[HTML]{C5E3DF}
-% Operation     & Duration (seconds) & Message Lost \\ \hline
-% None          & 0        & None         \\ \hline
-% Restart       & 1        & 46437        \\ \hline
-% Shutdown      & 12       & 280572       \\ \hline
-% Long Shutdown & 89       & 1304451      \\ \hline
-% \end{tabular}
-% \label{tab:agent_simple}
-% \end{table}
-%
-% The Figure \ref{fig:agent_throughput} also shows, that test case with long shutdown is longer about 10 seconds that other scenarios and the throughput after the shutdown is quite higher. This means that router high throughput to even the messages lost.
-%
-% \begin{figure}[H]
-% 	\centering
-% 	\includegraphics[width=1\linewidth]{obrazky-figures/charts-excel/agent.pdf}
-% 	\caption{Router throughput comparison during the same load after different unexpected events.}
-% 	\label{fig:agent_throughput}
-% \end{figure}
-%
-% Latency of test cases cases with the agent function demonstration is depicted in the Figure \ref{fig:agent_latency}. You can see that router is able to even the latency during the restart and short shutdown with test run without any unexpected behavior. On the other hand, long shutdown (red) gets worse latency almost for 50 percentile of messages.
-%
-% \begin{figure}[H]
-% 	\centering
-% 	\includegraphics[width=1\linewidth]{obrazky-figures/charts-excel/agent_latency.pdf}
-% 	\caption{Router and broker latency comparison during the same load.}
-% 	\label{fig:agent_latency}
-% \end{figure}
-
-\newpage
-\section{Problems}
-\todo{Todo}
-All measurements were orchestrated by an automation server called Jenkins\footnote{Jenkins\,---\,\url{https://jenkins.io/}}.
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begingroup
+\setlength{\tabcolsep}{10pt} % Default value: 6pt
+\renewcommand{\arraystretch}{1.35} % Default value: 1
+	\begin{table}[H]
+	\centering
+	\caption{Table with summary of lost messages during the perform specific action on the middle router node without redundant path.}
+	\label{tab:agent_redundant_lost}
+	\begin{tabular}{|l|r|r|r|r|}
+	\hline
+	\rowcolor[HTML]{C5E3DF}
+	\cellcolor[HTML]{C5E3DF} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}} & \multicolumn{3}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Message Lost}} \\ \cline{3-5}
+	\rowcolor[HTML]{C5E3DF}
+	\multirow{-2}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Action}} & \multicolumn{1}{c|}{\multirow{-2}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Duration (s)}}} & \multicolumn{1}{l|}{\cellcolor[HTML]{C5E3DF}\textbf{Expected}} & \multicolumn{1}{l|}{\cellcolor[HTML]{C5E3DF}\textbf{Lost}} & \multicolumn{1}{l|}{\cellcolor[HTML]{C5E3DF}\textbf{Percent}} \\ \hline
+	Restart & 0 & & 21\,804 & 0.29 \% \\ \cline{1-2} \cline{4-5}
+	 & 10 & & 13\,359 & 0.18 \% \\ \cline{2-2} \cline{4-5}
+	 & 60 & & 16\,205 & 0.22 \% \\ \cline{2-2} \cline{4-5}
+	\multirow{-3}{*}{Shutdown} & 120 & \multirow{-4}{*}{7\,500\,000} & 22\,042 & 0.29 \% \\ \hline
+	\end{tabular}
+	\end{table}
+\endgroup

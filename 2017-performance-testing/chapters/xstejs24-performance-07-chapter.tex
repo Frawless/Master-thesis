@@ -43,6 +43,14 @@ Behavioral testing introduces an idea of multipoint senders and receivers. Lets 
 \section{Maestro-Agent Executor Improvements}
 The Maestro-Agent is able to download external git repositories and tries to process them during the test. However, the external code handler is currently designed only for code written in Groovy. This limitation can be easily removed by creating more general executor, which would be able to execute any type of scripts. One idea how to achieve this is to create more complex executor in \emph{Kotlin} languange\footnote{Kotlin\,---\,\url{https://kotlinlang.org/}}. The new executor should be able to run each type of downloaded script and keep the access to the return code and standard output. This extension would remove the limitation to the use, which has to specify each external action handler in the Groovy language. Note, that new executor should not affect performance testing during the execution, so the operations should remain atomic.
 
-\section{Maestro Clients in Python}
-\label{Maestro Clients in Python}
-In the Subsection \label{Latency} was mentioned, that latency of Qpid-Dispatch and Message Broker cannot be compared with lower values. The reason is the used technology for Maestro Sender and Maestro Receiver. Both of them are written in Java (JMS) which makes the connection to the Message Broker (written in Java, using JMS) faster then connection to another technology. This makes Qpid-Dispatch slower in case of connection creation, since it is written in Python and C (using Qpid-Proton library for connections). For more precision during the latency measurements, the Maestro should use Python clients for load generation in case of Qpid-Dispatch testing. However, current version of Maestro offers only JMS clients for performance testing, which makes more space for future improvements in scenarios like Qpid-Dispatch latency testing. Note, that delay caused by connection creation is in a matter of microseconds.
+\section{Multiple Agents and Inspectors}
+Version of Maestro 1.3.0 has already integrated Maestro Agent and AMQP Inspector. However, the front-end API does not allows setting for multiple Agents or Inspectors during one test scenario. Hence, only one Agent and one Inspector can be specified by Groovy test script. The solution for this problem must involve dynamic scan of specific environment variables which will contains setting for the Maestro components. The settings can be loaded into the array of Agent/Inspector setting and then can be assigned to a specific component by the node URL.
+
+\section{Problems}
+\todo{Todo - popsat nebo vypustit?}
+\begin{itemize}
+  \item \textbf{Jenkins}\,---\,the idea was to have jobs in Jenkins\footnote{Jenkins\,---\,\url{https://jenkins.io/}} but Maestro does not like Jenkins without reason, probably some hidden issue
+  \item \textbf{QpidJMS}\,---\,QpidJMS is not able to fill MapMessage body by default only via undocumented feature, the developer consultaiton was needed.
+  \item \textbf{Qpid-Dispatch}\,---\,performance degradation in line topology was discussed with engineers and it was said: "it is ok, it's flow control".
+  \item \textbf{Agent and Inspector on same node}\,---\,this sometimes cause the problem (caused by data server which is binded to node) that test will not be ended properly (try it).
+\end{itemize}

@@ -294,6 +294,7 @@
     \renewcommand\listfigurename{Zoznam obrázkov}
   \fi
   \listoffigures
+  \addcontentsline{toc}{chapter}{List of Figures}
 
   \ifczech
     \renewcommand\listtablename{Seznam tabulek}
@@ -302,6 +303,7 @@
     \renewcommand\listtablename{Zoznam tabuliek}
   \fi
   \listoftables
+  \addcontentsline{toc}{chapter}{List of Tables}
 
   \ifODSAZ
     \setlength{\parskip}{0.5\bigskipamount}
@@ -310,6 +312,7 @@
   \fi
 
   \input{xstejs24-performance-30-zkratky-shortcuts}
+  \addcontentsline{toc}{chapter}{List of Shortcuts}
   \newpage
 
   \ifslovak
@@ -321,7 +324,7 @@
      \addcontentsline{toc}{section}{Seznam příloh}
     \else
      \section*{List of Appendices}
-     \addcontentsline{toc}{section}{List of Appendices}
+     \addcontentsline{toc}{chapter}{List of Appendices}
     \fi
   \fi
     \startcontents[chapters]

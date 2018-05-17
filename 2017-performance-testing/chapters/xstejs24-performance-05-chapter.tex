@@ -347,15 +347,6 @@ The Maestro Inspector is designed to run a specific Inspector class based on use
 	\end{algorithm}
 \end{center}
 
-The AMQP Inspector uses the request-response message mechanism with the SUT. The inspector creates message using Java library \emph{Qpid JMS}\footnote{Qpid-JMS\,---\,\url{https://qpid.apache.org/components/jms/index.html}} as specified in the Subsection \ref{AMQP Inspector}. Since we want to collect as much relevant data as possible, we are sending three\footnote{Three specific requests to AMQP Management are enough to collect all data which are needed.} request-response messages with different entityType option every 5\,seconds during the whole test. For the response collecting it is necessary to create a temporary queue, that is used by the router as response destination. The destination is contained in the field \emph{response-to}. The actual request message is represented as an object with type of \emph{JMS Message}. The main Inspector's process mechanism is described in the Algorithm \ref{alg:requester}, while the message request-response mechanism is depicted in the Figure \ref{fig:collector}.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=15cm]{obrazky-figures/inspector_collector.pdf}
-  \caption{The whole Inspector process including message creation, message sending, collecting and parse.}
-  \label{fig:collector}
-\end{figure}
-
 \begin{center}
 	\begin{algorithm}[H]
 		\LinesNumbered
@@ -396,3 +387,13 @@ The AMQP Inspector uses the request-response message mechanism with the SUT. The
 		 \label{alg:requester}
 	\end{algorithm}
 \end{center}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=15cm]{obrazky-figures/inspector_collector.pdf}
+  \caption{The whole Inspector process including message creation, message sending, collecting and parse.}
+  \label{fig:collector}
+\end{figure}
+
+
+The AMQP Inspector uses the request-response message mechanism with the SUT. The inspector creates message using Java library \emph{Qpid JMS}\footnote{Qpid-JMS\,---\,\url{https://qpid.apache.org/components/jms/index.html}} as specified in the Subsection \ref{AMQP Inspector}. Since we want to collect as much relevant data as possible, we are sending three\footnote{Three specific requests to AMQP Management are enough to collect all data which are needed.} request-response messages with different entityType option every 5\,seconds during the whole test. For the response collecting it is necessary to create a temporary queue, that is used by the router as response destination. The destination is contained in the field \emph{response-to}. The actual request message is represented as an object with type of \emph{JMS Message}. The main Inspector's process mechanism is described in the Algorithm \ref{alg:requester}, while the message request-response mechanism is depicted in the Figure \ref{fig:collector}.
