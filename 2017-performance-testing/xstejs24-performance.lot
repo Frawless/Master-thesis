@@ -11,7 +11,7 @@
 \contentsline {table}{\numberline {6.3}{\ignorespaces Table with collected data with highlighted performance improvements and degradations.\relax }}{56}{table.caption.55}
 \contentsline {table}{\numberline {6.4}{\ignorespaces Test case settings for latency measurements.\relax }}{57}{table.caption.57}
 \contentsline {table}{\numberline {6.5}{\ignorespaces The summary table with collected latency data with highlighted performance improvements and degradations.\relax }}{62}{table.caption.68}
-\contentsline {table}{\numberline {6.6}{\ignorespaces Table with summary of lost messages during the perform specific action on the middle router node.\relax }}{64}{table.caption.72}
+\contentsline {table}{\numberline {6.6}{\ignorespaces Table with summary of lost messages during the specific actions on the middle router node.\relax }}{64}{table.caption.72}
 \contentsline {table}{\numberline {6.7}{\ignorespaces Table with summary of lost messages during the perform specific action on the middle router node without redundant path.\relax }}{67}{table.caption.77}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

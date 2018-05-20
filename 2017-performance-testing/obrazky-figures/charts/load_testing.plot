@@ -28,5 +28,5 @@ set style fill solid 0.2 border
 
 # with linespoints - link with points
 
-plot "load_testing.dat" using 1:3 ls 2 title 'Load Size' with filledcurves x1 axes x1y1,\
+plot "load_testing.dat" using 1:3 ls 2 title 'Request Count' with filledcurves x1 axes x1y1,\
      "load_testing.dat" using 1:2 ls 1 title 'Response Time' with filledcurves x1 axes x1y2 fs transparent

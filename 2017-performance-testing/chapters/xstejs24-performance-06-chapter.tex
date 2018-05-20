@@ -5,7 +5,7 @@
 
 \chapter{Experimental Evaluation}
 \label{Experimental Evaluation}
-This chapter summarizes results of the performance testing and experimental evaluation of Maestro. We split the experiments into two parts. The first performs a basic measurement of Maestro\,1.3.0 which includes Maestro Agent and AMQP Inspector. During this experiments we focused on reclaiming the highest possible throughput of singlepoint topology of Qpid-dispatch and Message Broker and multipoint topologies with three nodes of Qpid-dispatch and with Broker in the middle. These experimental topologies are depicted in the Figure \ref{fig:basic_topologies}. The later series of experiments is focused on behavior testing of topologies, which involves Qpid-Dispatch reliability and recovery testing.
+This chapter summarizes results of the performance testing and experimental evaluation of Maestro. We split the experiments into two parts. The first performs a basic measurement of Maestro\,1.3.0 which includes Maestro Agent and AMQP Inspector. During this experiments we focused on reclaiming the highest possible throughput of singlepoint topology of Qpid-dispatch and Message Broker and multipoint topologies with three nodes of Qpid-dispatch and with Broker in the middle. These experimental topologies are depicted in the Figure \ref{fig:basic_topologies}. The later series of experiments are focused on behavior testing of topologies, which involves Qpid-Dispatch reliability and recovery testing.
 
 Since the testing was executed over multiple topology types, we used Topology Generator for quick automatic changes of topology. Each test was executed against established topology where all components were newly installed and restarted between each test scenario. This was done during the cleaning stage. For experimental evaluation we used machines specified in the Table \ref{tab:machines}. The reason why clients use more powerful machines is that we needed more machines for SUT, but only two IBM Xeon machines were available during the experimental evaluation and we needed at least three machines for the SUT nodes. For proper comparison we need all SUTs on the same machine type.
 
@@ -46,22 +46,22 @@ Maestro works as the orchestration system, and requires proper infrastructure be
 	\caption[Examples of experimental topologies created for basic performance testing and experiments with Maestro.]{Examples of experimental topologies created for basic performance testing and experiments with Maestro. The arrows indicates the communication path between topology components.}\label{fig:basic_topologies}
 \end{figure}
 
-Each test case has specific parameters which can be defined by the user. The summary of available parameter is in the following:
+Each test case has specific parameters which can be defined by the user. The summary of available parameter is in the following list:
 \begin{itemize}
 	\setlength\itemsep{0em}
 	\item \textbf{MESSAGE\_SIZE}\,---\,message size in bytes.
 	\item \textbf{PARALLEL\_COUNT}\,---\,number of connected clients to the SUT during the test.
-	\item \textbf{TEST\_DURATION}\,---\,test duration defined as time value (120s, 10m) or number of messages (10\,000\,000) to transfer.
-	\item \textbf{RATE}\,---\,number defines rate of each connected client; 0 represents unbound test.
+	\item \textbf{TEST\_DURATION}\,---\,test duration specified as time value (e.g. 120s, 10m) or number of messages (10\,000\,000) to transfer.
+	\item \textbf{RATE}\,---\,rate of each connected client; 0 represents unbounded test.
 	\item \textbf{INSPECTOR\_NAME}\,---\,name of inspector implementation (ActivemqInspector or InterconnectInspector).
 	\item \textbf{MANAGEMENT\_INTERFACE}\,---\,URL where inspector will inspect the SUT.
 	\item \textbf{MAESTRO\_BROKER}\,---\,URL to Maestro Broker.
-	\item \textbf{SEND\_RECEIVE\_URL} (singlepoint only)\,---\,URL for connect sender and receiver.
-	\item \textbf{SEND\_URL}\,---\,URL for connect sender.
-	\item \textbf{RECEIVE\_URL}\,---\,URL for connect receiver.
+	\item \textbf{SEND\_RECEIVE\_URL} (singlepoint only)\,---\,URL where sender and receiver connects.
+	\item \textbf{SEND\_URL}\,---\,URL where sender connects.
+	\item \textbf{RECEIVE\_URL}\,---\,URL where receiver connects.
 	\item \textbf{EXT\_POINT\_SOURCE}\,---\,URL to public git repository with code handlers.
 	\item \textbf{EXT\_POINT\_BRANCH}\,---\,branch which should be used for ext point repository.
-	\item \textbf{EXT\_POINT\_COMMAND}\,---\,command to execute by the Agent.
+	\item \textbf{EXT\_POINT\_COMMAND}\,---\,command executed by the Agent.
 \end{itemize}
 
 \subsection{Throughput}
@@ -100,7 +100,7 @@ We measured throughput only by load generators\,---\,\emph{Maes\-tro Sender} and
 \subsubsection*{Single Node}
 The first tests were ran against the single node topologies, which are depicted in the Figures \ref{fig:basic_topology_router} and \ref{fig:basic_topology_broker}. These topologies contains only one SUT node, which is forwarding messages from sender to receiver. During the test the SUT node is inspected by the proper Maestro Inspector.
 
-The measured throughput is depicted in the Figure \ref{fig:rate-single} where one can see the comparison of tests with 15\,minutes duration, which tries to achieve the highest possible throughput. One can see that the maximum throughput of Qpid-Dispatch, as a standalone network component, can reach around 90\,000 messages per second. On the other hand, the lone Messaging Broker reaches only about 30\,000 messages per second. This throughput difference is caused by the fact, that Broker stores all of the messages in the memory until clients want them. This is the main feature of the broker, because it operates as an message distributor in the network. The router only routes the messages to the destination which does not need to store message in the memory.
+The measured throughput is depicted in the Figure \ref{fig:rate-single} where one can see the comparison of tests with 15\,minutes duration, which tries to achieve the highest possible throughput. One can see that the maximum throughput of Qpid-Dispatch, as a standalone network component, can reach around 90\,000 messages per second. On the other hand, the lone Messaging Broker reaches only about 30\,000 messages per second. This throughput difference is caused by the fact, that Broker stores all of the messages in the memory until clients want them. This is the main feature of the broker, because it operates as an message distributor in the network. On contrary the router only routes the messages to the destination so it does not need to store message in the memory.
 
 \begin{figure}[H]
 	\centering
@@ -127,7 +127,7 @@ In the Figure \ref{fig:router-single-memory} we can see the memory usage of Qpid
 
 
 \subsubsection*{Multipoint Topology}
-For the multipoint experiments we used topologies depicted in the Figures \ref{fig:basic_topology_router_line} and \ref{fig:basic_topology_broker_line}. The network throughput can be influenced by other device connected to the topology. The singlepoint topology was extended by another components by adding two other routers around the original SUT. The versions of the newly added SUTs are the same as the original ones.
+For the multipoint experiments we used topologies depicted in the Figures \ref{fig:basic_topology_router_line} and \ref{fig:basic_topology_broker_line}. The network throughput can naturally be influenced by other device connected to the topology. So the singlepoint topology was extended by another components by adding two other routers around the original SUT. The versions of the newly added SUTs are the same as the original ones.
 
 \begin{figure}[H]
 	\centering
@@ -136,7 +136,7 @@ For the multipoint experiments we used topologies depicted in the Figures \ref{f
 	\label{fig:rate-multipoint-router}
 \end{figure}
 
-In the Figure \ref{fig:rate-multipoint-router} one can see, that adding routers to the broker node raises achievable throughput to the 48\,000 messages per second. On the other hand, the topology consisting only of the routers has significant performance degradation. The throughput falls from the 90\,000 messages per second to the approximately 23\,000 messages per second. This degradation is caused by the interior flow-control mechanism, which should prevent the overload of the network. However, in this case study we can see that the performance degradation is too high and the mechanism used in the Qpid-Dispatch should be re-implemented.
+In the Figure \ref{fig:rate-multipoint-router} one can see, that adding routers to the broker node raises achievable throughput to the 48\,000 messages per second. On the other hand, the topology consisting only of the routers shows significant performance degradation. The throughput falls from the 90\,000 messages per second to the approximately 23\,000 messages per second. This degradation is caused by the interior flow-control mechanism, which should prevent the overload of the network. However, in this case study we can see that the performance degradation is too high and the mechanism used in the Qpid-Dispatch should be re-implemented.
 
 
 \begin{figure}[H]
@@ -242,9 +242,9 @@ The latency measurements are done with 80\% of maximum rate, which were discusse
 	\label{fig:latency-single-same-load}
 \end{figure}
 
-However, we tried to rerun the latency measurements with same load for both test cases. The load was set to 4\,500 messages per second for each connected client. The output is depicted in the Figure \ref{fig:latency-single-same-load}, where the router is significantly faster, but still slower than Broker. This is probably caused by some Maestro internal processes.
+Then we tried to rerun the latency measurements with same load for both test cases. The load was set to 4\,500 messages per second for each connected client. The output is depicted in the Figure \ref{fig:latency-single-same-load}, where the router is significantly faster, but still slower than Broker. This is probably caused by some Maestro internal processes.
 
-The memory used by Qpid-dispatch is slightly lower and much stable than in the case of maximum throughput as one can see in the Figure \ref{fig:latency-single-router-memory}. This proves, that used memory is dependent to the load. If the load on the router is higher then it needs more memory for proper routing.
+The memory used by Qpid-dispatch is slightly lower and much stable than in the case of maximum throughput as one can see in the Figure \ref{fig:latency-single-router-memory}. This proves, that used memory is dependent on the load. If the load on the router is higher then it needs more memory for proper routing.
 
 \begin{figure}[H]
 	\centering
@@ -321,7 +321,7 @@ ry of latency measurements is available in the Table \ref{tab:latency-summary}. 
 
 \section{Behavior Measurements}
 \label{Behavior Measurements}
-Moreover, we present some results collected during the behavioral testing with using the Maestro Agent extension. The topologies used in the following scenarios are depicted in the Figure \ref{fig:agent_topologies}. The topology depicted in the Figure \ref{fig:agent_line} is used for demonstrate Agent functions and message loss during the crash. The other topology depicted in the Figure \ref{fig:agent_redundant} represent basic line link with redundant router\,2 which is configured as a slave and root router\,3 which is master. Here we demonstrate recovery time of Qpid-Dispatch.
+Moreover, we present some results collected during the behavioral testing using the Maestro Agent extension. The topologies used in the following scenarios are depicted in the Figure \ref{fig:agent_topologies}. The topology depicted in the Figure \ref{fig:agent_line} is used to demonstrate Agent functions and message loss during the crash. The other topology depicted in the Figure \ref{fig:agent_redundant} represent a basic line link with redundant router\,2 which is configured as a slave and root router\,3 which is configured as a master. Here we demonstrate the recovery time of Qpid-Dispatch.
 
 \begin{figure}[h]
 	\centering
@@ -331,34 +331,34 @@ Moreover, we present some results collected during the behavioral testing with u
 	\begin{minipage}{0.45\linewidth}
 		\subfloat[Topology with redundant router.\label{fig:agent_redundant}]{\includegraphics[width=\linewidth]{obrazky-figures/basic_topology_router_agent_redundant.pdf}}
 	\end{minipage}
-	\caption[Examples of experimental topologies created for behavioral performance testing and experiments with Maestro.]{Examples of experimental topologies created for behavioral performance testing and experiments with Maestro. The arrows indicates the communication path between the topology components and the numbers represent cost for the path.}\label{fig:agent_topologies}
+	\caption[Examples of experimental topologies created for behavioral performance testing and experiments with Maestro.]{Examples of experimental topologies created for behavioral performance testing and experiments with Maestro. The arrows indicate the communication path between topology components and the numbers represent the cost for the path.}\label{fig:agent_topologies}
 \end{figure}
 
-On each topology was performed four tests with different actions performed by the Agent. The test properties remains the same as during the latency testing for router line topology with the difference in test duration, which was set to 1\,500\,000 messages per connected client. The following actions, with additional parameter such as duration, were performed during test:
+On each topology we performed four tests with different actions executed by the Agent. The test properties remains the same as during the latency testing for router line topology with the difference in test duration, which was set to 1\,500\,000 messages per connected client. The following actions, with additional parameter such as duration, were performed during the test:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
 	\item \textbf{Restart}\,---\,simple router restart.
-	\item \textbf{Shutdown}\,---\,simple shutdown and start for different time duration.
+	\item \textbf{Shutdown}\,---\,simple shutdown and restart for different time duration.
 \end{itemize}
 
 \subsection{Agent Demonstration}
 \label{Agent Demonstration}
-The agent performed specific action in the third minute of test scenario (there can be small delay caused by repository download on the Agent). The shutdown actions has specific duration, which was set to 10, 60 and 120 seconds. Since topology used for this type of tests does not have any redundant path to destination or Broker work message store, the messages got lost during the actions. Note, that the test was triggered without message acknowledgment settings for the router and the clients. In the Figure \ref{fig:agent-throughput} one can see the throughput affected by the restart and shutdown actions in every case study. The magnitude of the action impact is based on the action duration, hence the longer shutdown will provide more message lost than short restart. However, the chart proves, that routers can establish lost connection with the clients without problems when the router is started again. The different test duration points to the fact, that Maestro detect connections issues and wait for the connection establishment.
+The agent performed specific action in the third minute of the test scenario (there can be a small delay caused by the repository download on the Agent). The shutdown actions have specific duration, which was set to 10, 60 and 120 seconds. Since the topology used for this type of tests does not have any redundant path to destination or Broker work message store, the messages got lost during the actions. Note, that the test was triggered without message acknowledgment settings for the router and the clients. In the Figure \ref{fig:agent-throughput} one can see the throughput affected by the restart and shutdown actions in every case study. The magnitude of the action impact is based on the action duration, hence, the longer shutdown will lose more message than short restart. However, the chart proves, that routers can establish lost connection with the clients without problems when the router is started again. The different test duration points to the fact, that Maestro detect connections issues and wait for the connection establishment.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{obrazky-figures/charts/agent-throughput.pdf}
-	\caption{Maestro Agent demonstration against a simple topology with actions restart and shutdown in the third minute of test.}
+	\caption{Maestro Agent demonstration against a simple topology with restart and shutdown in the third minute of test.}
 	\label{fig:agent-throughput}
 \end{figure}
 
-The latency is affected as well, one can see that significant message amount raise the latency from 1\,$\mu$s to 64\,$\mu$s. However note, that some messages was lost which lead to smaller number of samples for latency compute. The message lost ratio is captured in the Table~\ref{tab:agent_demonstration}. One can see that Qpid-Dispatch lost 39\,518 messages which correspond to throughput for 2\,195\,$\mu$s. Regarding this, we can say that router restart interrupt the link for 2,195\,$\mu$s.
+The latency is affected as well, one can see that significant message amount raises the latency from 1\,$\mu$s to 64\,$\mu$s. However note, that some messages were lost which lead to smaller number of samples for latency computation. The message lost ratio is captured in the Table~\ref{tab:agent_demonstration}. One can see that Qpid-Dispatch lost 39\,518 messages which correspond to throughput for 2\,195\,$\mu$s. Regarding this, we can say that router restart interrupt the link for 2,195\,$\mu$s.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{obrazky-figures/charts/agent-latency.pdf}
-	\caption{Latency diagram affected by the actions performing the connection issues.}
+	\caption{Latency diagram affected by the actions simulating the connection issues.}
 	\label{fig:agent-latency}
 \end{figure}
 
@@ -371,7 +371,7 @@ The latency is affected as well, one can see that significant message amount rai
 \renewcommand{\arraystretch}{1.35} % Default value: 1
 	\begin{table}[H]
 	\centering
-	\caption{Table with summary of lost messages during the perform specific action on the middle router node.}
+	\caption{Table with summary of lost messages during the specific actions on the middle router node.}
 	\label{tab:agent_demonstration}
 	\begin{tabular}{|l|r|r|r|r|}
 	\hline
@@ -389,7 +389,7 @@ The latency is affected as well, one can see that significant message amount rai
 
 
 \subsection{Measurement With Redundant Router}
-During this experiment the Agent perform the same actions as in the previous test cases. The difference is, that current topology has slave router connected into the network which is ready to route the messages when master router crash. In the Figure \ref{fig:agent-redundant-throughput} is depicted the throughput for all tests on this topology. The Agent performs actions in third minute which caused spike under the stable load curve, but the throughput is raised back quickly. This spike is caused by small delay when the redundant router starts his job. It needs some time for warm-up, which involves the memory allocation depicted in the Figure \ref{fig:agent-redundant-memory}. As one can see, there is no additional spikes after then master is turned up, hence the first spike is cause only by first routing redundant router.
+During this experiment the Agent performs the same actions as in the previous test cases. The difference is, that given topology now has a slave router connected into the network which is ready to route the messages when master router crash. In the Figure \ref{fig:agent-redundant-throughput} is depicted the throughput for all tests on this topology. The Agent performs actions in third minute which causes spike under the stable load curve, but the throughput is raised back quickly. This spike is caused by a small delay when the redundant router starts his job. It needs some time for warm-up, which involves the memory allocation depicted in the Figure \ref{fig:agent-redundant-memory}. As one can see, there is no additional spikes after then master is turned up, hence the first spike is cause only by first routing redundant router.
 
 \begin{figure}[H]
 	\centering
@@ -401,27 +401,27 @@ During this experiment the Agent perform the same actions as in the previous tes
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{obrazky-figures/charts/restart-redundant-agent-memory.pdf}
-	\caption{Allocated memory for redundant router during the restart. One can see that router allocate new memory when the master router crash and the slave has to handle the load. This memory is allocated till the tear down.}
+	\caption{Allocated memory for redundant router during the restart. One can see that router allocated new memory when the master router crashed and the slave had to handle the load. This memory is allocated until the tear down.}
 	\label{fig:agent-redundant-memory}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{obrazky-figures/charts/agent-redundant-latency.pdf}
-	\caption{Latency diagram with Agent actions performing and redundant router in the topology. The latency remains the same for all the test cases which points to good routing between the routers.}
+	\caption{Latency diagram with Agent actions and redundant router in the topology. The latency remains the same for all the test cases which points to a good routing between the routers.}
 	\label{fig:agent-redundant-latency}
 \end{figure}
 
-Since we want to know how long it takes to router to re-establish connections after crash we can find the answer in the Figure \ref{fig:agent-redundant-unpressetled}. One can see the detail of test case with restart router action which is executed three minutes after the test starts. The monitored router is the redundant one, so we can see that it handled load for two seconds. After this time the master router was able to route load again and the slave router just waits for another communication. This statement is also supported by results collected and discuss in the Section \ref{Agent Demonstration}.
+Since we want to know how long it takes to router to re-establish connections after the crash we can find the answer in the Figure \ref{fig:agent-redundant-unpressetled}. One can see the detail of test case with restart router action which is executed three minutes after the test starts. The monitored router is the redundant one, so we can see that it handled the load for two seconds. After this time the master router was able to route load again and the slave router just waits for another communication. This statement is also supported by results collected and discuss in the Section \ref{Agent Demonstration}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{obrazky-figures/charts/restart-redundant-agent-routerLink.pdf}
-	\caption{Chart captures unpressetled messages on the redundant router node. The slave router handled load for two seconds.}
+	\caption{Chart captures unsettled messages on the redundant router node. The slave router handled load for two seconds.}
 	\label{fig:agent-redundant-unpressetled}
 \end{figure}
 
-The conclusion is, that Qpid-Dispatch is able to recover after crash in less than three seconds, when there is no block for service start. When the router is down, the topology is updated and the previous hop does not have path to the crashed router, so the clients cannot affect the router start after the crash. However, even with redundant path there is a chance that some messages are lost as it is captured in the Table \ref{tab:agent_redundant_lost}. For avoid this cases it is necessary to turn on acknowledge mechanism for AMQP messages, which should avoid message lost but it will affect the performance.
+The conclusion is, that Qpid-Dispatch is able to recover after a crash in less than three seconds, when there is no block for service start. When the router is down, the topology is updated and the previous hop does not have path to the crashed router, so the clients cannot affect the router start after the crash. However, even with redundant path there is a chance that some messages are lost as it is captured in the Table \ref{tab:agent_redundant_lost}. For avoid this cases it is necessary to turn on acknowledge mechanism for AMQP messages, which should avoid message lost but it will affect the performance.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}

@@ -29,6 +29,6 @@ set style fill solid 0.2 border
 
 # with linespoints - link with points
 
-plot "soak_testing.dat" using 1:2 ls 2 title 'Load Size 80%' with filledcurves x1 axes x1y1,\
-     "soak_testing.dat" using 1:4 ls 3 title 'Load Size 10%' with filledcurves x1 axes x1y1,\
+plot "soak_testing.dat" using 1:2 ls 2 title 'Request Count 80 % of maximum' with filledcurves x1 axes x1y1,\
+     "soak_testing.dat" using 1:4 ls 3 title 'Request Count 10 % of maximum' with filledcurves x1 axes x1y1,\
      "soak_testing.dat" using 1:3 ls 1 title 'Memory Allocated' with filledcurves x1 axes x1y2 fs transparent
