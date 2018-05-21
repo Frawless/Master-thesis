@@ -6,9 +6,9 @@
 \chapter{Messaging Performance Tool}
 \label{Messaging Performance Tool}
 % https://github.com/orpiske/msg-perf-tool
-The performance of \emph{Message-Oriented Middleware} (MOM) \cite{CURRY:MOM} is one of the most critical elements of quality assurance for enterprise integration systems. There are multiple messaging components developed in the Red Hat company such as messaging clients, Message Broker, Message Router (Qpid-dispatch service) or stream-like message distributions tools---Kafka. All of these software needs performance testing to ensure quality standards of MOM. Note that we will shorten the term the messaging client to just client in this thesis.
+The performance of \emph{Message-Oriented Middleware} (MOM) \cite{CURRY:MOM} is one of the most critical elements of quality assurance for enterprise integration systems. There are multiple messaging components developed in the Red~Hat~Inc. company such as messaging clients, message broker, message router (Qpid-Dispatch service) or stream-like message distributions tools---Kafka. All of these software needs performance testing to ensure quality standards of MOM. Note that we will shorten the term the messaging client to just client in this thesis.
 
-The~Message Broker is an example of MOM. Its main purpose is to receive, store and distribute messages, which are sent and received by clients. Users choose MOM for message distribution to reduce the development time and cost of their own solution. Another benefit of using specialized MOM is robustness and guaranteed performance. The performance capabilities of a MOM are critical attributes to its users, because being able to handle a large amount of transactions in a timely manner is a key characteristic of MOM. Good example are automated systems, where components communicates with each other by command exchange. The amount of exchanged commands is heavily dependent on the system size and since we want to get the results as soon as possible we need to ensure smooth and quick message exchange.
+The~message broker is an example of MOM. Its main purpose is to receive, store and distribute messages, which are sent and received by clients. Users choose MOM for message distribution to reduce the development time and cost of their own solution. Another benefit of using specialized MOM is robustness and guaranteed performance. The performance capabilities of a MOM are critical attributes to its users, because being able to handle a large amount of transactions in a timely manner is a key characteristic of MOM. Good example are automated systems, where components communicates with each other by command exchange. The amount of exchanged commands is heavily dependent on the system size and since we want to get the results as soon as possible we need to ensure smooth and quick message exchange.
 
 \emph{Maestro} (or Messaging Performance Tool) \cite{ORPISKE:MSGPT} is a testing system designed for testing the performance of MOM. The Maestro is deployed as a cluster system on several machines. A~typical deployment consist of one node for Maestro Broker, one or more for Maestro Senders, and one or more for Maestro Receivers and the SUT. The architecture of Maestro system, depicted in the Figure \ref{fig:msg_perf_tool}, consists of the following components:
 
@@ -94,7 +94,6 @@ The type of metrics collected during tests depends on the cluster component. In 
 \renewcommand{\arraystretch}{1.35} % Default value: 1
 	\begin{table}[H]
 	\centering
-	\caption{The summary of Maestro metrics summary collected during test cases.}
 	\begin{tabular}{|p{2.5cm}|p{3.5cm}|p{7cm}|}
 	\hline
 	\rowcolor[HTML]{C5E3DF}
@@ -108,6 +107,7 @@ The type of metrics collected during tests depends on the cluster component. In 
 	                                         & OS basic memory                       & Physical and swap memory usage                                  \\ \hline
 	                                         & OS resources                          & Count of file descriptors                                       \\ \hline
 	\end{tabular}
+	\caption{The summary of Maestro metrics summary collected during test cases.}
 	\label{tab:maestro_metrics}
 	\end{table}
 \endgroup

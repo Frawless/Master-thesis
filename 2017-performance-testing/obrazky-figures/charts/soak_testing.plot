@@ -1,10 +1,10 @@
 set terminal pdf font 'CMU SERIF' size 6,4
 #set size 1200,400
 set output '../soak_testing.pdf'
-set title 'Soak Testing' font ",16"
+set title 'Endurance Testing' font ",16"
 set grid
 
-set xlabel 'Time [Days]'
+set xlabel 'Time [date]'
 #set xdata time
 set xrange [1511704800:1513087200]
 set timefmt "%s"
@@ -16,7 +16,7 @@ set ylabel 'Requests Count [RPS]'
 set yrange [0:2500]
 set ytics 500 nomirror
 
-set y2label 'Allocated Units [GB]'
+set y2label 'Allocated Units [MB]'
 set y2range [0:13000]
 set y2tics 1500 nomirror
 #set format y2 "%0.2f"

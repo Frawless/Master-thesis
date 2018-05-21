@@ -5,7 +5,7 @@ set output '../average_median_2.pdf'
 set title 'Latency Measurement Histogram' font ",16"
 set grid
 
-set xlabel 'Response [s]'
+set xlabel 'Response Time [s]'
 #set xdata time
 set xrange [0.5:12.5]
 set xtics 1 nomirror

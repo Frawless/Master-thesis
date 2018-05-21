@@ -16,7 +16,7 @@ set ylabel 'Request Count [RPS]'
 set yrange [0:5000]
 set ytics 1000 nomirror
 
-set y2label 'Response Time [seconds]'
+set y2label 'Response Time [s]'
 set y2range [0:5.5]
 set y2tics 1 nomirror
 #set format y2 "%0.2f"

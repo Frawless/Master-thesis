@@ -5,7 +5,7 @@
 
 \chapter{Analysis and Design}
 \label{Analysis and Design}
-Maestro is specially designed for the performance testing of the Broker. However, with the significant Qpid-Dispatch growth, the need for performance testing emerges. In the following we will analyze the Qpid-Dispatch service with focus on its capabilities and methodology. Moreover we will describe the design of the Topology Generator and Qpid-Dispatch Performance Module for Maestro, which are the main requirements to achieve the actual performance testing of Qpid-Dispatch router.
+Maestro is specially designed for the performance testing of the message broker. However, with the significant Qpid-Dispatch growth, the need for performance testing emerges. In the following we will analyze the message router service with focus on its capabilities and methodology. Moreover we will describe the design of the Topology Generator and Qpid-Dispatch Performance Module for Maestro, which are the main requirements to achieve the actual performance testing of Qpid-Dispatch router.
 
 \section{Used Technologies}
 The most of Maestro, such as the command parsing, reporting, clients abstractions and so on, is written in Java language. But the whole Maestro is not a pure Java code. For test specificatio we use Groovy instead. Groovy is basically a lightweight version of Java with several advantages. In particular, Groovy scripts are more readable for those who are not much familiar with Java code. Groovy scrips are also used as handlers for specific commands for extension points, which is described in more depth in the Subsection \ref{MPT Preparations}.
@@ -63,7 +63,7 @@ The following summary of Qpid-Dispatch router was composed based on knowledge av
 \footnotetext{ISO/OSI\,---\,\url{http://www.studytonight.com/computer-networks/complete-osi-model}}
 
 \subsection{Theory of Operation}
-The router accepts AMQP connections from senders and receivers and further creates AMQP connections to Message Brokers or similar AMQP-based services. Through these connections sender is able to reach receiver, which can be another client in the network or a message broker. Note, that the client can exchange messages directly with another client without involving a broker at all. The router classifies all of the incoming messages and routes them between senders and receivers. The router is designed to be deployed in topologies of multiple routers, preferably with redundant paths, to continually provide connectivity in the case any router in the network fails. For routing Qpid-Dispatch uses link-state routing protocols\footnote{Link-state protocols\,---\,\url{https://www.certificationkits.com/cisco-certification/ccna-articles/cisco-ccna-intro-to-routing-basics/cisco-ccna-link-state-routing-protocols/}} and algorithms similar to OSPF or IS-IS to calculate the best path (e.g. the path with the lowest cost) from sender to receiver through the whole network and to recover from failures.
+The router accepts AMQP connections from senders and receivers and further creates AMQP connections to message brokers or similar AMQP-based services. Through these connections sender is able to reach receiver, which can be another client in the network or a message broker. Note, that the client can exchange messages directly with another client without involving a broker at all. The router classifies all of the incoming messages and routes them between senders and receivers. The router is designed to be deployed in topologies of multiple routers, preferably with redundant paths, to continually provide connectivity in the case any router in the network fails. For routing Qpid-Dispatch uses link-state routing protocols\footnote{Link-state protocols\,---\,\url{https://www.certificationkits.com/cisco-certification/ccna-articles/cisco-ccna-intro-to-routing-basics/cisco-ccna-link-state-routing-protocols/}} and algorithms similar to OSPF or IS-IS to calculate the best path (e.g. the path with the lowest cost) from sender to receiver through the whole network and to recover from failures.
 
 \subsection{Addresses and Connections}
 \label{Addresses and Connections}
@@ -159,7 +159,7 @@ On the other hand, the output format should be easy for automatic parsing. The b
   \label{fig:generator}
 \end{figure}
 
-\footnotetext{YAML - \url{http://docs.ansible.com/ansible/latest/YAMLSyntax.html}}
+\footnotetext{YAML\,---\,\url{http://docs.ansible.com/ansible/latest/YAMLSyntax.html}}
 
 \subsection{Graph Metadata}
 \label{Graph Metadata}

@@ -57,7 +57,7 @@ The final step of the performance testing process is evaluation of the results. 
 
 \section{Performance Issues}
 \label{Performance Issues}
-A \emph{performance issue} is a common label for an unexpected application or device behavior which affects its performance. Usually, those issues are hard to detect because they manifest only under certain circumstances such as high load or long application run time. In the network applications there are several particular issues that are more frequently occurring  than others. In the following, we~will describe selected issues in more details.
+A~\emph{performance issue} is a common label for an unexpected application or device behavior which affects its performance. Usually, those issues are hard to detect because they manifest only under certain circumstances such as high load or long application run time. In the network applications there are several particular issues that are more frequently occurring  than others. In the following, we~will describe selected issues in more details.
 
 \subsection*{Performance Degradation}
 \label{Performance Degradation}
@@ -71,17 +71,17 @@ An unclean code usually leads to inefficient algorithms, application deadlocks, 
 	\item a development of new features for already existing components.
 \end{itemize}
 
-\footnotetext{Soak Test\,---\,refer to HW testing method during which engineers soak device into water and check for bubble leaks.}
+\footnotetext{Soak Test\,---\,refer to HW testing method during where engineers soak device into water and check for bubble leaks.}
 
 \subsection*{Response Time}
 \label{Response Time 1}
-Response time represents how long it takes for system to accept, evaluate, and respond to the user for his request e.g. HTTP request for the particular website. Different actions and requests can have significantly different response time and with that provide different load on the system. For example retrieving document from a web-server by its ID is considerably faster than searching for the same document by keywords. Response time is mostly measured during the \emph{load test} \cite{Manzor:APTB} of the application. Well designed test should consider different types of load on the system, various kind of requests, and different number of connected end-users at the same time. For user based systems we usually consider three threshold for the response time values:
+Response time represents how long it takes for system to accept, evaluate, and respond to the user for his request e.g. HTTP request for the particular website. Different actions and requests can have significantly different response time and with that provide different load on the system. For example retrieving document from a web-server by its ID is considerably faster than searching for the same document by keywords. Response time is mostly measured during the \emph{load test} \cite{Manzor:APTB} of the application. Well designed test should consider different types of load on the system, various kind of requests, and different number of connected end-users at the same time. For user based systems we usually consider three thresholds for the response time values:
 
 \begin{description}
 	\setlength\itemsep{0em}
 	\item \textbf{0.1 second}\,---\,this represent an ideal response time for the application, because user feels that system is reacting instantly and does not notice any interruptions.
 	\item \textbf{1 second}\,---\,this is the highest acceptable response time when user still does not feel any interruptions, but can feel a little delay; this still represent no bad impact on the user experience.
-	\item \textbf{10 second}\,---\,this is the limit after which response time become unacceptable and user will probably stop using the application.
+	\item \textbf{10 seconds}\,---\,this is the limit after which response time become unacceptable and user will probably stop using the application.
 \end{description}
 
 However response time thresholds for non-human interactive system are more strict. They can range in milliseconds or less.
@@ -150,7 +150,7 @@ Stress testing is the specific type of load testing, where we do not measure the
 Typical issues, which are covered by stress testing are as follows:
 \begin{itemize}
 	\setlength\itemsep{0em}
-	\item A sudden performance degradation.
+	\item A~sudden performance degradation.
 	\item System will recover after the stress test (system is operational after test).
 	\item System does not crash during stress test.
 	\item All subsystems such as database, load balancer, etc. remains operational.
@@ -158,7 +158,7 @@ Typical issues, which are covered by stress testing are as follows:
 
 When engineers finish stress testing and finds the limits of the system, they also can test the system recovery after a crash during finding of the system limits.
 
-In the Figure \ref{fig:stress_test} we show recorded stress testing with a raising load and response time. Everything is fine until the amount of requests exceed 3000 requests per second. With higher load there comes performance issues which leads to unexpected rise of the response time.
+In the Figure \ref{fig:stress_test} we show recorded stress testing with a raising load and response time. Everything is fine until the amount of requests exceed 3,000 requests per second. With higher load there comes performance issues which leads to unexpected rise of the response time.
 
 \begin{figure}[H]
   \centering
@@ -169,20 +169,21 @@ In the Figure \ref{fig:stress_test} we show recorded stress testing with a raisi
 
 \subsection*{Endurance Testing}
 \label{Endurance Testing}
-The endurance, or stability/soak testing refers to the method, that tries to identify problems, that may appear only after the extended period of time e.g.. The system could seem to be stable for one week, but after some longer period, problems such as memory leaks or not enough disk space can appear. Soak tests mainly focuses on measuring the memory as a performance metric. The following are common issues found by soak test:
-\begin{itemize}
-	\setlength\itemsep{0em}
-	\item A serious memory leaks that can eventually result into the system crash.
-	\item Improperly closed database connections that could starve the system.
-	\item Improperly closed connections between system layers that could stall any of the system modules.
-	\item Step-wise degradation that could lead to a high response time and the system becomes inefficient.
-\end{itemize}
-Typical scenarios for usage of soak testing:
+The endurance, or stability/soak testing refers to the method, that tries to identify problems, that may appear only after the extended period of time e.g. The system could seem to be stable for one week, but after some longer period, problems such as memory leaks or not enough disk space can appear. Soak tests mainly focuses on measuring the memory as a performance metric. Typical scenarios for usage of soak testing:
 \begin{itemize}
 	\setlength\itemsep{0em}
 	\item Developed system uses multiple database connections.
 	\item There is a chance for inappropriately allocated memory, or memory free.
 	\item Disk space limitation for store logs or other data.
+\end{itemize}
+
+The following are common issues found by soak test:
+\begin{itemize}
+	\setlength\itemsep{0em}
+	\item A~serious memory leaks that can eventually result into the system crash.
+	\item Improperly closed database connections that could starve the system.
+	\item Improperly closed connections between system layers that could stall any of the system modules.
+	\item Step-wise degradation that could lead to a high response time and the system becomes inefficient.
 \end{itemize}
 
 
@@ -195,7 +196,7 @@ This sort of test needs to use appropriate monitoring system to achieve the high
   \label{fig:soak_test}
 \end{figure}
 
-In the Figure \ref{fig:soak_test} you can see raising memory usage after period of time. The SUT can handle requests but as time goes by memory usage is too high and so the SUT will crash. This may have been caused by a memory leak or an inappropriate algorithm use.
+In the Figure \ref{fig:soak_test} you can see rising memory usage after period of time. The SUT can handle requests but as time goes by memory usage is too high and so the SUT will crash. This may have been caused by a memory leak or an inappropriate algorithm use.
 
 \subsection*{Smoke Testing}
 The smoke testing approach is inspired by the similar hardware technique, when engineers checks for the presence of the smoke from the device after turning the power on. Basically, its similar for software, since the main goal of smoke test is to test the basic functionality of the system and guarantee that the system is ready for the build. However, smoke tests are testing the functionality on a surface level, so they may not be enough for the deep testing of basic system functions. When smoke tests fail, the system is tagged as unstable, because it cannot ensure its basic functionality and it is not tested anymore until the smoke test pass. Smoke test are designed to uncover obvious errors which saves time, money and effort of the engineers. These tests should be used with every new build, since new features could harm previous system functionality.
@@ -244,11 +245,11 @@ The \emph{benchmark testing}\footnotemark{} is an approach, which collects perfo
 \label{Performance Metrics}
 % https://loadstorm.com/load-testing-metrics/ 2017/10/18
 
-During the performance testing we can monitor a lot of metrics, which can have different importance based on the system's purpose. The following lists the most common metrics that are monitored during the performance testing of all applications, not depending on developing language.
+During the performance testing we can monitor a lot of metrics, which can have different importance based on the system's purpose. The following lists the most common metrics that are monitored during the performance testing of all applications not depending on developing language.
 
 In the tested systems, performance metrics are collected during the long process of collection, analysis and reporting of information regarding the performance of whole the system or an individual component. This process can be different for each metric, since each metric needs different type of the system analysis.
 
-\subsection*{They Ways to Measure}
+\subsection*{The Ways to Measure}
 The performance measurement process can be divided into several steps. Metrics are usually measured after a warm-up period of time after the commencement of traffic, because it takes a while for workload to stabilize. Stabilized workload is necessary for measurements because unstable workload can negatively affect the measurement results. In the Figure \ref{fig:measurements} one can see a workload phases with marked part for the actual performance testing.
 
 \begin{figure}[H]
@@ -296,7 +297,7 @@ There are two common ways of measuring the response time \cite{Kopp:RPT}: one of
   \label{fig:average_percentil_1}
 \end{figure}
 
-The better solution how to determine the actual response time is the Percentile. The percentile is statistic method, which cuts measured ordered values into hundredths and then characterize the value below which a given percentage of measurements in a group of particular measurements falls. In the Figure \ref{fig:average_percentil_1} you can see the \emph{median} value, which reflects more realistic value of the system response time. Median value is same such as the 50th percentile. In this case, there is no problem, because user will expect slower response time than it has.
+Let's look at another case, where a better solution how to determine the actual response time is the Percentile. The percentile is statistic method, which cuts measured ordered values into hundredths and then characterize the value below which a given percentage of measurements in a group of particular measurements falls. In the Figure \ref{fig:average_percentil_1} you can see the \emph{median} value, which reflects more realistic value of the system response time. Median value is same such as the 50th percentile. In this case, there is no problem, because user will expect slower response time than it has.
 
 \begin{figure}[H]
   \centering
@@ -315,7 +316,7 @@ Applications running at servers with long run-time competes over a limited amoun
 	\item \textbf{CPU usage}\,---\,inappropriate usage of CPU could lead to performance degradation, because low priority processes may occupy CPU ahead of the higher priority processes. CPU usage is structuring into system usage and user usage. High system usage can cause problems or bottlenecks.
 	\item \textbf{Memory usage}\,---\,full consumption of memory could cause performance degradation.
 	\item \textbf{Disk space}\,---\,for example when using storage disk as a database, there should be preventive measures to backup the data and free up disk space.
-	\item \textbf{Operating System limits}\,---\,system's memory, and CPU capabilities.
+	\item \textbf{Operating System limits}\,---\,system's memory and CPU capabilities.
 \end{description}
 
 
