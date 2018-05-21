@@ -83,10 +83,11 @@
 % "hyperref" package create clickable links in pdf if you are using pdflatex.
 % Problem is that this package have to be introduced as the last one so it
 % can not be placed in the template file.
+\usepackage{xcolor}
 \ifWis
 \ifx\pdfoutput\undefined % nejedeme pod pdflatexem / we are not using pdflatex
 \else
-  \usepackage{color}
+  % \usepackage{color}
   \usepackage[unicode,colorlinks,hyperindex,plainpages=false,pdftex]{hyperref}
   \definecolor{links}{rgb}{0.4,0.5,0}
   \definecolor{anchors}{rgb}{1,0,0}
@@ -98,7 +99,7 @@
 \else % pro tisk budou odkazy, na které se dá klikat, černé / for the print clickable links will be black
 \ifx\pdfoutput\undefined % nejedeme pod pdflatexem / we are not using pdflatex
 \else
-  \usepackage{color}
+  % \usepackage{color}
   \usepackage[unicode,colorlinks,hyperindex,plainpages=false,pdftex,urlcolor=black,linkcolor=black,citecolor=black]{hyperref}
   \definecolor{links}{rgb}{0,0,0}
   \definecolor{anchors}{rgb}{0,0,0}
@@ -117,6 +118,9 @@
 \usepackage[export]{adjustbox}
 \usepackage[]{algorithm2e}
 \usepackage{lscape}
+\usepackage{hhline}
+
+
 
 \SetAlCapSkip{1em}
 

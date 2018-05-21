@@ -12,18 +12,22 @@ Since the testing was executed over multiple topology types, we used Topology Ge
 % Please add the following required packages to your document preamble:
 % \usepackage[table,xcdraw]{xcolor}
 % If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-\begin{table}[H]
-\centering
-\caption{Machines and their properties, which were used for the experimental evaluation.}
-\label{tab:machines}
-\begin{tabular}{|l|l|r|r|}
-\hline
-\rowcolor[HTML]{C5E3DF}
-\textbf{} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Machine}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{CPU}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{RAM (Gb)}} \\ \hline
-SUT & Opteron & 8 & 8 \\ \hline
-Clients & IBM Xeon & 16 & 16 \\ \hline
-\end{tabular}
-\end{table}
+\begingroup
+\setlength{\tabcolsep}{10pt} % Default value: 6pt
+\renewcommand{\arraystretch}{1.35} % Default value: 1
+	\begin{table}[H]
+	\centering
+	\caption{Machines and their properties, which were used for the experimental evaluation.}
+	\label{tab:machines}
+	\begin{tabular}{|l|l|r|r|}
+	\hline
+	\rowcolor[HTML]{C5E3DF}
+	\textbf{} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Machine}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{CPU}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{RAM (Gb)}} \\ \hline
+	SUT & Opteron & 8 & 8 \\ \hline
+	Clients & IBM Xeon & 16 & 16 \\ \hline
+	\end{tabular}
+	\end{table}
+\endgroup
 
 \section{Basic Performance Measurements}
 \label{Basic Performance Measurements}
@@ -75,26 +79,25 @@ We measured throughput only by load generators\,---\,\emph{Maes\-tro Sender} and
 \begingroup
 \setlength{\tabcolsep}{10pt} % Default value: 6pt
 \renewcommand{\arraystretch}{1.35} % Default value: 1
+% \setlength{\arrayrulewidth}{2pt}
 	\begin{table}[H]
 	\centering
-	\caption{Test case settings for throughput measurements}
+	\caption{Test case settings for throughput measurements.}
 	\label{tab:test_case_throughput}
 	\begin{tabular}{|l|r|r|r|r|}
 	\hline
+
 	\rowcolor[HTML]{C5E3DF}
-	\cellcolor[HTML]{C5E3DF}                                         & \multicolumn{4}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Value}}                                                                          \\ \cline{2-5}
+	           & \multicolumn{2}{c|}{\textbf{Singlepoint}} & \multicolumn{2}{c|}{\textbf{Multipoint}} \\ \hline
 	\rowcolor[HTML]{C5E3DF}
-	\cellcolor[HTML]{C5E3DF}                                         & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Singlepoint}} & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Multipoint}} \\ \cline{2-5}
-	\rowcolor[HTML]{C5E3DF}
-	\multirow{-3}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Test Property}} & \textbf{Router}                 & \textbf{Broker}                 & \textbf{Full Router}            & \textbf{With Broker}           \\ \hline
-	\textbf{MESSAGE\_SIZE [B]}                          & \multicolumn{4}{r|}{256}                    \\ \hline
+	\textbf{Test Property} & \textbf{Router}            & \textbf{Broker}                 & \textbf{Full Router}            & \textbf{With Broker}           \\ \hline
+	\textbf{MESSAGE\_SIZE [$B$]}                        & \multicolumn{4}{r|}{256}                    \\ \hline
 	\textbf{PARALLEL\_COUNT}                            & \multicolumn{4}{r|}{5}                      \\ \hline
-	\textbf{TEST\_DURATION [m]}                         & \multicolumn{4}{r|}{15m}                    \\ \hline
-	\textbf{RATE}                                       & \multicolumn{4}{r|}{0}                   		\\ \hline
+	\textbf{TEST\_DURATION [$m$]}                       & \multicolumn{4}{r|}{15}                    \\ \hline
+	\textbf{RATE [$msg \cdot s^{-1}$]}                                       & \multicolumn{4}{r|}{0}                   		\\ \hline
 	\end{tabular}
 	\end{table}
 \endgroup
-
 
 
 \subsubsection*{Single Node}
@@ -173,9 +176,9 @@ The collected data during the throughput measurements reveal unexpected and cons
 	\begin{tabular}{|l|r|r|r|r|}
 	\hline
 	\rowcolor[HTML]{C5E3DF}
-	\cellcolor[HTML]{C5E3DF} & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Throughput (Msg/s)}} & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Memory}} \\ \cline{2-5}
+	 & \multicolumn{2}{c|}{\textbf{Throughput [$msg \cdot s^{-1}$]}} & \multicolumn{2}{c|}{\textbf{Memory}} \\ \hline
 	\rowcolor[HTML]{C5E3DF}
-	\multirow{-2}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Test Type}} & \textbf{Expected} & \textbf{Measured} & \textbf{Total} & \textbf{Used max} \\ \hline
+	\textbf{Test Type} & \textbf{Expected} & \textbf{Measured} & \textbf{Total} & \textbf{Used max} \\ \hline
 	\textbf{Single Router} & - & 90\,000 & 45\,kB & 28\,kB \\ \hline
 	\textbf{Single Broker} & - & 30\,000 & 2\,GB & 0.9\,GB \\ \hline
 	\textbf{Line of Routers} & 90\,000 & \cellcolor[HTML]{FFCCC9}23\,000 & 49\,kB & 43\,kB \\ \hline
@@ -210,15 +213,13 @@ Latency is measured only by Maestro Receiver from certain load samples. Since th
 	\begin{tabular}{|l|r|r|r|r|}
 	\hline
 	\rowcolor[HTML]{C5E3DF}
-	\cellcolor[HTML]{C5E3DF} & \multicolumn{4}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Value}} \\ \cline{2-5}
+	 & \multicolumn{2}{c|}{\textbf{Singlepoint}} & \multicolumn{2}{c|}{\textbf{Multipoint}} \\ \hline
 	\rowcolor[HTML]{C5E3DF}
-	\cellcolor[HTML]{C5E3DF} & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Singlepoint}} & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Multipoint}} \\ \cline{2-5}
-	\rowcolor[HTML]{C5E3DF}
-	\multirow{-3}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Test Property}} & \textbf{Router} & \textbf{Broker} & \textbf{Full Router} & \textbf{With Broker} \\ \hline
-	\textbf{MESSAGE\_SIZE [B]} & \multicolumn{4}{r|}{256} \\ \hline
+	\textbf{Test Property} & \textbf{Router} & \textbf{Broker} & \textbf{Full Router} & \textbf{With Broker} \\ \hline
+	\textbf{MESSAGE\_SIZE [$B$]} & \multicolumn{4}{r|}{256} \\ \hline
 	\textbf{PARALLEL\_COUNT} & \multicolumn{4}{r|}{5} \\ \hline
-	\textbf{TEST\_DURATION} & \multicolumn{4}{r|}{2\,000\,000 messages} \\ \hline
-	\textbf{RATE} & 15\,000 & 4\,600 & 3\,600 & 7\,600 \\ \hline
+	\textbf{TEST\_DURATION [$msg$]} & \multicolumn{4}{r|}{2\,000\,000} \\ \hline
+	\textbf{RATE [$msg \cdot s^{-1}$]} & 15\,000 & 4\,600 & 3\,600 & 7\,600 \\ \hline
 	\end{tabular}
 	\end{table}
 \endgroup
@@ -307,9 +308,9 @@ ry of latency measurements is available in the Table \ref{tab:latency-summary}. 
 	\begin{tabular}{|l|r|r|r|r|r|}
 	\hline
 	\rowcolor[HTML]{C5E3DF}
-	\multicolumn{1}{|c|}{\cellcolor[HTML]{C5E3DF}} & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Latency ($\mu$s)}} & \multicolumn{2}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Memory}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}} \\ \cline{2-5}
+	 & \multicolumn{2}{c|}{\textbf{Latency [$\mu$s]}} & \multicolumn{2}{c|}{\textbf{Memory}} &  \\ \hline
 	\rowcolor[HTML]{C5E3DF}
-	\multicolumn{1}{|c|}{\multirow{-2}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Test Type}}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{90 \%}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{99 \%}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Total}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Used max}} & \multicolumn{1}{c|}{\multirow{-2}{*}{\cellcolor[HTML]{C5E3DF}\textbf{\begin{tabular}[c]{@{}c@{}}Duration \\ (s)\end{tabular}}}} \\ \hline
+	\textbf{Test Type} & \textbf{90 \%} & \textbf{99 \%} & \textbf{Total} & \textbf{Used max} & \textbf{Duration} [$s$] \\ \hline
 	\textbf{Single Router} & 2.263 & 12.495 & 38 KB & 28 KB & \cellcolor[HTML]{9AFF99}136 \\ \hline
 	\textbf{Single Broker} & 0.386 & 181.759 & 2 GB & 0.9 GB & \cellcolor[HTML]{FFCCC9}425 \\ \hline
 	\textbf{Line of Routers} & \cellcolor[HTML]{9AFF99}1.292 & 50.815 & 46 KB & 8 KB & \cellcolor[HTML]{FFCCC9}540 \\ \hline
@@ -376,9 +377,7 @@ The latency is affected as well, one can see that significant message amount rai
 	\begin{tabular}{|l|r|r|r|r|}
 	\hline
 	\rowcolor[HTML]{C5E3DF}
-	\cellcolor[HTML]{C5E3DF} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}} & \multicolumn{3}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Message Lost}} \\ \cline{3-5}
-	\rowcolor[HTML]{C5E3DF}
-	\multirow{-2}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Action}} & \multicolumn{1}{c|}{\multirow{-2}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Duration (s)}}} & \multicolumn{1}{l|}{\cellcolor[HTML]{C5E3DF}\textbf{Expected}} & \multicolumn{1}{l|}{\cellcolor[HTML]{C5E3DF}\textbf{Lost}} & \multicolumn{1}{l|}{\cellcolor[HTML]{C5E3DF}\textbf{Percent}} \\ \hline
+	\textbf{Action} & \textbf{Duration [$s$]} & \textbf{Expected [$msg$]} & \textbf{Lost [$msg$]} & \textbf{Percent} \\ \hline
 	Restart & 0 & & 39\,518 & 0.53 \% \\ \cline{1-2} \cline{4-5}
 	 & 10 & & 220\,445 & 2.94 \% \\ \cline{2-2} \cline{4-5}
 	 & 60 & & 871\,661 & 11,62 \% \\ \cline{2-2} \cline{4-5}
@@ -437,9 +436,7 @@ The conclusion is, that Qpid-Dispatch is able to recover after a crash in less t
 	\begin{tabular}{|l|r|r|r|r|}
 	\hline
 	\rowcolor[HTML]{C5E3DF}
-	\cellcolor[HTML]{C5E3DF} & \multicolumn{1}{c|}{\cellcolor[HTML]{C5E3DF}} & \multicolumn{3}{c|}{\cellcolor[HTML]{C5E3DF}\textbf{Message Lost}} \\ \cline{3-5}
-	\rowcolor[HTML]{C5E3DF}
-	\multirow{-2}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Action}} & \multicolumn{1}{c|}{\multirow{-2}{*}{\cellcolor[HTML]{C5E3DF}\textbf{Duration (s)}}} & \multicolumn{1}{l|}{\cellcolor[HTML]{C5E3DF}\textbf{Expected}} & \multicolumn{1}{l|}{\cellcolor[HTML]{C5E3DF}\textbf{Lost}} & \multicolumn{1}{l|}{\cellcolor[HTML]{C5E3DF}\textbf{Percent}} \\ \hline
+	\textbf{Action} & \textbf{Duration [$s$]} & \textbf{Expected [$msg$]} & \textbf{Lost [$msg$]} & \textbf{Percent} \\ \hline
 	Restart & 0 & & 21\,804 & 0.29 \% \\ \cline{1-2} \cline{4-5}
 	 & 10 & & 13\,359 & 0.18 \% \\ \cline{2-2} \cline{4-5}
 	 & 60 & & 16\,205 & 0.22 \% \\ \cline{2-2} \cline{4-5}

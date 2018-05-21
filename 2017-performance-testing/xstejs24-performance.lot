@@ -2,12 +2,12 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces The summary of Maestro metrics summary collected during test cases.\relax }}{22}{table.caption.26}
+\contentsline {table}{\numberline {3.1}{\ignorespaces The summary of Maestro metrics summary collected during test cases.\relax }}{23}{table.caption.26}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {6.1}{\ignorespaces Machines and their properties, which were used for the experimental evaluation.\relax }}{50}{table.caption.43}
-\contentsline {table}{\numberline {6.2}{\ignorespaces Test case settings for throughput measurements\relax }}{52}{table.caption.45}
+\contentsline {table}{\numberline {6.2}{\ignorespaces Test case settings for throughput measurements.\relax }}{52}{table.caption.45}
 \contentsline {table}{\numberline {6.3}{\ignorespaces Table with collected data with highlighted performance improvements and degradations.\relax }}{56}{table.caption.55}
 \contentsline {table}{\numberline {6.4}{\ignorespaces Test case settings for latency measurements.\relax }}{57}{table.caption.57}
 \contentsline {table}{\numberline {6.5}{\ignorespaces The summary table with collected latency data with highlighted performance improvements and degradations.\relax }}{62}{table.caption.68}

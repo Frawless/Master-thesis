@@ -89,24 +89,28 @@ The other problem factor is the large size of the stored logs. This is mitigated
 \label{Testing Metrics}
 The type of metrics collected during tests depends on the cluster component. In the Table \ref{tab:maestro_metrics} we can see the summary of the metrics, which are collected for each component.
 
-\begin{table}[H]
-\centering
-\caption{The summary of Maestro metrics summary collected during test cases.}
-\begin{tabular}{|p{2.5cm}|p{3.5cm}|p{7cm}|}
-\hline
-\rowcolor[HTML]{C5E3DF}
-\multicolumn{1}{|c|}{\textbf{Component}} & \multicolumn{1}{c|}{\textbf{Metrics}} & \multicolumn{1}{c|}{\textbf{Description}}                       \\ \hline
-\textbf{Sender}                          & Throughput                            & Throughput of the sender                                        \\ \hline
-\textbf{Receiver}                        & Throughput                            & Throughput of the receiver                                      \\ \hline
-\textbf{}                                & Latency                               & Time between send and receive messages                           \\ \hline
-\textbf{Broker}			                & JVM heap memory                       & Maximum, minimum, and current Eden, Survivor, and Tenured space\footnotemark{} \\ \hline
-                                         & JVM non-heap                          & PermGen or Metaspace                                            \\ \hline
-                                         & Broker internals                      & Queue size and expiration count                                 \\ \hline
-                                         & OS basic memory                       & Physical and swap memory usage                                  \\ \hline
-                                         & OS resources                          & Count of file descriptors                                       \\ \hline
-\end{tabular}
-\label{tab:maestro_metrics}
-\end{table}
+\begingroup
+\setlength{\tabcolsep}{10pt} % Default value: 6pt
+\renewcommand{\arraystretch}{1.35} % Default value: 1
+	\begin{table}[H]
+	\centering
+	\caption{The summary of Maestro metrics summary collected during test cases.}
+	\begin{tabular}{|p{2.5cm}|p{3.5cm}|p{7cm}|}
+	\hline
+	\rowcolor[HTML]{C5E3DF}
+	\multicolumn{1}{|c|}{\textbf{Component}} & \multicolumn{1}{c|}{\textbf{Metrics}} & \multicolumn{1}{c|}{\textbf{Description}}                       \\ \hline
+	\textbf{Sender}                          & Throughput                            & Throughput of the sender                                        \\ \hline
+	\textbf{Receiver}                        & Throughput                            & Throughput of the receiver                                      \\ \hline
+	\textbf{}                                & Latency                               & Time between send and receive messages                           \\ \hline
+	\textbf{Broker}			                & JVM heap memory                       & Maximum, minimum, and current Eden, Survivor, and Tenured space\footnotemark{} \\ \hline
+	                                         & JVM non-heap                          & PermGen or Metaspace                                            \\ \hline
+	                                         & Broker internals                      & Queue size and expiration count                                 \\ \hline
+	                                         & OS basic memory                       & Physical and swap memory usage                                  \\ \hline
+	                                         & OS resources                          & Count of file descriptors                                       \\ \hline
+	\end{tabular}
+	\label{tab:maestro_metrics}
+	\end{table}
+\endgroup
 
 \footnotetext{Eden, Survivor and Tenured space are internal Java memory spaces.}
 

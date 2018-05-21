@@ -3,8 +3,8 @@
 % Performance Testing and Analysis of Qpid-Dispatch Router
 % Chapter 8
 
-\chapter{Summary}
-\label{Summary}
+\chapter{Conclusion}
+\label{Conclusion}
 In this work we described the fundamentals of performance testing, common performance metrics and bugs, and selected related tools. Further, we introduced the architecture and functionality of Messaging Performance Tool (MPT) called Maestro. The main part of this work focused on the proposal and implementation of extensions for Maestro, in particular new components: Maestro Agent and AMQP Inspector. The implementation of these components was necessary to enable proper performance testing of Qpid-Dispatch router. Moreover, we designed and implemented the Topology Generator tool, which is going to be used for semi-automatic topology configuration generation, which will significantly simplify the testing phase.
 
 % The design was changed multiple times during this work according the needs of the performance testing of Qpid-Dispatch but also of Maestro itself. For example the Maestro Agent was initially designed as a component which can control the router, but after some discussions and implementation start we decided to create Maestro Agent as independent code handler on the SUT node. This allows router control, but also control of any other software on the node easily by external Groovy scripts available in any public git repository.
