@@ -5,7 +5,7 @@
 
 \chapter{Analysis and Design}
 \label{Analysis and Design}
-Maestro is specially designed for the performance testing of the message broker. However, with the significant Qpid-Dispatch growth, the need for performance testing emerges. In the following we will analyze the message router service with focus on its capabilities and methodology. Moreover we will describe the design of the Topology Generator and Qpid-Dispatch Performance Module for Maestro, which are the main requirements to achieve the actual performance testing of Qpid-Dispatch router.
+Maestro is specially designed for the performance testing of the message broker. However, with the significant Qpid-Dispatch growth, the need for performance testing emerges. In the following we will analyze the message router service with focus on its capabilities and methodology. Moreover we will describe the design of the Topology Generator and message router Performance Module for Maestro, which are the main requirements to achieve the actual performance testing of message router.
 
 \section{Used Technologies}
 The most of Maestro, such as the command parsing, reporting, clients abstractions and so on, is written in Java language. But the whole Maestro is not a pure Java code. For test specificatio we use Groovy instead. Groovy is basically a lightweight version of Java with several advantages. In particular, Groovy scripts are more readable for those who are not much familiar with Java code. Groovy scrips are also used as handlers for specific commands for extension points, which is described in more depth in the Subsection \ref{MPT Preparations}.
@@ -30,7 +30,7 @@ Ansible scripts, called playbooks, are written in YAML language. This makes Ansi
   \label{fig:ansible_architecture}
 \end{figure}
 
-We use Ansible for several tasks; mainly to deploy systems on specific nodes. As we~want to run performance tests of Qpid-dispatch over multiple topology scenarios it is necessary to do system deployment quickly and automatically, which is easy with Ansible. System deployment contains installation of Maestro, Qpid-dispatch and other services based on the testing scenario. The next usage is to create and deploy configuration files for each router. This task runs the Topology generator and creates configuration files for each machine based on the generator output.
+We use Ansible for several tasks; mainly to deploy systems on specific nodes. As we~want to run performance tests of Qpid-Dispatch over multiple topology scenarios it is necessary to do system deployment quickly and automatically, which is easy with Ansible. System deployment contains installation of Maestro, Qpid-Dispatch and other services based on the testing scenario. The next usage is to create and deploy configuration files for each router. This task runs the Topology generator and creates configuration files for each machine based on the generator output.
 
 
 \subsection{Docker}
@@ -46,7 +46,7 @@ Docker containers are build up from a dockerfile where container attributes are 
 \end{figure}
 
 
-Since docker is able to run services such as Qpid-dispatch very easily and also allows communication between containers, it is possible to deploy Maestro with proper SUT in containers and analyze behavior in the container network or just run Maestro on single machine. However, for proper performance results we need real machines, so docker containers we used only for Maestro development and trying some basic stuffs with Maestro. The docker architecture is depicted in the Figure \ref{fig:docker_architecture} \cite{Docker-img}.
+Since docker is able to run services such as Qpid-Dispatch very easily and also allows communication between containers, it is possible to deploy Maestro with proper SUT in containers and analyze behavior in the container network or just run Maestro on single machine. However, for proper performance results we need real machines, so docker containers we used only for Maestro development and trying some basic stuffs with Maestro. The docker architecture is depicted in the Figure \ref{fig:docker_architecture} \cite{Docker-img}.
 
 \section{Qpid-Dispatch Router}
 Qpid-Dispatch is a lightweight AMQP message router suitable for building scalable and highly performant messaging networks. This router is an application layer program, w.r.t. ISO/OSI\footnotemark{} model, running either as a normal user program or as a daemon. In particular, it has the following key features:
@@ -210,7 +210,7 @@ In the Figure \ref{fig:msg_perf_tool_update} we show updated version of Maestro 
 \begin{figure}[h]
   \centering
   \includegraphics[width=15cm]{obrazky-figures/msg_perf_tool_for_router.pdf}
-  \caption{The architecture of updated Maestro for testing of the Qpid-dispatch router. The arrows represent communications between the Maestro components and with the SUT. The line value represents the number of connections where default is 1. The C front-end is no longer need for this version.}
+  \caption{The architecture of updated Maestro for testing of the Qpid-Dispatch router. The arrows represent communications between the Maestro components and with the SUT. The line value represents the number of connections where default is 1. The C front-end is no longer need for this version.}
   \label{fig:msg_perf_tool_update}
 \end{figure}
 
