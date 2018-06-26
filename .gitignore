@@ -11,7 +11,11 @@
 *.nav
 *.snm
 Literatura/*
+Meetings
 comments.txt
+start-with-the-maestro.txt
 Maestro/
+Measurements/
 Excel@FIT/plot/*
 .vscode
+*.code-workspace
