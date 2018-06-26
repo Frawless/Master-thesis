@@ -176,12 +176,12 @@ The type of metrics collected during tests depends on the component. In the Tabl
 %--------------------------------------------------------
 \section{Maestro-Agent Extension}
 \label{sec:maestro_agent}
-The current version of Maestro however cannot use all performance testing and network recovery capabilities of the Qpid-Dispatch. For better performance analysis and measurements it is necessary to design and implement additional functionality for the MPT. We propose a new component called Maestro-agent designed for simple execution of user specific scripts on testing nodes. However, Maestro is not a simple project, so creating new handlers for some testing purpose can be difficult. Hence, creation of Maestro-agent offers an elegant solution, where every user only needs to provide groovy scripts with action descriptions. This way user does not need to change Maestro code at all, he only has to specify the source of the extension point, for example a git repository, which is downloaded by agent and executed during the test scenario.
+The current version of Maestro however cannot use all performance testing and network recovery capabilities of the Qpid-Dispatch. It offers only load generator with latency and throughput measurements. For improve performance analysis and measurements it is necessary to design and implement additional functionality for the MPT. We propose a new component called Maestro-agent designed for simple execution of user specific scripts on testing nodes. However, Maestro is not a simple project, so creating new handlers for some testing purpose can be difficult. Hence, creation of Maestro-agent offers an elegant solution, where every user only needs to provide groovy scripts with action descriptions. This way user does not need to change Maestro code at all, he only has to specify the source of the extension point, for example a git repository, which is downloaded by agent and executed during the test scenario.
 
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.9\linewidth]{agent_2_excel.pdf}
+	\includegraphics[width=0.7\linewidth]{agent_2_excel.pdf}
 	\caption{Example of agent's behavior during the test.}
 	\label{fig:agent_2}
 \end{figure}
