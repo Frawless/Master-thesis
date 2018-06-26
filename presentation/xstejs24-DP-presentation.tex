@@ -94,19 +94,18 @@
       \end{tabular}
 		\end{frame}
 		%/////////////////////////////////////////////////
-		\section{Extension: Maestro-Agent and AMQP Inspector}
-		\begin{frame}{Extensions: Maestro-Agent and AMQP Inspector}
+		\section{Extension: Maestro-Agent}
+		\begin{frame}{Extensions: Maestro-Agent}
       \begin{tabular}{cl}
         \begin{tabular}{l}
             \parbox{0.55\linewidth}{%  change the parbox width as appropiate
             \begin{itemize}
                 \setlength\itemsep{0.5em}
                 \item Enables automatic \textbf{SUT} (Software Under Test) changes during the test.
-                \item \textbf{Groovy} code handler.
-                \item Can fetch and process external repositories.
-                \item Monitors \textbf{Qpid-dispatch}.
-                \item Request-response mechanism over \textbf{AMQP}.
-                \item \textbf{Topology Generator} for automatic deployment and configuration.
+                \item Implements \textbf{Groovy} code handler.
+                \item Can fetch and process the \textbf{external repositories}.
+                \item The agent tries to execute all scripts in the repository directory.
+                \item The repository URL and directory is specified in the test script.
             \end{itemize}
             }
         \end{tabular}
@@ -115,69 +114,101 @@
           \end{tabular} \\
       \end{tabular}
 		\end{frame}
-		%/////////////////////////////////////////////////
-		% \section{Extension: Topology Generator}
-		% \begin{frame}{Extension: Topology Generator}
-    %    		\begin{tabular}{cl}
-    %        		\begin{tabular}{l}
-    %          		\parbox{0.4\linewidth}{%  change the parbox width as appropiate
-		% 				\begin{itemize}
-		% 					\setlength\itemsep{0.5em}
-		% 					\item Metadata transformed into Configuration files.
-    %           \begin{itemize}
-    %             \item Inventory
-    %             \item Graph File
-    %           \end{itemize}
-		% 					\item Automatic deployment by \textbf{Ansible}.
-		% 				\end{itemize}
-   % 					}
-    %      		\end{tabular}
-    %      		& \begin{tabular}{l}
-    %        			\scalebox{0.3}{\includegraphics{figures/generator.pdf}} \\ \\ \\
-    %        			\scalebox{0.3}{\includegraphics{figures/deployment.pdf}}
-    %        		\end{tabular} \\
-		% 	\end{tabular}
-		% \end{frame}
+    %/////////////////////////////////////////////////   
+    \section{Extension: AMQP Inspector}
+		\begin{frame}{Extensions: AMQP Inspector}
+      \begin{itemize}
+        \setlength\itemsep{0.5em}
+        \item Enables the automatic monitoring of \textbf{Qpid-dispatch} router.
+        \item Request-response mechanism over \textbf{AMQP}.
+        \item AMQP Inspector sends requests to the \textbf{AMQP Management} continually every few seconds.
+        \item AMQP Inspector specification can be changed in the test script.
+    \end{itemize}
+      \begin{figure}[ht]
+        \begin{center}
+          \scalebox{0.40}{\includegraphics{figures/inspector_start.pdf}}
+        \end{center}
+      \end{figure}
+    \end{frame}
+
+    %/////////////////////////////////////////////////
+		\section{Extension: Topology Generator}
+		\begin{frame}{Extension: Topology Generator}
+       		\begin{tabular}{cl}
+           		\begin{tabular}{l}
+             		\parbox{0.55\linewidth}{%  change the parbox width as appropiate
+						\begin{itemize}
+              \setlength\itemsep{0.5em}
+              \item Simplifies the test preparation steps.
+              \item Semi-automatic generation of the configuration files for the routers.
+							\item Metadata are transformed into variables for the configuration files.
+              \begin{itemize}
+                \item Inventory
+                \item Graph File
+              \end{itemize}
+							\item Automatic deployment of the configuration files by \textbf{Ansible}.
+						\end{itemize}
+   					}
+         		\end{tabular}
+         		& \begin{tabular}{l}
+           			\scalebox{0.45}{\includegraphics{figures/generator.pdf}} \\ \\ \\
+           		\end{tabular} \\
+			\end{tabular}
+    \end{frame}
     %/////////////////////////////////////////////////
     \section{Measurements}
     \begin{frame}{Experimental Evaluation}
       \begin{itemize}
           \setlength\itemsep{0.5em}
           \item \textbf{Latency} vs. \textbf{Throughput} vs. \textbf{Behavioral} testing.
-          \item The figure shows throughput comparison of \textbf{Messaging Broker} and \textbf{Qpid-dispatch}.
+          \item The figure shows the throughput and latency comparison of \textbf{Apache ActiveMQ Artemis} and \textbf{Qpid-Dispatch}.
       \end{itemize}
       \begin{figure}[ht]
         \begin{center}
-          \scalebox{0.7}{\includegraphics{figures/throughput.pdf}}
+          \scalebox{0.37}{\includegraphics{figures/throughput.pdf}}
+          \scalebox{0.37}{\includegraphics{figures/multipoint-latency.pdf}}
         \end{center}
       \end{figure}
     \end{frame}
     %/////////////////////////////////////////////////
-		\section{Measurements II.}
-    \begin{frame}{Experimental Evaluation}
-      \begin{itemize}
-          \setlength\itemsep{0.5em}
-          \item Latency is measured by \textbf{Maestro Receiver}.
-          \item The figure shows latency comparison between \textbf{Messaging Broker} and \textbf{Qpid-dispatch}.
-      \end{itemize}
-      \begin{figure}[ht]
-        \begin{center}
-          \scalebox{0.7}{\includegraphics{figures/latency.pdf}}
-          % \scalebox{0.4}{\includegraphics{figures/agent.pdf}}
-        \end{center}
-      \end{figure}
-    \end{frame}
+		% \section{Measurements II.}
+    % \begin{frame}{Experimental Evaluation}
+    %   \begin{itemize}
+    %       \setlength\itemsep{0.5em}
+    %       \item Latency is measured by \textbf{Maestro Receiver}.
+    %       \item The figure shows the latency comparison between \textbf{Apache ActiveMQ Artemis} and \textbf{Qpid-Dispatch} connected in a line.
+    %   \end{itemize}
+    %   \begin{figure}[ht]
+    %     \begin{center}
+    %       \scalebox{0.7}{\includegraphics{figures/multipoint-latency.pdf}}
+    %       % \scalebox{0.4}{\includegraphics{figures/agent.pdf}}
+    %     \end{center}
+    %   \end{figure}
+    % \end{frame}
     %/////////////////////////////////////////////////
     \section{Measurements III.}
-    \begin{frame}{Experimental Evaluation}
+    \begin{frame}{Experimental Evaluation with the Agent}
       \begin{itemize}
           \setlength\itemsep{0.5em}
           \item Latency and throughput can be affected by the \textbf{Agent}.
-          \item The figure shows behavioral test case, during which one node of topology is shut down.
+          \item The figure shows the throughput of the several test scenarios with the agent.
       \end{itemize}
       \begin{figure}[ht]
         \begin{center}
-          \scalebox{0.7}{\includegraphics{figures/agent_latency.pdf}}
+          \scalebox{0.7}{\includegraphics{figures/agent-throughput.pdf}}
+        \end{center}
+      \end{figure}
+    \end{frame}
+    %/////////////////////////////////////////////////
+    \section{Measurements IV.}
+    \begin{frame}{Experimental Evaluation with the Agent}
+      \begin{itemize}
+          \setlength\itemsep{0.5em}
+          \item The figure shows behavioral test case, during which one node of the topology is shut down.
+      \end{itemize}
+      \begin{figure}[ht]
+        \begin{center}
+          \scalebox{0.7}{\includegraphics{figures/agent-latency.pdf}}
         \end{center}
       \end{figure}
     \end{frame}
@@ -201,26 +232,148 @@
 							\setlength\itemsep{0.5em}
 							\item \textbf{Throughput} and \textbf{latency}, \textbf{behavioral} testing.
               \item Single node, multi node or cluster topologies.
-              \item Topologies consists of \textbf{Qpid-dispatch} and other messaging services.
+              \item Topologies consists of \textbf{Qpid-Dispatch} and \textbf{Apache ActiveMQ Artemis}.
               \item Automatic generation of specific topologies.
 						\end{itemize}
 				\end{itemize}
 		\end{frame}
-		%/////////////////////////////////////////////////
-    \section{Contacts}
-    \begin{frame}{Contacts}
+    %/////////////////////////////////////////////////
+    { % these braces make the change local to the single frame
+      \setbeamertemplate{footline}
+      {
+        \leavevmode%
+        \hbox{%
+        \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+          \usebeamerfont{author in head/foot}\insertshortauthor
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.6\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+          \usebeamerfont{title in head/foot}\insertshorttitle\hspace*{3em}
+        \end{beamercolorbox}}%
+        \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,center]{date in head/foot}%
+          
+        \end{beamercolorbox}%
+        \vskip0pt%
+      }
+      \section{Reviewer's Questions}
+      \begin{frame}[noframenumbering]{Reviewer's Question}
+        \begin{itemize}
+            \setlength\itemsep{0.5em}
+            \item Jak si vysvětlujete to, že \textbf{Apache ActiveMQ Artemis} má při společném zapojení s \textbf{Qpid-Dispatch} routery větší výkon, než když je zapojen samostatně?
+        \end{itemize}
+        \begin{figure}[ht]
+          \begin{center}
+            \scalebox{0.7}{\includegraphics{figures/broker-throughput-comparison.pdf}}
+          \end{center}
+        \end{figure}
+      \end{frame}
+    }
+    %/////////////////////////////////////////////////
+    { % these braces make the change local to the single frame
+      \setbeamertemplate{footline}
+      {
+        \leavevmode%
+        \hbox{%
+        \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+          \usebeamerfont{author in head/foot}\insertshortauthor
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.6\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+          \usebeamerfont{title in head/foot}\insertshorttitle\hspace*{3em}
+        \end{beamercolorbox}}%
+        \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,center]{date in head/foot}%
+          
+        \end{beamercolorbox}%
+        \vskip0pt%
+      }
+      \section{Final Architecture}
+      \begin{frame}[noframenumbering]{Final Architecture}
+        \begin{figure}[ht]
+          \begin{center}
+            \scalebox{0.35}{\includegraphics{figures/msg_perf_tool_for_router.pdf}}
+          \end{center}
+        \end{figure}
+      \end{frame}
+    }    
+    %/////////////////////////////////////////////////
+    { % these braces make the change local to the single frame
+    \setbeamertemplate{footline}
+    {
+      \leavevmode%
+      \hbox{%
+      \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+        \usebeamerfont{author in head/foot}\insertshortauthor
+      \end{beamercolorbox}%
+      \begin{beamercolorbox}[wd=.6\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+        \usebeamerfont{title in head/foot}\insertshorttitle\hspace*{3em}
+      \end{beamercolorbox}}%
+      \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,center]{date in head/foot}%
+        
+      \end{beamercolorbox}%
+      \vskip0pt%
+    }
+    \section{Measurements}
+    \begin{frame}[noframenumbering]{Experimental Evaluation Topologies}
+      \begin{itemize}
+          \setlength\itemsep{0.5em}
+          \item Used for \textbf{Latency}, \textbf{Throughput}, \textbf{Behavioral} testing.
+          \item The figures shows topologies used for the experimental evaluation.
+      \end{itemize}
       \begin{figure}[ht]
         \begin{center}
-          \scalebox{0.30}{\includegraphics{figures/maestro-logo.pdf}}
+          \scalebox{0.35}{\includegraphics{figures/basic_topology_router_single.pdf}}
+          \scalebox{0.35}{\includegraphics{figures/basic_topology_broker_single.pdf}}
+          \scalebox{0.35}{\includegraphics{figures/basic_topology_router.pdf}}
+          \scalebox{0.35}{\includegraphics{figures/basic_topology_broker.pdf}}
         \end{center}
       \end{figure}
-      \begin{center}
-        \begin{itemize}
-          \item Jakub Stejskal\,---\,jstejska@redhat.com, xstejs24@stud.fit.vutbr.cz
-          \item Otavio Rudolfo Piske\,---\,opiske@redhat.com (Author of Maestro)
-          \item GitHub\,---\,\url{https://github.com/maestro-performance/}
-        \end{itemize}
-    \end{center}
     \end{frame}
+  }
+
     %/////////////////////////////////////////////////
+    { % these braces make the change local to the single frame
+      \setbeamertemplate{footline}
+      {
+        \leavevmode%
+        \hbox{%
+        \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+          \usebeamerfont{author in head/foot}\insertshortauthor
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.6\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+          \usebeamerfont{title in head/foot}\insertshorttitle\hspace*{3em}
+        \end{beamercolorbox}}%
+        \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,center]{date in head/foot}%
+          
+        \end{beamercolorbox}%
+        \vskip0pt%
+      }
+      \section{Measurements III. v2}
+      \begin{frame}[noframenumbering]{Agent Topology}
+        \begin{itemize}
+            \setlength\itemsep{0.5em}
+            \item The topology used for the behavioral testing and analysis.
+        \end{itemize}
+        \begin{figure}[ht]
+          \begin{center}
+            \scalebox{0.45}{\includegraphics{figures/basic_topology_router_agent_redundant.pdf}}
+          \end{center}
+        \end{figure}
+      \end{frame}
+    }
+    %/////////////////////////////////////////////////
+    % \section{Contacts}
+    % \begin{frame}[noframenumbering]{Contacts}
+    %   \begin{figure}[ht]
+    %     \begin{center}
+    %       \scalebox{0.30}{\includegraphics{figures/maestro-logo.pdf}}
+    %     \end{center}
+    %   \end{figure}
+    %   \begin{center}
+    %     \begin{itemize}
+    %       \item Jakub Stejskal\,---\,jstejska@redhat.com, xstejs24@stud.fit.vutbr.cz
+    %       \item Otavio Rudolfo Piske\,---\,opiske@redhat.com (Author of Maestro)
+    %       \item GitHub\,---\,\url{https://github.com/maestro-performance/}
+    %     \end{itemize}
+    % \end{center}
+    % \end{frame}
+    %/////////////////////////////////////////////////
+
 \end{document}
