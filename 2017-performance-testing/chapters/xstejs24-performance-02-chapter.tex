@@ -151,9 +151,9 @@ Typical issues, which are covered by stress testing are as follows:
 \begin{itemize}
 	\setlength\itemsep{0em}
 	\item A~sudden performance degradation.
-	\item System will recover after the stress test (system is operational after test).
-	\item System does not crash during stress test.
-	\item All subsystems such as database, load balancer, etc. remains operational.
+	\item System will not recover after the stress test (system is not operational after test).
+	\item System will crash during stress test.
+	\item All subsystems such as database, load balancer, etc. are not operational after the stress test.
 \end{itemize}
 
 When engineers finish stress testing and finds the limits of the system, they also can test the system recovery after a crash during finding of the system limits.
